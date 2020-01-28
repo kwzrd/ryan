@@ -8,6 +8,7 @@ from bot.constants import Channels, Emoji, Users
 from bot.utils import relay_message
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 def is_gallonmate(user: discord.User) -> bool:
