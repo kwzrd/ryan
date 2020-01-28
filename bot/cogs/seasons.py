@@ -119,6 +119,7 @@ class Seasons(commands.Cog):
         response.add_field(name="Guild name", value="Success" if g_success else "Missing permission", inline=False)
         response.add_field(name="Channels", value=f"Success: {ch_success}\nMissing permission: {ch_fail}", inline=False)
         response.add_field(name="Members", value=f"Success: {m_success}\nMissing permission: {m_fail}", inline=False)
+
         await ctx.send(embed=response)
 
 
