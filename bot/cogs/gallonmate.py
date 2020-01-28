@@ -7,9 +7,7 @@ from discord.ext.commands import Bot, Cog
 from bot.constants import Emoji, Channels, Users
 from bot.utils import relay_message
 
-
-log = logging.getLogger(__name__)
-log.setLevel(logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 def is_gallonmate(user: discord.User) -> bool:
@@ -41,4 +39,4 @@ class Gallonmate(Cog):
 def setup(bot: Bot) -> None:
     """Load Gallonmate cog."""
     bot.add_cog(Gallonmate(bot))
-    log.info("Gallonmate cog loaded")
+    logger.info("Gallonmate cog loaded")
