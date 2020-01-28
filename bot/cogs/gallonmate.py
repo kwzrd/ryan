@@ -16,7 +16,7 @@ def is_gallonmate(user: discord.User) -> bool:
 
 class Gallonmate(Cog):
 
-    def __init__(self, bot: Bot):
+    def __init__(self, bot: Bot) -> None:
         self.bot = bot
 
     @Cog.listener()
