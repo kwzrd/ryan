@@ -1,6 +1,7 @@
 import logging
 import random
 import string
+from typing import Optional
 
 import discord
 from discord.ext import commands
@@ -37,14 +38,22 @@ seasons = {
 }
 
 
-def decorate_name(discord_name: str, season_name: str) -> str:
+def decorate_name(discord_name: str, season_name: Optional[str]) -> str:
     """Decorate a given string with emoji for current season.
 
     The used emoji and drawn randomly from the season given by `season_name`.
     Strips all other emoji from `discord_name` before decorating.
+
+    If `season_name` is None, the name isn't decorating, but existing emoji
+    are stripped. This can be used to reset a decoration.
     """
     name = "".join(char for char in discord_name if char in string.printable)
-    prefix, postfix = random.sample(population=seasons[season_name], k=2)
+
+    if season_name is not None:
+        prefix, postfix = random.sample(population=seasons[season_name], k=2)
+    else:
+        prefix = postfix = ""
+
     return prefix + name + postfix
 
 
