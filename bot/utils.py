@@ -4,10 +4,6 @@ from datetime import datetime
 import discord
 
 
-log = logging.getLogger(__name__)
-log.setLevel(logging.INFO)
-
-
 async def relay_message(message: discord.Message, target: discord.TextChannel) -> None:
     """Relays a quote embed to the `target` channel."""
     author = message.author
