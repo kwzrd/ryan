@@ -26,7 +26,15 @@ seasons = {
         u"\U0001F331",  # seedling
         u"\U0001F95A",  # egg
         u"\U0001F36B",  # chocolate
-    )
+    ),
+    "valentines": (
+        u"\U0001F36B",  # chocolate
+        u"\U0001F495",  # two hearts
+        u"\U0001F493",  # beating heart
+        u"\U0001F49E",  # revolving hearts
+        u"\U0001F498",  # arrow heart
+        u"\U0001F48B",  # kiss
+    ),
 }
 
 
