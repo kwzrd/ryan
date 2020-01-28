@@ -9,6 +9,7 @@ from discord.ext import commands
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+RESET_SEASON = "reset"  # Controls the name of the `reset` season
 
 seasons = {
     "christmas": (
@@ -35,7 +36,7 @@ seasons = {
         u"\U0001F498",  # arrow heart
         u"\U0001F48B",  # kiss
     ),
-    "reset": (
+    RESET_SEASON: (
         "remove decorations",
     ),
 }
@@ -100,7 +101,7 @@ class Seasons(commands.Cog):
             await ctx.send(embed=self.seasons_embed)
             return
 
-        if season_name == "reset":
+        if season_name == RESET_SEASON:
             season_name = None
 
         g_success = None
