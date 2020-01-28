@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 def is_gallonmate(user: discord.User) -> bool:
+    """Check whether `user` is Gallonmate."""
     return user.id == Users.gallonmate
 
 
