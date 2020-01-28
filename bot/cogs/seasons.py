@@ -35,6 +35,9 @@ seasons = {
         u"\U0001F498",  # arrow heart
         u"\U0001F48B",  # kiss
     ),
+    "reset": (
+        "remove decorations",
+    ),
 }
 
 
@@ -75,8 +78,8 @@ class Seasons(commands.Cog):
                     "inline": False,
                 }
                 for season, emoji in seasons.items()
-            ]
-        }
+            ],
+        },
     )
 
     def __init__(self, bot: commands.Bot) -> None:
@@ -96,6 +99,9 @@ class Seasons(commands.Cog):
         if season_name is None or season_name not in seasons:
             await ctx.send(embed=self.seasons_embed)
             return
+
+        if season_name == "reset":
+            season_name = None
 
         g_success = None
         ch_fail, m_fail = 0, 0
