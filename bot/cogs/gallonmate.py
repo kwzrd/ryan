@@ -1,10 +1,10 @@
-import random
 import logging
+import random
 
 import discord
 from discord.ext.commands import Bot, Cog
 
-from bot.constants import Emoji, Channels, Users
+from bot.constants import Channels, Emoji, Users
 from bot.utils import relay_message
 
 logger = logging.getLogger(__name__)
