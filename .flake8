@@ -4,4 +4,6 @@ import-order-style=pycharm
 application_import_names=bot
 ignore=
     # Missing annotations for self, cls, *args, **kwargs
-    TYP101,TYP102,TYP002,TYP003
+    TYP101,TYP102,TYP002,TYP003,
+    # Linebreak before binary operator (contradicts W504)
+    W503,
