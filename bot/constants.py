@@ -4,6 +4,7 @@ class Emoji:
 
 class Users:
     gallonmate = 209018651360100352
+    kwzrd = 144912469071101952
 
 
 class Channels:
