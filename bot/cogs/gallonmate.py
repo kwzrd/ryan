@@ -29,7 +29,7 @@ class Gallonmate(Cog):
             return
 
         roll = random.randint(0, 99)
-        log.info(f"Roll {roll}")
+        logger.info(f"Roll {roll}")
         if roll == 0:
             target_channel = self.bot.get_channel(Channels.gallonmate_rolls)
             await message.add_reaction(Emoji.galooned)
