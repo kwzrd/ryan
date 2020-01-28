@@ -16,3 +16,4 @@ python_version = "3.7"
 
 [scripts]
 start = "python -m bot"
+lint = "python -m flake8"
