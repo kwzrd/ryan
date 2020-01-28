@@ -117,6 +117,6 @@ class Seasons(commands.Cog):
 
 
 def setup(bot: commands.Bot) -> None:
-    """Load Gallonmate cog."""
+    """Load Seasons cog."""
     bot.add_cog(Seasons(bot))
     log.info("Seasons cog loaded")
