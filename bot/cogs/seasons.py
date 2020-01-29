@@ -42,7 +42,7 @@ seasons = {
 }
 
 
-def decorate_name(discord_name: str, season_name: Optional[str]) -> str:
+def decorate_name(discord_name: str, season_name: str) -> str:
     """Decorate a given string with emoji for current season.
 
     The used emoji are drawn randomly from the season given by `season_name`.
@@ -53,7 +53,7 @@ def decorate_name(discord_name: str, season_name: Optional[str]) -> str:
     """
     name = "".join(char for char in discord_name if char in string.printable)
 
-    if season_name is not None:
+    if season_name != RESET_SEASON:
         prefix, postfix = random.sample(population=seasons[season_name], k=2)
     else:
         prefix = postfix = ""
@@ -100,9 +100,6 @@ class Seasons(commands.Cog):
         if season_name is None or season_name not in seasons:
             await ctx.send(embed=self.seasons_embed)
             return
-
-        if season_name == RESET_SEASON:
-            season_name = None
 
         g_success = None
         ch_fail, m_fail = 0, 0
