@@ -2,7 +2,7 @@ import logging
 import random
 
 import discord
-from discord.ext.commands import Bot, Cog
+from discord.ext import commands
 
 from bot.constants import Channels, Emoji, Users
 from bot.utils import relay_message
@@ -16,13 +16,13 @@ def is_gallonmate(user: discord.User) -> bool:
     return user.id == Users.gallonmate
 
 
-class Gallonmate(Cog):
+class Gallonmate(commands.Cog):
     """Cog with Gallonmate-specific functionality."""
 
-    def __init__(self, bot: Bot) -> None:
+    def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
 
-    @Cog.listener()
+    @commands.Cog.listener()
     async def on_message(self, message: discord.Message) -> None:
         """Listen for Gallonmate messages and evaluate whether they shall be galooned."""
         if (
@@ -39,7 +39,7 @@ class Gallonmate(Cog):
             await relay_message(message, target_channel)
 
 
-def setup(bot: Bot) -> None:
+def setup(bot: commands.Bot) -> None:
     """Load Gallonmate cog."""
     bot.add_cog(Gallonmate(bot))
     logger.info("Gallonmate cog loaded")
