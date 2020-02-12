@@ -10,6 +10,7 @@ flake8-import-order = "*"
 
 [packages]
 discord-py = "*"
+aiosqlite = "*"
 
 [requires]
 python_version = "3.7"
