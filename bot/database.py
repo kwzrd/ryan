@@ -47,7 +47,10 @@ class Database:
         return self
 
     async def get_nicknames(self) -> List[str]:
-        """Retrieve a list of all nicknames."""
+        """Retrieve a list of all nicknames.
+
+        Gives an empty list should no nicknames be available.
+        """
         cursor = await self._connection.execute(
             f"""SELECT "{self.C_AUTHOR}", "{self.C_TARGET}", "{self.C_NAME}" FROM "{self.T_NICKNAMES}";"""
         )
