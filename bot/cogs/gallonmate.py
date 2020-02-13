@@ -38,6 +38,25 @@ class Gallonmate(commands.Cog):
             await message.add_reaction(Emoji.galooned)
             await relay_message(message, target_channel)
 
+    @commands.group()
+    async def gallonmate(self, ctx: commands.Context) -> None:
+        """Parent command for Gallonmate-specific functionality."""
+        if not ctx.invoked_subcommand:
+            await self.help(ctx)
+
+    @gallonmate.command()
+    async def help(self, ctx: commands.Context) -> None:
+        """Provide an embed with module's commands."""
+        help_embed = discord.Embed(
+            title="Gallonmate",
+            description="Available commands in Gallonmate group",
+        )
+
+        for cmd in self.gallonmate.commands:
+            help_embed.add_field(name=cmd.name, value=cmd.brief, inline=False)
+
+        await ctx.send(embed=help_embed)
+
 
 def setup(bot: commands.Bot) -> None:
     """Load Gallonmate cog."""
