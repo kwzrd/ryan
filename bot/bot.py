@@ -25,6 +25,7 @@ class Bot(commands.Bot):
         """
         self.start_time = datetime.now()
         self.database = await Database().open()
+        self.season = None
 
         await super().start(*args, **kwargs)
 
