@@ -18,6 +18,11 @@ class Bot(commands.Bot):
     season: Optional[str]
 
     async def start(self, *args, **kwargs) -> None:
+        """Prepare Bot subclass.
+
+        We establish a connection to the database here from an async context,
+        then delegate to the base class.
+        """
         self.start_time = datetime.now()
         self.database = await Database().open()
 
@@ -26,5 +31,6 @@ class Bot(commands.Bot):
         logger.info("Bot online")
 
     async def close(self) -> None:
+        """Allow base class to close, then safely close database connection."""
         await super().close()
         await self.database.close()
