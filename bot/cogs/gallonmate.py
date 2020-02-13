@@ -74,7 +74,7 @@ class Gallonmate(commands.Cog):
         if not ctx.invoked_subcommand:
             await self.help(ctx)
 
-    @gallonmate.command()
+    @gallonmate.command(name="add")
     async def add_nickname(self, ctx: commands.Context, *, value: str) -> None:
         """Register new nickname."""
         author: int = ctx.author.id
@@ -84,19 +84,19 @@ class Gallonmate(commands.Cog):
 
         await ctx.send(embed=msg_success(f"Inserted {value}!"))
 
-    @gallonmate.command()
+    @gallonmate.command(name="apply")
     async def apply_nickname(self, ctx: commands.Context) -> None:
         """Draw a random nickname and apply it to Gallonmate."""
         await ctx.send(embed=msg_error("Command not yet implemented!"))
 
-    @gallonmate.command()
+    @gallonmate.command(name="remove")
     async def remove_nickname(self, ctx: commands.Context, *, value: str) -> None:
         """Remove specific nickname."""
         await self.bot.database.remove_nickname(value)
 
         await ctx.send(embed=msg_success(f"Removed {value}!"))
 
-    @gallonmate.command()
+    @gallonmate.command(name="list")
     async def list_nicknames(self, ctx: commands.Context) -> None:
         """List all available nicknames."""
         names = await self.bot.database.get_nicknames()
@@ -108,7 +108,7 @@ class Gallonmate(commands.Cog):
 
         await ctx.send(embed=response_embed)
 
-    @gallonmate.command()
+    @gallonmate.command(name="clear")
     async def clear_nicknames(self, ctx: commands.Context) -> None:
         """Remove all nicknames."""
         await self.bot.database.truncate_nicknames()
