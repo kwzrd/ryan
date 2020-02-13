@@ -4,6 +4,7 @@ import random
 import discord
 from discord.ext import commands
 
+from bot.bot import Bot
 from bot.constants import Channels, Emoji, Users
 from bot.utils import relay_message
 
@@ -19,7 +20,7 @@ def is_gallonmate(user: discord.User) -> bool:
 class Gallonmate(commands.Cog):
     """Cog with Gallonmate-specific functionality."""
 
-    def __init__(self, bot: commands.Bot) -> None:
+    def __init__(self, bot: Bot) -> None:
         self.bot = bot
 
     @commands.Cog.listener()
@@ -83,7 +84,7 @@ class Gallonmate(commands.Cog):
         await ctx.send(embed=help_embed)
 
 
-def setup(bot: commands.Bot) -> None:
+def setup(bot: Bot) -> None:
     """Load Gallonmate cog."""
     bot.add_cog(Gallonmate(bot))
     logger.info("Gallonmate cog loaded")
