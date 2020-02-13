@@ -1,11 +1,12 @@
 import logging
 import random
+import string
 
 import discord
 from discord.ext import commands
 
 from bot.bot import Bot
-from bot.constants import Channels, Emoji, Users
+from bot.constants import Channels, Emoji, Guilds, Users
 from bot.utils import relay_message
 
 logger = logging.getLogger(__name__)
@@ -87,7 +88,43 @@ class Gallonmate(commands.Cog):
     @gallonmate.command(name="apply")
     async def apply_nickname(self, ctx: commands.Context) -> None:
         """Draw a random nickname and apply it to Gallonmate."""
-        await ctx.send(embed=msg_error("Command not yet implemented!"))
+        available_names = await self.bot.database.get_nicknames()
+
+        if available_names:
+
+            tree_society: discord.Guild = self.bot.get_guild(Guilds.tree_society)
+
+            if tree_society is None:
+                await ctx.send(embed=msg_error(f"Could not find guild (id: {Guilds.tree_society})"))
+                return
+
+            gallon = tree_society.get_member(Users.gallonmate)
+
+            if gallon is None:
+                await ctx.send(embed=msg_error(f"Could not find Gallonmate (id: {Users.gallonmate})"))
+                return
+
+            current_emoji = [char for char in gallon.display_name if char not in string.printable]
+            new_name = random.choice(available_names)
+
+            if current_emoji:
+                lhs, rhs = random.sample(population=current_emoji, k=2)
+                new_name = lhs + new_name + rhs
+
+            try:
+                await gallon.edit(nick=new_name)
+
+            except discord.Forbidden:
+                await ctx.send(embed=msg_error(f"Missing permissions for name change (STATUS: 403)"))
+
+            except discord.HTTPException as e:
+                await ctx.send(embed=msg_error(f"Failed to change name to {new_name} (STATUS: {e.status}, {e.text})"))
+
+            else:
+                await ctx.send(embed=msg_success(f"Successfully changed Gallonmate nickname to {new_name}"))
+
+        else:
+            await ctx.send(embed=msg_error("No nicknames available"))
 
     @gallonmate.command(name="remove")
     async def remove_nickname(self, ctx: commands.Context, *, value: str) -> None:
