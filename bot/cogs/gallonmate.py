@@ -45,6 +45,31 @@ class Gallonmate(commands.Cog):
             await self.help(ctx)
 
     @gallonmate.command()
+    async def add_nickname(self, ctx: commands.Context, *, value: str) -> None:
+        """Register new nickname."""
+        ...
+
+    @gallonmate.command()
+    async def apply_nickname(self, ctx: commands.Context) -> None:
+        """Draw a random nickname and apply it to Gallonmate."""
+        ...
+
+    @gallonmate.command()
+    async def remove_nickname(self, ctx: commands.Context, *, value: str) -> None:
+        """Remove specific nickname."""
+        ...
+
+    @gallonmate.command()
+    async def list_nicknames(self, ctx: commands.Context) -> None:
+        """List all available nicknames."""
+        ...
+
+    @gallonmate.command()
+    async def clear_nicknames(self, ctx: commands.Context) -> None:
+        """Remove all nicknames."""
+        ...
+
+    @gallonmate.command()
     async def help(self, ctx: commands.Context) -> None:
         """Provide an embed with module's commands."""
         help_embed = discord.Embed(
