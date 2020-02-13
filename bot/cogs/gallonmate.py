@@ -77,27 +77,43 @@ class Gallonmate(commands.Cog):
     @gallonmate.command()
     async def add_nickname(self, ctx: commands.Context, *, value: str) -> None:
         """Register new nickname."""
-        ...
+        author: int = ctx.author.id
+        target: int = Users.gallonmate
+
+        await self.bot.database.add_nickname(author, target, value)
+
+        await ctx.send(embed=msg_success(f"Inserted {value}!"))
 
     @gallonmate.command()
     async def apply_nickname(self, ctx: commands.Context) -> None:
         """Draw a random nickname and apply it to Gallonmate."""
-        ...
+        await ctx.send(embed=msg_error("Command not yet implemented!"))
 
     @gallonmate.command()
     async def remove_nickname(self, ctx: commands.Context, *, value: str) -> None:
         """Remove specific nickname."""
-        ...
+        await self.bot.database.remove_nickname(value)
+
+        await ctx.send(embed=msg_success(f"Removed {value}!"))
 
     @gallonmate.command()
     async def list_nicknames(self, ctx: commands.Context) -> None:
         """List all available nicknames."""
-        ...
+        names = await self.bot.database.get_nicknames()
+
+        if names:
+            response_embed = msg_success("\n".join(n for n in names))
+        else:
+            response_embed = msg_error("No nicknames available")
+
+        await ctx.send(embed=response_embed)
 
     @gallonmate.command()
     async def clear_nicknames(self, ctx: commands.Context) -> None:
         """Remove all nicknames."""
-        ...
+        await self.bot.database.truncate_nicknames()
+
+        await ctx.send(embed=msg_success(f"Table truncated!"))
 
     @gallonmate.command()
     async def help(self, ctx: commands.Context) -> None:
