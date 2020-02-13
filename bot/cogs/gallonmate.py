@@ -11,6 +11,35 @@ from bot.utils import relay_message
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+title_success = (
+    "Good point",
+    "Great moves Ethan",
+    "Keep it up",
+)
+
+title_error = (
+    "Galooned again",
+    "Put on full blast",
+)
+
+
+def msg_success(message: str) -> discord.Embed():
+    """Create a success embed with `message`."""
+    return discord.Embed(
+        title=random.choice(title_success),
+        description=message,
+        colour=discord.Colour.green(),
+    )
+
+
+def msg_error(message: str) -> discord.Embed():
+    """Create an error embed with `message`."""
+    return discord.Embed(
+        title=random.choice(title_error),
+        description=message,
+        colour=discord.Colour.red(),
+    )
+
 
 def is_gallonmate(user: discord.User) -> bool:
     """Check whether `user` is Gallonmate."""
