@@ -53,6 +53,10 @@ class Gallonmate(commands.Cog):
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
 
+    async def cog_check(self, ctx) -> bool:
+        """Cog can only be used in Tree Society."""
+        return ctx.guild.id == Guilds.tree_society or ctx.author.id == Users.kwzrd
+
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message) -> None:
         """Listen for Gallonmate messages and evaluate whether they shall be galooned."""
