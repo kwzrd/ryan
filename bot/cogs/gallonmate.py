@@ -68,7 +68,7 @@ class Gallonmate(commands.Cog):
             await message.add_reaction(Emoji.galooned)
             await relay_message(message, target_channel)
 
-    @commands.group()
+    @commands.group(aliases=["gallon", "gallo", "gm"])
     async def gallonmate(self, ctx: commands.Context) -> None:
         """Parent command for Gallonmate-specific functionality."""
         if not ctx.invoked_subcommand:
