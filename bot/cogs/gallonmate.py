@@ -54,7 +54,7 @@ class Gallonmate(commands.Cog):
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
 
-    async def cog_check(self, ctx) -> bool:
+    async def cog_check(self, ctx: commands.Context) -> bool:
         """Cog can only be used in Tree Society."""
         return ctx.guild.id == Guilds.tree_society or ctx.author.id == Users.kwzrd
 
