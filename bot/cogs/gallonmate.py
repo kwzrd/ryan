@@ -72,7 +72,7 @@ class Gallonmate(commands.Cog):
     async def gallonmate(self, ctx: commands.Context) -> None:
         """Parent command for Gallonmate-specific functionality."""
         if not ctx.invoked_subcommand:
-            await self.help(ctx)
+            await self.help_command(ctx)
 
     @gallonmate.command(name="add")
     async def add_nickname(self, ctx: commands.Context, *, value: str) -> None:
@@ -115,8 +115,8 @@ class Gallonmate(commands.Cog):
 
         await ctx.send(embed=msg_success(f"Table truncated!"))
 
-    @gallonmate.command()
-    async def help(self, ctx: commands.Context) -> None:
+    @gallonmate.command(name="help")
+    async def help_command(self, ctx: commands.Context) -> None:
         """Provide an embed with module's commands."""
         help_embed = discord.Embed(
             title="Gallonmate",
