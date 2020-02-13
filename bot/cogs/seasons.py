@@ -5,6 +5,8 @@ import string
 import discord
 from discord.ext import commands
 
+from bot.bot import Bot
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
@@ -82,7 +84,7 @@ class Seasons(commands.Cog):
         },
     )
 
-    def __init__(self, bot: commands.Bot) -> None:
+    def __init__(self, bot: Bot) -> None:
         self.bot = bot
 
     @commands.command()
@@ -136,7 +138,7 @@ class Seasons(commands.Cog):
         await ctx.send(embed=response)
 
 
-def setup(bot: commands.Bot) -> None:
+def setup(bot: Bot) -> None:
     """Load Seasons cog."""
     bot.add_cog(Seasons(bot))
     logger.info("Seasons cog loaded")
