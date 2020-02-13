@@ -102,6 +102,8 @@ class Seasons(commands.Cog):
             await ctx.send(embed=self.seasons_embed)
             return
 
+        self.bot.season = season_name
+
         g_success = None
         ch_fail, m_fail = 0, 0
 
