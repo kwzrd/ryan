@@ -1,6 +1,7 @@
 import logging
 import random
 import string
+from typing import Optional
 
 import discord
 from discord.ext import commands
@@ -80,8 +81,12 @@ class Gallonmate(commands.Cog):
             await self.help_command(ctx)
 
     @gallonmate.command(name="add")
-    async def add_nickname(self, ctx: commands.Context, *, value: str) -> None:
+    async def add_nickname(self, ctx: commands.Context, *, value: Optional[str] = None) -> None:
         """Register new nickname."""
+        if not value or value in await self.bot.database.get_nicknames():
+            await ctx.send(embed=msg_error("Value either invalid or duplicate (already exists)"))
+            return
+
         author: int = ctx.author.id
         target: int = Users.gallonmate
 
@@ -131,8 +136,12 @@ class Gallonmate(commands.Cog):
             await ctx.send(embed=msg_error("No nicknames available"))
 
     @gallonmate.command(name="remove")
-    async def remove_nickname(self, ctx: commands.Context, *, value: str) -> None:
+    async def remove_nickname(self, ctx: commands.Context, *, value: Optional[str] = None) -> None:
         """Remove specific nickname."""
+        if not value or value in await self.bot.database.get_nicknames():
+            await ctx.send(embed=msg_error("Value either invalid or not present in database"))
+            return
+
         await self.bot.database.remove_nickname(value)
 
         await ctx.send(embed=msg_success(f"Removed {value}!"))
