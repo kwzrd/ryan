@@ -15,8 +15,6 @@ class Bot(commands.Bot):
     start_time: datetime
     database: Database
 
-    season: Optional[str]
-
     async def start(self, *args, **kwargs) -> None:
         """Prepare Bot subclass.
 
@@ -25,7 +23,6 @@ class Bot(commands.Bot):
         """
         self.start_time = datetime.now()
         self.database = await Database().open()
-        self.season = None
 
         await super().start(*args, **kwargs)
 
