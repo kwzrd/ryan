@@ -49,7 +49,7 @@ class Database:
     async def get_nicknames(self) -> List[str]:
         """Retrieve a list of all nicknames."""
         cursor = await self._connection.execute(
-            f"""SELECT "{self.C_NAME}" FROM "{self.T_NICKNAMES}";"""
+            f"""SELECT "{self.C_AUTHOR}", "{self.C_TARGET}", "{self.C_NAME}" FROM "{self.T_NICKNAMES}";"""
         )
 
         return [value for author, target, value in await cursor.fetchall()]
