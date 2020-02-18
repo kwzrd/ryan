@@ -171,6 +171,7 @@ class Gallonmate(commands.Cog):
         help_embed = discord.Embed(
             title="Gallonmate",
             description="Available commands in Gallonmate group",
+            colour=discord.Color.green(),
         )
 
         for cmd in self.gallonmate.commands:
