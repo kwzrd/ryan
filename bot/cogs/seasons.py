@@ -5,6 +5,8 @@ import string
 import discord
 from discord.ext import commands
 
+from bot.constants import Emoji
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
@@ -108,6 +110,9 @@ class Seasons(commands.Cog):
             await ctx.send(embed=self.seasons_embed)
             return
 
+        status_react = Emoji.tips_fedora
+        await ctx.message.add_reaction(status_react)
+
         g_success = None
         ch_fail, m_fail = 0, 0
 
@@ -142,6 +147,7 @@ class Seasons(commands.Cog):
         response.add_field(name="Members", value=f"Success: {m_success}\nMissing permission: {m_fail}", inline=False)
 
         await ctx.send(embed=response)
+        await ctx.message.clear_reaction(status_react)
 
 
 def setup(bot: commands.Bot) -> None:
