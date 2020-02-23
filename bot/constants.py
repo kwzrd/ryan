@@ -1,5 +1,6 @@
 class Emoji:
     galooned = "<:galooned:338627421630627842>"
+    tips_fedora = "<:pepetipsfedora:550466723997024267>"
 
 
 class Users:
