@@ -70,7 +70,8 @@ class Gallonmate(commands.Cog):
         )
 
         for cmd in self.gallonmate.commands:
-            help_embed.add_field(name=cmd.name, value=cmd.brief, inline=False)
+            aliases = ', '.join(alias for alias in cmd.aliases)
+            help_embed.add_field(name=f"{cmd.name} [{aliases or 'NA'}]", value=cmd.short_doc, inline=False)
 
         return help_embed
 
