@@ -35,6 +35,14 @@ seasons = {
         u"\U0001F498",  # arrow heart
         u"\U0001F48B",  # kiss
     ),
+    "saint patrick": (
+        u"\U0001F49A",  # green heart
+        u"\U0001F340",  # four leaf
+        u"\U0001F91E",  # crossed fingers
+        u"\U0001F37A",  # beer
+        u"\U0001F308",  # rainbow
+        u"\U0001F3A9",  # hat
+    ),
     RESET_SEASON: (
         "remove decorations",
     ),
