@@ -111,8 +111,8 @@ class Gallonmate(commands.Cog):
 
         await ctx.send(embed=msg_success(f"Inserted {value}!"))
 
-    @gallonmate.command(name="apply")
-    async def apply_nickname(self, ctx: commands.Context) -> None:
+    @gallonmate.command(name="switch")
+    async def switch_nickname(self, ctx: commands.Context) -> None:
         """Draw a random nickname and apply it to Gallonmate."""
         available_names = await self.bot.database.get_nicknames()
 
