@@ -94,7 +94,7 @@ class Seasons(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def season(self, ctx: commands.Context, season_name: str = None) -> None:
+    async def season(self, ctx: commands.Context, *, season_name: str = None) -> None:
         """Attempt to decorate the server.
 
         Many of the decorations may fail due to missing permissions. The bot handles
