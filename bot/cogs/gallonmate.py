@@ -58,6 +58,22 @@ class Gallonmate(commands.Cog):
         """Cog can only be used in Tree Society."""
         return ctx.guild.id == Guilds.tree_society or ctx.author.id == Users.kwzrd
 
+    async def get_help(self, failed_cmd: bool) -> discord.Embed:
+        """Provide an embed with module's commands.
+
+        If `failed_cmd` is True, the embed is coloured red. Green otherwise.
+        """
+        help_embed = discord.Embed(
+            title="Gallonmate",
+            description="Available commands in Gallonmate group",
+            colour=discord.Color.orange() if failed_cmd else discord.Color.green(),
+        )
+
+        for cmd in self.gallonmate.commands:
+            help_embed.add_field(name=cmd.name, value=cmd.brief, inline=False)
+
+        return help_embed
+
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message) -> None:
         """Listen for Gallonmate messages and evaluate whether they shall be galooned."""
@@ -78,7 +94,7 @@ class Gallonmate(commands.Cog):
     async def gallonmate(self, ctx: commands.Context) -> None:
         """Parent command for Gallonmate-specific functionality."""
         if not ctx.invoked_subcommand:
-            await self.help_command(ctx)
+            await ctx.send(embed=await self.get_help(failed_cmd=True))
 
     @gallonmate.command(name="add")
     async def add_nickname(self, ctx: commands.Context, *, value: Optional[str] = None) -> None:
@@ -167,17 +183,8 @@ class Gallonmate(commands.Cog):
 
     @gallonmate.command(name="help")
     async def help_command(self, ctx: commands.Context) -> None:
-        """Provide an embed with module's commands."""
-        help_embed = discord.Embed(
-            title="Gallonmate",
-            description="Available commands in Gallonmate group",
-            colour=discord.Color.green(),
-        )
-
-        for cmd in self.gallonmate.commands:
-            help_embed.add_field(name=cmd.name, value=cmd.brief, inline=False)
-
-        await ctx.send(embed=help_embed)
+        """Give the help embed directly."""
+        await ctx.send(embed=await self.get_help(failed_cmd=False))
 
 
 def setup(bot: Bot) -> None:
