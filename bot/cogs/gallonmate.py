@@ -97,7 +97,7 @@ class Gallonmate(commands.Cog):
         if not ctx.invoked_subcommand:
             await ctx.send(embed=await self.get_help(failed_cmd=True))
 
-    @gallonmate.command(name="add")
+    @gallonmate.command(name="add", aliases=["a"])
     async def add_nickname(self, ctx: commands.Context, *, value: Optional[str] = None) -> None:
         """Register new nickname."""
         if not value or value in await self.bot.database.get_nicknames():
@@ -111,7 +111,7 @@ class Gallonmate(commands.Cog):
 
         await ctx.send(embed=msg_success(f"Inserted {value}!"))
 
-    @gallonmate.command(name="switch")
+    @gallonmate.command(name="switch", aliases=["s"])
     async def switch_nickname(self, ctx: commands.Context) -> None:
         """Draw a random nickname and apply it to Gallonmate."""
         available_names = await self.bot.database.get_nicknames()
@@ -152,7 +152,7 @@ class Gallonmate(commands.Cog):
         else:
             await ctx.send(embed=msg_error("No nicknames available"))
 
-    @gallonmate.command(name="remove")
+    @gallonmate.command(name="remove", aliases=["rm"])
     async def remove_nickname(self, ctx: commands.Context, *, value: Optional[str] = None) -> None:
         """Remove specific nickname."""
         if not value or value not in await self.bot.database.get_nicknames():
@@ -163,7 +163,7 @@ class Gallonmate(commands.Cog):
 
         await ctx.send(embed=msg_success(f"Removed {value}!"))
 
-    @gallonmate.command(name="list")
+    @gallonmate.command(name="list", aliases=["ls"])
     async def list_nicknames(self, ctx: commands.Context) -> None:
         """List all available nicknames."""
         names = await self.bot.database.get_nicknames()
@@ -175,14 +175,14 @@ class Gallonmate(commands.Cog):
 
         await ctx.send(embed=response_embed)
 
-    @gallonmate.command(name="clear")
+    @gallonmate.command(name="clear", aliases=["c"])
     async def clear_nicknames(self, ctx: commands.Context) -> None:
         """Remove all nicknames."""
         await self.bot.database.truncate_nicknames()
 
         await ctx.send(embed=msg_success(f"Table truncated!"))
 
-    @gallonmate.command(name="help")
+    @gallonmate.command(name="help", aliases=["h"])
     async def help_command(self, ctx: commands.Context) -> None:
         """Give the help embed directly."""
         await ctx.send(embed=await self.get_help(failed_cmd=False))
