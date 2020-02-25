@@ -100,7 +100,11 @@ class Gallonmate(commands.Cog):
     @gallonmate.command(name="add", aliases=["a"])
     async def add_nickname(self, ctx: commands.Context, *, value: Optional[str] = None) -> None:
         """Register new nickname."""
-        if not value or value in await self.bot.database.get_nicknames():
+        if (
+            not value
+            or value in await self.bot.database.get_nicknames()
+            or any(char not in string.printable for char in value)
+        ):
             await ctx.send(embed=msg_error("Value either invalid or duplicate (already exists)"))
             return
 
