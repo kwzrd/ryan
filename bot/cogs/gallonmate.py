@@ -155,7 +155,7 @@ class Gallonmate(commands.Cog):
     @gallonmate.command(name="remove")
     async def remove_nickname(self, ctx: commands.Context, *, value: Optional[str] = None) -> None:
         """Remove specific nickname."""
-        if not value or value in await self.bot.database.get_nicknames():
+        if not value or value not in await self.bot.database.get_nicknames():
             await ctx.send(embed=msg_error("Value either invalid or not present in database"))
             return
 
