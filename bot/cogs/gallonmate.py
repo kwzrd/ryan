@@ -188,13 +188,16 @@ class Gallonmate(commands.Cog):
         if not ctx.invoked_subcommand:
             await ctx.send(embed=get_help(self.daemon, failed_cmd=True))
 
-    @daemon.command(name="status", aliases=["st"])
+    @daemon.command(name="status", aliases=["state"])
     async def daemon_status(self, ctx: commands.Context) -> None:
         """Check whether the daemon is currently running."""
         if self.switch_daemon.done():
             report = msg_error("Daemon is inactive")
         else:
-            report = msg_success(f"Daemon is running, scheduled switch in: {seconds_until_midnight()}")
+            t_remaining = seconds_until_midnight()
+            delta = datetime.timedelta(seconds=t_remaining)
+
+            report = msg_success(f"Daemon is running, scheduled switch in: {seconds_until_midnight()} (delta: {delta})")
 
         await ctx.send(embed=report)
 
