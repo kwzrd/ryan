@@ -19,6 +19,7 @@ title_success = (
     "Good point",
     "Great moves Ethan",
     "Keep it up",
+    "Life is excellent!",
 )
 
 title_error = (
