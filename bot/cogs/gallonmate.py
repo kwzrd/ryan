@@ -80,6 +80,9 @@ class Gallonmate(commands.Cog):
 
     async def switch_daemon_func(self):
         """Background task calling `switch_routine` once a day."""
+        await self.bot.wait_until_ready()
+        logger.info(f"Daemon started")
+
         while True:
             await asyncio.sleep(seconds_until_midnight())
 
