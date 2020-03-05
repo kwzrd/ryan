@@ -142,18 +142,18 @@ class Gallonmate(commands.Cog):
         """Cog can only be used in Tree Society."""
         return ctx.guild.id == Guilds.tree_society or ctx.author.id == Users.kwzrd
 
-    async def get_help(self, failed_cmd: bool) -> discord.Embed:
-        """Provide an embed with module's commands.
+    async def get_help(self, group: commands.Group, failed_cmd: bool) -> discord.Embed:
+        """Provide an embed with commands of `group`.
 
         If `failed_cmd` is True, the embed is coloured orange. Green otherwise.
         """
         help_embed = discord.Embed(
-            title="Gallonmate",
-            description="Available commands in Gallonmate group",
+            title=f"{group.name}".capitalize(),
+            description=f"Available arguments in {group.name} group:",
             colour=discord.Color.orange() if failed_cmd else discord.Color.green(),
         )
 
-        for cmd in self.gallonmate.commands:
+        for cmd in group.commands:
             aliases = ', '.join(alias for alias in cmd.aliases)
             help_embed.add_field(name=f"{cmd.name} [{aliases or 'NA'}]", value=cmd.short_doc, inline=False)
 
@@ -179,12 +179,13 @@ class Gallonmate(commands.Cog):
     async def gallonmate(self, ctx: commands.Context) -> None:
         """Parent command for Gallonmate-specific functionality."""
         if not ctx.invoked_subcommand:
-            await ctx.send(embed=await self.get_help(failed_cmd=True))
+            await ctx.send(embed=await self.get_help(self.gallonmate, failed_cmd=True))
 
     @gallonmate.group(aliases=["d"])
     async def daemon(self, ctx: commands.Context) -> None:
         """Command sub-group to control the Gallonmate daemon."""
-        ...
+        if not ctx.invoked_subcommand:
+            await ctx.send(embed=await self.get_help(self.daemon, failed_cmd=True))
 
     @daemon.command(name="status", aliases=["st"])
     async def daemon_status(self, ctx: commands.Context) -> None:
@@ -215,6 +216,11 @@ class Gallonmate(commands.Cog):
 
         self.switch_daemon = self.bot.loop.create_task(self.switch_daemon_func())
         await ctx.send(embed=msg_success("Daemon has been started"))
+
+    @daemon.command(name="help", aliases=["h"])
+    async def daemon_help(self, ctx: commands.Context) -> None:
+        """Give the help embed directly."""
+        await ctx.send(embed=await self.get_help(self.daemon, failed_cmd=False))
 
     @gallonmate.command(name="add", aliases=["a"])
     async def add_nickname(self, ctx: commands.Context, *, value: Optional[str] = None) -> None:
@@ -278,9 +284,9 @@ class Gallonmate(commands.Cog):
         await ctx.send(embed=msg_success(f"Table truncated!"))
 
     @gallonmate.command(name="help", aliases=["h"])
-    async def help_command(self, ctx: commands.Context) -> None:
+    async def gallonmate_help(self, ctx: commands.Context) -> None:
         """Give the help embed directly."""
-        await ctx.send(embed=await self.get_help(failed_cmd=False))
+        await ctx.send(embed=await self.get_help(self.gallonmate, failed_cmd=False))
 
 
 def setup(bot: Bot) -> None:
