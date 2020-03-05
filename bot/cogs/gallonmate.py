@@ -69,6 +69,51 @@ class Gallonmate(commands.Cog):
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
 
+    async def switch_routine(self) -> str:
+        """Routine to attempt to switch Gallonmate nickname.
+
+        If the method fails at any point, it will raise SwitchException with an informative
+        message the can be displayed to the user.
+
+        Internally draws available nicknames from the database. No available nicknames will
+        result in a raise.
+
+        On success, return the new nickname.
+        """
+        available_names = await self.bot.database.get_nicknames()
+
+        if not available_names:
+            raise SwitchException("No nicknames available")
+
+        tree_society: discord.Guild = self.bot.get_guild(Guilds.tree_society)
+
+        if tree_society is None:
+            raise SwitchException(f"Could not find guild (id: {Guilds.tree_society})")
+
+        gallon = tree_society.get_member(Users.gallonmate)
+
+        if gallon is None:
+            raise SwitchException(f"Could not find Gallonmate (id: {Users.gallonmate})")
+
+        current_emoji = [char for char in gallon.display_name if char not in string.printable]
+        new_name = random.choice(available_names)
+
+        if current_emoji:
+            lhs, rhs = random.sample(population=current_emoji, k=2)
+            new_name = lhs + new_name + rhs
+
+        try:
+            await gallon.edit(nick=new_name)
+
+        except discord.Forbidden:
+            raise SwitchException(f"Missing permissions for name change (STATUS: 403)")
+
+        except discord.HTTPException as e:
+            raise SwitchException(f"Failed to change name to {new_name} (STATUS: {e.status}, {e.text})")
+
+        else:
+            return new_name
+
     async def cog_check(self, ctx: commands.Context) -> bool:
         """Cog can only be used in Tree Society."""
         return ctx.guild.id == Guilds.tree_society or ctx.author.id == Users.kwzrd
@@ -133,43 +178,15 @@ class Gallonmate(commands.Cog):
     @gallonmate.command(name="switch", aliases=["s"])
     async def switch_nickname(self, ctx: commands.Context) -> None:
         """Draw a random nickname and apply it to Gallonmate."""
-        available_names = await self.bot.database.get_nicknames()
+        try:
+            new_name = await self.switch_routine()
 
-        if available_names:
-
-            tree_society: discord.Guild = self.bot.get_guild(Guilds.tree_society)
-
-            if tree_society is None:
-                await ctx.send(embed=msg_error(f"Could not find guild (id: {Guilds.tree_society})"))
-                return
-
-            gallon = tree_society.get_member(Users.gallonmate)
-
-            if gallon is None:
-                await ctx.send(embed=msg_error(f"Could not find Gallonmate (id: {Users.gallonmate})"))
-                return
-
-            current_emoji = [char for char in gallon.display_name if char not in string.printable]
-            new_name = random.choice(available_names)
-
-            if current_emoji:
-                lhs, rhs = random.sample(population=current_emoji, k=2)
-                new_name = lhs + new_name + rhs
-
-            try:
-                await gallon.edit(nick=new_name)
-
-            except discord.Forbidden:
-                await ctx.send(embed=msg_error(f"Missing permissions for name change (STATUS: 403)"))
-
-            except discord.HTTPException as e:
-                await ctx.send(embed=msg_error(f"Failed to change name to {new_name} (STATUS: {e.status}, {e.text})"))
-
-            else:
-                await ctx.send(embed=msg_success(f"Successfully changed Gallonmate nickname to {new_name}"))
+        except SwitchException as switch_exc:
+            reason = str(switch_exc)
+            await ctx.send(embed=msg_error(reason))
 
         else:
-            await ctx.send(embed=msg_error("No nicknames available"))
+            await ctx.send(embed=msg_success(f"Gallonmate nickname changed: {new_name}"))
 
     @gallonmate.command(name="remove", aliases=["rm"])
     async def remove_nickname(self, ctx: commands.Context, *, value: Optional[str] = None) -> None:
