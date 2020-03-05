@@ -76,9 +76,9 @@ class Gallonmate(commands.Cog):
 
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
-        self.nickname_task = self.bot.loop.create_task(self.daily_switch())
+        self.switch_daemon = self.bot.loop.create_task(self.switch_daemon_func())
 
-    async def daily_switch(self):
+    async def switch_daemon_func(self):
         """Background task calling `switch_routine` once a day."""
         while True:
             await asyncio.sleep(seconds_until_midnight())
