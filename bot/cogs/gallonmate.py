@@ -58,6 +58,11 @@ def seconds_until_midnight() -> int:
     return (midnight - now).seconds
 
 
+class SwitchException(Exception):
+    """Custom exception raised during an attempted switch shall have specific handling."""
+    ...
+
+
 class Gallonmate(commands.Cog):
     """Cog with Gallonmate-specific functionality."""
 
