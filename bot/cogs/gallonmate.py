@@ -2,6 +2,7 @@ import logging
 import random
 import string
 import datetime
+import asyncio
 from typing import Optional
 
 import discord
@@ -72,6 +73,19 @@ class Gallonmate(commands.Cog):
 
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
+        self.nickname_task = self.bot.loop.create_task(self.daily_switch())
+
+    async def daily_switch(self):
+        """Background task calling `switch_routine` once a day."""
+        while True:
+            await asyncio.sleep(seconds_until_midnight())
+
+            try:
+                new_name = await self.switch_routine()
+            except SwitchException as switch_exc:
+                logger.error(f"Daily switch failed: {switch_exc}")
+            else:
+                logger.info(f"Daily switch successful: {new_name}")
 
     async def switch_routine(self) -> str:
         """Routine to attempt to switch Gallonmate nickname.
