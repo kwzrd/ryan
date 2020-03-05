@@ -24,6 +24,9 @@ title_success = (
 title_error = (
     "Galooned again",
     "Put on full blast",
+    "Reduced you to memes",
+    "Get in the kiln",
+    "Idk & dunno",
 )
 
 
