@@ -178,6 +178,41 @@ class Gallonmate(commands.Cog):
         if not ctx.invoked_subcommand:
             await ctx.send(embed=await self.get_help(failed_cmd=True))
 
+    @gallonmate.group(aliases=["d"])
+    async def daemon(self, ctx: commands.Context) -> None:
+        """Command sub-group to control the Gallonmate daemon."""
+        ...
+
+    @daemon.command(name="status", aliases=["st"])
+    async def daemon_status(self, ctx: commands.Context) -> None:
+        """Check whether the daemon is currently running."""
+        if self.switch_daemon.done():
+            report = msg_error("Daemon is inactive")
+        else:
+            report = msg_success(f"Daemon is running, scheduled switch in: {seconds_until_midnight()}")
+
+        await ctx.send(embed=report)
+
+    @daemon.command(name="kill", aliases=["k", "stop", "disable"])
+    async def daemon_kill(self, ctx: commands.Context) -> None:
+        """If the daemon is running, stop it."""
+        if self.switch_daemon.done():
+            await ctx.send(embed=msg_error("Daemon is not running!"))
+            return
+
+        self.switch_daemon.cancel()
+        await ctx.send(embed=msg_success("Daemon has been stopped"))
+
+    @daemon.command(name="start", aliases=["enable"])
+    async def daemon_start(self, ctx: commands.Context) -> None:
+        """If the daemon is inactive, start it."""
+        if not self.switch_daemon.done():
+            await ctx.send(embed=msg_error("Daemon is already running!"))
+            return
+
+        self.switch_daemon = self.bot.loop.create_task(self.switch_daemon_func())
+        await ctx.send(embed=msg_success("Daemon has been started"))
+
     @gallonmate.command(name="add", aliases=["a"])
     async def add_nickname(self, ctx: commands.Context, *, value: Optional[str] = None) -> None:
         """Register new nickname."""
