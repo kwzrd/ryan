@@ -73,7 +73,7 @@ def get_help(group: commands.Group, failed_cmd: bool) -> discord.Embed:
     """
     help_embed = discord.Embed(
         title=f"{group.name}".capitalize(),
-        description=f"Available arguments in {group.name} group:",
+        description=f"Available arguments in {group.name} group",
         colour=discord.Color.orange() if failed_cmd else discord.Color.green(),
     )
 
