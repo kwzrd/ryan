@@ -95,6 +95,8 @@ class Gallonmate(commands.Cog):
 
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
+
+        self.announce = True
         self.switch_daemon = self.bot.loop.create_task(self.switch_daemon_func())
 
     async def switch_daemon_func(self) -> None:
@@ -111,6 +113,12 @@ class Gallonmate(commands.Cog):
                 logger.error(f"Daily switch failed: {switch_exc}")
             else:
                 logger.info(f"Daily switch successful: {new_name}")
+
+                if self.announce:
+                    msg = f"Congratulations <@{Users.gallonmate}>! Your new nickname is {new_name}!"
+
+                    ann_channel = self.bot.get_channel(Channels.gallonmate_announce)
+                    await ann_channel.send(embed=msg_success(msg))
 
     async def switch_routine(self) -> str:
         """Routine to attempt to switch Gallonmate nickname.
