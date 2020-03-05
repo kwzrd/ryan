@@ -1,6 +1,7 @@
 import logging
 import random
 import string
+import datetime
 from typing import Optional
 
 import discord
@@ -46,6 +47,15 @@ def msg_error(message: str) -> discord.Embed():
 def is_gallonmate(user: discord.User) -> bool:
     """Check whether `user` is Gallonmate."""
     return user.id == Users.gallonmate
+
+
+def seconds_until_midnight() -> int:
+    """Give the amount of seconds needed to wait until the next-up midnight."""
+    now = datetime.datetime.now()
+    tomorrow = now + datetime.timedelta(days=1)
+    midnight = datetime.datetime(year=tomorrow.year, month=tomorrow.month, day=tomorrow.day)
+
+    return (midnight - now).seconds
 
 
 class Gallonmate(commands.Cog):
