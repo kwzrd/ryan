@@ -142,7 +142,7 @@ class Gallonmate(commands.Cog):
     async def get_help(self, failed_cmd: bool) -> discord.Embed:
         """Provide an embed with module's commands.
 
-        If `failed_cmd` is True, the embed is coloured red. Green otherwise.
+        If `failed_cmd` is True, the embed is coloured orange. Green otherwise.
         """
         help_embed = discord.Embed(
             title="Gallonmate",
