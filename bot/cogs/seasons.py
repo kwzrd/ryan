@@ -1,10 +1,12 @@
 import logging
 import random
 import string
-from typing import Optional
 
 import discord
 from discord.ext import commands
+
+from bot.bot import Bot
+from bot.constants import Emoji
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -35,6 +37,14 @@ seasons = {
         u"\U0001F49E",  # revolving hearts
         u"\U0001F498",  # arrow heart
         u"\U0001F48B",  # kiss
+    ),
+    "saint patrick": (
+        u"\U0001F49A",  # green heart
+        u"\U0001F340",  # four leaf
+        u"\U0001F91E",  # crossed fingers
+        u"\U0001F37A",  # beer
+        u"\U0001F308",  # rainbow
+        u"\U0001F3A9",  # hat
     ),
     RESET_SEASON: (
         "remove decorations",
@@ -83,11 +93,11 @@ class Seasons(commands.Cog):
         },
     )
 
-    def __init__(self, bot: commands.Bot) -> None:
+    def __init__(self, bot: Bot) -> None:
         self.bot = bot
 
     @commands.command()
-    async def season(self, ctx: commands.Context, season_name: str = None) -> None:
+    async def season(self, ctx: commands.Context, *, season_name: str = None) -> None:
         """Attempt to decorate the server.
 
         Many of the decorations may fail due to missing permissions. The bot handles
@@ -100,6 +110,9 @@ class Seasons(commands.Cog):
         if season_name is None or season_name not in seasons:
             await ctx.send(embed=self.seasons_embed)
             return
+
+        status_react = Emoji.tips_fedora
+        await ctx.message.add_reaction(status_react)
 
         g_success = None
         ch_fail, m_fail = 0, 0
@@ -135,9 +148,10 @@ class Seasons(commands.Cog):
         response.add_field(name="Members", value=f"Success: {m_success}\nMissing permission: {m_fail}", inline=False)
 
         await ctx.send(embed=response)
+        await ctx.message.clear_reaction(status_react)
 
 
-def setup(bot: commands.Bot) -> None:
+def setup(bot: Bot) -> None:
     """Load Seasons cog."""
     bot.add_cog(Seasons(bot))
     logger.info("Seasons cog loaded")
