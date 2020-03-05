@@ -244,7 +244,7 @@ class Gallonmate(commands.Cog):
 
         await ctx.send(embed=msg_success(f"Inserted {value}!"))
 
-    @gallonmate.command(name="switch", aliases=["s"])
+    @gallonmate.command(name="switch", aliases=["s", "change", "apply"])
     async def switch_nickname(self, ctx: commands.Context) -> None:
         """Draw a random nickname and apply it to Gallonmate."""
         try:
