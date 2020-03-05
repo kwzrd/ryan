@@ -96,7 +96,7 @@ class Gallonmate(commands.Cog):
         self.bot = bot
         self.switch_daemon = self.bot.loop.create_task(self.switch_daemon_func())
 
-    async def switch_daemon_func(self):
+    async def switch_daemon_func(self) -> None:
         """Background task calling `switch_routine` once a day."""
         await self.bot.wait_until_ready()
         logger.info(f"Daemon started")
