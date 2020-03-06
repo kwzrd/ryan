@@ -55,7 +55,7 @@ def is_gallonmate(user: discord.User) -> bool:
     return user.id == Users.gallonmate
 
 
-def seconds_until_midnight() -> int:
+async def seconds_until_midnight() -> int:
     """Give the amount of seconds needed to wait until the next-up midnight.
 
     The exact `midnight` moment is actually delayed to 5 seconds after, in order
@@ -68,7 +68,7 @@ def seconds_until_midnight() -> int:
     return (midnight - now).seconds
 
 
-def get_help(group: commands.Group, failed_cmd: bool) -> discord.Embed:
+async def get_help(group: commands.Group, failed_cmd: bool) -> discord.Embed:
     """Provide an embed with commands of `group`.
 
     If `failed_cmd` is True, the embed is coloured orange. Green otherwise.
@@ -106,7 +106,7 @@ class Gallonmate(commands.Cog):
         logger.info(f"Daemon started")
 
         while True:
-            await asyncio.sleep(seconds_until_midnight())
+            await asyncio.sleep(await seconds_until_midnight())
 
             try:
                 new_name = await self.switch_routine()
@@ -190,13 +190,13 @@ class Gallonmate(commands.Cog):
     async def gallonmate(self, ctx: commands.Context) -> None:
         """Parent command for Gallonmate-specific functionality."""
         if not ctx.invoked_subcommand:
-            await ctx.send(embed=get_help(self.gallonmate, failed_cmd=True))
+            await ctx.send(embed=await get_help(self.gallonmate, failed_cmd=True))
 
     @gallonmate.group(aliases=["d"])
     async def daemon(self, ctx: commands.Context) -> None:
         """Command sub-group to control the Gallonmate daemon."""
         if not ctx.invoked_subcommand:
-            await ctx.send(embed=get_help(self.daemon, failed_cmd=True))
+            await ctx.send(embed=await get_help(self.daemon, failed_cmd=True))
 
     @daemon.command(name="status", aliases=["state"])
     async def daemon_status(self, ctx: commands.Context) -> None:
@@ -204,7 +204,7 @@ class Gallonmate(commands.Cog):
         if self.switch_daemon.done():
             report = msg_error("Daemon is inactive")
         else:
-            t_remaining = seconds_until_midnight()
+            t_remaining = await seconds_until_midnight()
             delta = datetime.timedelta(seconds=t_remaining)
 
             report = msg_success(f"Daemon is running, scheduled switch in: {t_remaining} (delta: {delta})")
@@ -234,7 +234,7 @@ class Gallonmate(commands.Cog):
     @daemon.command(name="help", aliases=["h"])
     async def daemon_help(self, ctx: commands.Context) -> None:
         """Give the help embed directly."""
-        await ctx.send(embed=get_help(self.daemon, failed_cmd=False))
+        await ctx.send(embed=await get_help(self.daemon, failed_cmd=False))
 
     @gallonmate.command(name="add", aliases=["a"])
     async def add_nickname(self, ctx: commands.Context, *, value: Optional[str] = None) -> None:
@@ -300,7 +300,7 @@ class Gallonmate(commands.Cog):
     @gallonmate.command(name="help", aliases=["h"])
     async def gallonmate_help(self, ctx: commands.Context) -> None:
         """Give the help embed directly."""
-        await ctx.send(embed=get_help(self.gallonmate, failed_cmd=False))
+        await ctx.send(embed=await get_help(self.gallonmate, failed_cmd=False))
 
 
 def setup(bot: Bot) -> None:
