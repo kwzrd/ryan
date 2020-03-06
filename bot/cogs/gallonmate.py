@@ -302,6 +302,12 @@ class Gallonmate(commands.Cog):
         self.switch_daemon = self.bot.loop.create_task(self.switch_daemon_func())
         await ctx.send(embed=msg_success("Daemon has been started"))
 
+    @daemon.command(name="announce", aliases=["ann"])
+    async def daemon_announce(self, ctx: commands.Context, value: bool):
+        """Set the boolean value of announce control variable."""
+        self.announce = value
+        await ctx.send(embed=msg_success(f"Daemon announce control var set to `{self.announce}`"))
+
     @daemon.command(name="help", aliases=["h"])
     async def daemon_help(self, ctx: commands.Context) -> None:
         """Give the help embed directly."""
