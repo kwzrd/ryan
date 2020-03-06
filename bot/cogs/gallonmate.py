@@ -116,7 +116,7 @@ class Gallonmate(commands.Cog):
                 logger.info(f"Daily switch successful: {new_name}")
 
                 if self.announce:
-                    msg = f"Congratulations <@{Users.gallonmate}>! Your new nickname is {new_name}!"
+                    msg = f"Daily nickname switch for <@{Users.gallonmate}> complete!"
 
                     ann_channel = self.bot.get_channel(Channels.gallonmate_announce)
                     await ann_channel.send(embed=msg_success(msg))
