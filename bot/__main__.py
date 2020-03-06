@@ -22,8 +22,8 @@ bot.remove_command("help")
 async def custom_help(ctx: commands.Context) -> None:
     """Custom help command with basic information."""
     help_embed = discord.Embed(
-        title="Ryan",
-        description="a real human bean",
+        title="I am Ryan",
+        description="Real human bean",
         colour=discord.Colour.green(),
     )
     help_embed.set_thumbnail(url=bot.user.avatar_url)
