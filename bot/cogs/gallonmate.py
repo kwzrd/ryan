@@ -303,7 +303,7 @@ class Gallonmate(commands.Cog):
         await ctx.send(embed=msg_success("Daemon has been started"))
 
     @daemon.command(name="announce", aliases=["ann"])
-    async def daemon_announce(self, ctx: commands.Context, value: bool):
+    async def daemon_announce(self, ctx: commands.Context, value: bool) -> None:
         """Set the boolean value of announce control variable."""
         self.announce = value
         await ctx.send(embed=msg_success(f"Daemon announce control var set to `{self.announce}`"))
