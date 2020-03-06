@@ -100,6 +100,10 @@ class Gallonmate(commands.Cog):
         self.announce = True
         self.switch_daemon = self.bot.loop.create_task(self.switch_daemon_func())
 
+    async def cog_check(self, ctx: commands.Context) -> bool:
+        """Cog can only be used in Tree Society."""
+        return ctx.guild.id == Guilds.tree_society or ctx.author.id == Users.kwzrd
+
     async def switch_daemon_func(self) -> None:
         """Background task calling `switch_routine` once a day."""
         await self.bot.wait_until_ready()
@@ -165,10 +169,6 @@ class Gallonmate(commands.Cog):
 
         else:
             return new_name
-
-    async def cog_check(self, ctx: commands.Context) -> bool:
-        """Cog can only be used in Tree Society."""
-        return ctx.guild.id == Guilds.tree_society or ctx.author.id == Users.kwzrd
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message) -> None:
