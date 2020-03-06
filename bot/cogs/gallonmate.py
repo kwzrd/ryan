@@ -94,6 +94,11 @@ class SwitchException(Exception):
 class Gallonmate(commands.Cog):
     """Cog with Gallonmate-specific functionality."""
 
+    bot: Bot
+
+    announce: bool
+    switch_daemon: asyncio.Task
+
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
 
