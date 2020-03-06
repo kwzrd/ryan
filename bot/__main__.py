@@ -1,5 +1,7 @@
 import logging
+import subprocess
 import sys
+from typing import List
 
 import discord
 from discord.ext import commands
@@ -16,6 +18,18 @@ bot.load_extension("bot.cogs.gallonmate")
 bot.load_extension("bot.cogs.seasons")
 
 bot.remove_command("help")
+
+
+def vc_info() -> str:
+    """Give a human-readable string with basic version control information."""
+    def get(args: List[str]) -> str:
+        return subprocess.run(args, capture_output=True, text=True).stdout.strip()
+
+    commit = ["git", "describe", "--always"]
+    branch = ["git", "rev-parse", "--abbrev-ref", "HEAD"]
+    tstamp = ["git", "log", "-1", "--format=%cd"]
+
+    return f"HEAD: {get(commit)} ({get(branch)})\n{get(tstamp)}"
 
 
 @bot.command(name="help")
@@ -35,6 +49,8 @@ async def custom_help(ctx: commands.Context) -> None:
     help_embed.add_field(name="active modules", value=active_cogs, inline=False)
 
     help_embed.add_field(name="awake since", value=str(bot.start_time), inline=False)
+
+    help_embed.add_field(name="version control", value=vc_info(), inline=False)
 
     await ctx.send(embed=help_embed)
 
