@@ -278,7 +278,7 @@ class Gallonmate(commands.Cog):
             t_remaining = await seconds_until_midnight()
             delta = datetime.timedelta(seconds=t_remaining)
 
-            report = msg_success(f"Daemon is running, scheduled delta {delta} (raw: {t_remaining})")
+            report = msg_success(f"Daemon is running, scheduled delta: `{delta}` (raw `{t_remaining}`)")
 
         await ctx.send(embed=report)
 
