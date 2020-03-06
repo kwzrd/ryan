@@ -192,50 +192,6 @@ class Gallonmate(commands.Cog):
         if not ctx.invoked_subcommand:
             await ctx.send(embed=await get_help(self.gallonmate, failed_cmd=True))
 
-    @gallonmate.group(aliases=["d"])
-    async def daemon(self, ctx: commands.Context) -> None:
-        """Command sub-group to control the Gallonmate daemon."""
-        if not ctx.invoked_subcommand:
-            await ctx.send(embed=await get_help(self.daemon, failed_cmd=True))
-
-    @daemon.command(name="status", aliases=["state"])
-    async def daemon_status(self, ctx: commands.Context) -> None:
-        """Check whether the daemon is currently running."""
-        if self.switch_daemon.done():
-            report = msg_error("Daemon is inactive")
-        else:
-            t_remaining = await seconds_until_midnight()
-            delta = datetime.timedelta(seconds=t_remaining)
-
-            report = msg_success(f"Daemon is running, scheduled switch in: {t_remaining} (delta: {delta})")
-
-        await ctx.send(embed=report)
-
-    @daemon.command(name="kill", aliases=["k", "stop", "disable"])
-    async def daemon_kill(self, ctx: commands.Context) -> None:
-        """If the daemon is running, stop it."""
-        if self.switch_daemon.done():
-            await ctx.send(embed=msg_error("Daemon is not running!"))
-            return
-
-        self.switch_daemon.cancel()
-        await ctx.send(embed=msg_success("Daemon has been stopped"))
-
-    @daemon.command(name="start", aliases=["enable"])
-    async def daemon_start(self, ctx: commands.Context) -> None:
-        """If the daemon is inactive, start it."""
-        if not self.switch_daemon.done():
-            await ctx.send(embed=msg_error("Daemon is already running!"))
-            return
-
-        self.switch_daemon = self.bot.loop.create_task(self.switch_daemon_func())
-        await ctx.send(embed=msg_success("Daemon has been started"))
-
-    @daemon.command(name="help", aliases=["h"])
-    async def daemon_help(self, ctx: commands.Context) -> None:
-        """Give the help embed directly."""
-        await ctx.send(embed=await get_help(self.daemon, failed_cmd=False))
-
     @gallonmate.command(name="add", aliases=["a"])
     async def add_nickname(self, ctx: commands.Context, *, value: Optional[str] = None) -> None:
         """Register new nickname."""
@@ -301,6 +257,50 @@ class Gallonmate(commands.Cog):
     async def gallonmate_help(self, ctx: commands.Context) -> None:
         """Give the help embed directly."""
         await ctx.send(embed=await get_help(self.gallonmate, failed_cmd=False))
+
+    @gallonmate.group(aliases=["d"])
+    async def daemon(self, ctx: commands.Context) -> None:
+        """Command sub-group to control the Gallonmate daemon."""
+        if not ctx.invoked_subcommand:
+            await ctx.send(embed=await get_help(self.daemon, failed_cmd=True))
+
+    @daemon.command(name="status", aliases=["state"])
+    async def daemon_status(self, ctx: commands.Context) -> None:
+        """Check whether the daemon is currently running."""
+        if self.switch_daemon.done():
+            report = msg_error("Daemon is inactive")
+        else:
+            t_remaining = await seconds_until_midnight()
+            delta = datetime.timedelta(seconds=t_remaining)
+
+            report = msg_success(f"Daemon is running, scheduled switch in: {t_remaining} (delta: {delta})")
+
+        await ctx.send(embed=report)
+
+    @daemon.command(name="kill", aliases=["k", "stop", "disable"])
+    async def daemon_kill(self, ctx: commands.Context) -> None:
+        """If the daemon is running, stop it."""
+        if self.switch_daemon.done():
+            await ctx.send(embed=msg_error("Daemon is not running!"))
+            return
+
+        self.switch_daemon.cancel()
+        await ctx.send(embed=msg_success("Daemon has been stopped"))
+
+    @daemon.command(name="start", aliases=["enable"])
+    async def daemon_start(self, ctx: commands.Context) -> None:
+        """If the daemon is inactive, start it."""
+        if not self.switch_daemon.done():
+            await ctx.send(embed=msg_error("Daemon is already running!"))
+            return
+
+        self.switch_daemon = self.bot.loop.create_task(self.switch_daemon_func())
+        await ctx.send(embed=msg_success("Daemon has been started"))
+
+    @daemon.command(name="help", aliases=["h"])
+    async def daemon_help(self, ctx: commands.Context) -> None:
+        """Give the help embed directly."""
+        await ctx.send(embed=await get_help(self.daemon, failed_cmd=False))
 
 
 def setup(bot: Bot) -> None:
