@@ -29,6 +29,8 @@ title_error = (
     "Reduced you to memes",
     "Get in the kiln",
     "Idk & dunno",
+    "Something wrong",
+    "I hold my head",
 )
 
 
