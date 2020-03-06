@@ -1,6 +1,7 @@
 import logging
 import subprocess
 import sys
+from datetime import datetime
 from typing import List
 
 import discord
@@ -48,7 +49,7 @@ async def custom_help(ctx: commands.Context) -> None:
     active_cogs = "\n".join(cog for cog in bot.cogs)
     help_embed.add_field(name="active modules", value=active_cogs, inline=False)
 
-    help_embed.add_field(name="awake since", value=str(bot.start_time), inline=False)
+    help_embed.add_field(name="uptime", value=f"{datetime.now() - bot.start_time}", inline=False)
 
     help_embed.add_field(name="version control", value=vc_info(), inline=False)
 
