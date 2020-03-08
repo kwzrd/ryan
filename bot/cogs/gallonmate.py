@@ -120,11 +120,11 @@ class Gallonmate(commands.Cog):
             await asyncio.sleep(await seconds_until_midnight())
 
             try:
-                new_name = await self.switch_routine()
+                await self.switch_routine()
             except SwitchException as switch_exc:
                 logger.error(f"Daily switch failed: {switch_exc}")
             else:
-                logger.info(f"Daily switch successful: {new_name}")
+                logger.info(f"Daily switch successful")
 
                 if self.announce:
                     msg = f"Daily nickname switch for <@{Users.gallonmate}> complete!"
@@ -172,7 +172,7 @@ class Gallonmate(commands.Cog):
             raise SwitchException(f"Missing permissions for name change (STATUS: 403)")
 
         except discord.HTTPException as e:
-            raise SwitchException(f"Failed to change name to {new_name} (STATUS: {e.status}, {e.text})")
+            raise SwitchException(f"Failed to change name (STATUS: {e.status}, {e.text})")
 
         else:
             return new_name
@@ -213,20 +213,20 @@ class Gallonmate(commands.Cog):
 
         await self.bot.database.add_nickname(author, target, value)
 
-        await ctx.send(embed=msg_success(f"Inserted {value}!"))
+        await ctx.send(embed=msg_success(f"Inserted `{value}`"))
 
     @gallonmate.command(name="switch", aliases=["s", "change", "apply"])
     async def switch_nickname(self, ctx: commands.Context) -> None:
         """Draw a random nickname and apply it to Gallonmate."""
         try:
-            new_name = await self.switch_routine()
+            await self.switch_routine()
 
         except SwitchException as switch_exc:
             reason = str(switch_exc)
             await ctx.send(embed=msg_error(reason))
 
         else:
-            await ctx.send(embed=msg_success(f"Gallonmate nickname changed: {new_name}"))
+            await ctx.send(embed=msg_success(f"Gallonmate nickname changed: <@{Users.gallonmate}>"))
 
     @gallonmate.command(name="remove", aliases=["rm"])
     async def remove_nickname(self, ctx: commands.Context, *, value: Optional[str] = None) -> None:
@@ -237,7 +237,7 @@ class Gallonmate(commands.Cog):
 
         await self.bot.database.remove_nickname(value)
 
-        await ctx.send(embed=msg_success(f"Removed {value}!"))
+        await ctx.send(embed=msg_success(f"Removed `{value}`"))
 
     @gallonmate.command(name="list", aliases=["ls"])
     async def list_nicknames(self, ctx: commands.Context) -> None:
