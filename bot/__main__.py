@@ -8,8 +8,7 @@ import discord
 from discord.ext import commands
 
 from bot.bot import Bot
-from bot.config import Config
-from bot.constants import Users
+from bot.constants import Client, Users
 
 logging.basicConfig(stream=sys.stdout, level=logging.WARNING)
 
@@ -58,4 +57,4 @@ async def custom_help(ctx: commands.Context) -> None:
     await ctx.send(embed=help_embed)
 
 
-bot.run(Config.token)
+bot.run(Client.token)
