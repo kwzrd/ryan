@@ -1,3 +1,6 @@
+import os
+
+
 class Emoji:
     galooned = "<:galooned:338627421630627842>"
     tips_fedora = "<:pepetipsfedora:550466723997024267>"
@@ -15,3 +18,7 @@ class Guilds:
 class Channels:
     gallonmate_rolls = 484118447073132574
     gallonmate_announce = 319955430732464128
+
+
+class Client:
+    token: str = os.environ["TOKEN"]
