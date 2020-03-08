@@ -13,13 +13,6 @@ from bot.constants import Users
 
 logging.basicConfig(stream=sys.stdout, level=logging.WARNING)
 
-bot = Bot(command_prefix="?")
-
-bot.load_extension("bot.cogs.gallonmate")
-bot.load_extension("bot.cogs.seasons")
-
-bot.remove_command("help")
-
 
 def run_git(args: List[str]) -> str:
     """Run a git command specified by `args`, capture its stdout output and return as string."""
@@ -32,7 +25,14 @@ tstamp = ["log", "-1", "--format=%cd"]
 dstamp = ["log", "-1", "--format=%as"]
 
 vc_info = f"HEAD: {run_git(commit)} ({run_git(branch)})\n{run_git(tstamp)}"
-playing = f"{run_git(commit)} ({run_git(dstamp)})"
+activity = discord.Game(f"{run_git(commit)} ({run_git(dstamp)})")
+
+bot = Bot(command_prefix="?", activity=activity)
+
+bot.load_extension("bot.cogs.gallonmate")
+bot.load_extension("bot.cogs.seasons")
+
+bot.remove_command("help")
 
 
 @bot.command(name="help")
