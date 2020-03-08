@@ -21,16 +21,18 @@ bot.load_extension("bot.cogs.seasons")
 bot.remove_command("help")
 
 
-def vc_info() -> str:
-    """Give a human-readable string with basic version control information."""
-    def get(args: List[str]) -> str:
-        return subprocess.run(args, capture_output=True, text=True).stdout.strip()
+def run_git(args: List[str]) -> str:
+    """Run a git command specified by `args`, capture its stdout output and return as string."""
+    return subprocess.run(["git"] + args, capture_output=True, text=True).stdout.strip()
 
-    commit = ["git", "describe", "--always"]
-    branch = ["git", "rev-parse", "--abbrev-ref", "HEAD"]
-    tstamp = ["git", "log", "-1", "--format=%cd"]
 
-    return f"HEAD: {get(commit)} ({get(branch)})\n{get(tstamp)}"
+commit = ["describe", "--always"]
+branch = ["rev-parse", "--abbrev-ref", "HEAD"]
+tstamp = ["log", "-1", "--format=%cd"]
+dstamp = ["log", "-1", "--format=%ai"]
+
+vc_info = f"HEAD: {run_git(commit)} ({run_git(branch)})\n{run_git(tstamp)}"
+playing = f"{run_git(commit)} ({run_git(dstamp)})"
 
 
 @bot.command(name="help")
@@ -51,7 +53,7 @@ async def custom_help(ctx: commands.Context) -> None:
 
     help_embed.add_field(name="uptime", value=f"{datetime.now() - bot.start_time}", inline=False)
 
-    help_embed.add_field(name="version control", value=vc_info(), inline=False)
+    help_embed.add_field(name="version control", value=vc_info, inline=False)
 
     await ctx.send(embed=help_embed)
 
