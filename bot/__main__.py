@@ -29,7 +29,7 @@ def run_git(args: List[str]) -> str:
 commit = ["describe", "--always"]
 branch = ["rev-parse", "--abbrev-ref", "HEAD"]
 tstamp = ["log", "-1", "--format=%cd"]
-dstamp = ["log", "-1", "--format=%ai"]
+dstamp = ["log", "-1", "--format=%as"]
 
 vc_info = f"HEAD: {run_git(commit)} ({run_git(branch)})\n{run_git(tstamp)}"
 playing = f"{run_git(commit)} ({run_git(dstamp)})"
