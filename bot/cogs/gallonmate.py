@@ -118,7 +118,7 @@ class Gallonmate(commands.Cog):
 
         while True:
             t_sleep = await seconds_until_midnight()
-            logger.info(f"Daemon will sleep for {t_sleep}")
+            logger.info(f"Daemon will sleep for {t_sleep} secs")
             await asyncio.sleep(t_sleep)
 
             try:
