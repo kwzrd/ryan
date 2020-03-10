@@ -117,7 +117,9 @@ class Gallonmate(commands.Cog):
         logger.info(f"Daemon started")
 
         while True:
-            await asyncio.sleep(await seconds_until_midnight())
+            t_sleep = await seconds_until_midnight()
+            logger.info(f"Daemon will sleep for {t_sleep}")
+            await asyncio.sleep(t_sleep)
 
             try:
                 await self.switch_routine()
