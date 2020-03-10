@@ -10,7 +10,9 @@ from discord.ext import commands
 from bot.bot import Bot
 from bot.constants import Client, Users
 
-logging.basicConfig(stream=sys.stdout, level=logging.WARNING)
+log_format = "{levelname}:{asctime}:{name}:{msg}"
+dt_format = "%d/%m/%y:%H.%M.%S"
+logging.basicConfig(stream=sys.stdout, level=logging.WARNING, format=log_format, style="{", datefmt=dt_format)
 
 
 def run_git(args: List[str]) -> str:
