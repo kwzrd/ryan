@@ -3,7 +3,7 @@ import datetime
 import logging
 import random
 import string
-from typing import Optional
+from typing import Optional, Tuple
 
 import discord
 from discord.ext import commands
@@ -133,7 +133,7 @@ class Gallonmate(commands.Cog):
                     ann_channel = self.bot.get_channel(Channels.gallonmate_announce)
                     await ann_channel.send(embed=msg_success(msg))
 
-    async def switch_routine(self) -> str:
+    async def switch_routine(self) -> Tuple[str, str]:
         """Routine to attempt to switch Gallonmate nickname.
 
         If the method fails at any point, it will raise SwitchException with an informative
@@ -155,6 +155,7 @@ class Gallonmate(commands.Cog):
             raise SwitchException(f"Could not find guild (id: {Guilds.tree_society})")
 
         gallon = tree_society.get_member(Users.gallonmate)
+        old_name = gallon.display_name
 
         if gallon is None:
             raise SwitchException(f"Could not find Gallonmate (id: {Users.gallonmate})")
@@ -176,7 +177,7 @@ class Gallonmate(commands.Cog):
             raise SwitchException(f"Failed to change name (STATUS: {e.status}, {e.text})")
 
         else:
-            return new_name
+            return old_name, new_name
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message) -> None:
