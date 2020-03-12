@@ -1,6 +1,7 @@
 import asyncio
 import datetime
 import logging
+import operator
 import random
 import string
 from typing import Optional, Tuple
@@ -81,7 +82,7 @@ async def get_help(group: commands.Group, failed_cmd: bool) -> discord.Embed:
         colour=discord.Color.orange() if failed_cmd else discord.Color.green(),
     )
 
-    for cmd in group.commands:
+    for cmd in sorted(group.commands, key=operator.attrgetter("name")):
         aliases = ', '.join(alias for alias in cmd.aliases)
         help_embed.add_field(name=f"{cmd.name} [{aliases or 'NA'}]", value=cmd.short_doc, inline=False)
 
