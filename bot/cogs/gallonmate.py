@@ -121,14 +121,18 @@ class Gallonmate(commands.Cog):
             await asyncio.sleep(t_sleep)
 
             try:
-                await self.switch_routine()
+                old_name, new_name = await self.switch_routine()
             except SwitchException as switch_exc:
                 logger.error(f"Daily switch failed: {switch_exc}")
             else:
                 logger.info(f"Daily switch successful")
 
                 if self.announce:
-                    msg = f"Daily nickname switch for <@{Users.gallonmate}> complete!"
+                    msg = (
+                        f"Daily nickname switch for <@{Users.gallonmate}> complete!\n"
+                        f"\n"
+                        f"`{old_name}` -> `{new_name}`"
+                    )
 
                     ann_channel = self.bot.get_channel(Channels.gallonmate_announce)
                     await ann_channel.send(embed=msg_success(msg))
@@ -221,14 +225,19 @@ class Gallonmate(commands.Cog):
     async def switch_nickname(self, ctx: commands.Context) -> None:
         """Draw a random nickname and apply it to Gallonmate."""
         try:
-            await self.switch_routine()
+            old_name, new_name = await self.switch_routine()
 
         except SwitchException as switch_exc:
             reason = str(switch_exc)
             await ctx.send(embed=msg_error(reason))
 
         else:
-            await ctx.send(embed=msg_success(f"Gallonmate nickname changed: <@{Users.gallonmate}>"))
+            embed = msg_success(
+                f"Nickname for <@{Users.gallonmate}> changed\n"
+                f"\n"
+                f"`{old_name}` -> `{new_name}`"
+            )
+            await ctx.send(embed=embed)
 
     @gallonmate.command(name="remove", aliases=["rm"])
     async def remove_nickname(self, ctx: commands.Context, *, value: Optional[str] = None) -> None:
