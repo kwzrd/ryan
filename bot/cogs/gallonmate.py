@@ -57,7 +57,7 @@ def is_gallonmate(user: discord.User) -> bool:
     return user.id == Users.gallonmate
 
 
-async def seconds_until_midnight() -> int:
+async def seconds_until_midnight() -> float:
     """Give the amount of seconds needed to wait until the next-up midnight.
 
     The exact `midnight` moment is actually delayed to 5 seconds after, in order
@@ -67,7 +67,7 @@ async def seconds_until_midnight() -> int:
     tomorrow = now + datetime.timedelta(days=1)
     midnight = datetime.datetime(year=tomorrow.year, month=tomorrow.month, day=tomorrow.day, second=5)
 
-    return (midnight - now).seconds
+    return (midnight - now).total_seconds()
 
 
 async def get_help(group: commands.Group, failed_cmd: bool) -> discord.Embed:
