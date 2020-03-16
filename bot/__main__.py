@@ -24,6 +24,7 @@ activity = discord.Game(f"{run_git(commit)} ({run_git(dstamp)})")
 
 bot = Bot(command_prefix="?", activity=activity)
 
+bot.load_extension("bot.cogs.corona")
 bot.load_extension("bot.cogs.gallonmate")
 bot.load_extension("bot.cogs.seasons")
 
