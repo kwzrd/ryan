@@ -12,6 +12,11 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
+async def cute_dict(dct: t.Dict[str, str]) -> str:
+    """Make `dct` readable in Discord's markdown."""
+    return "\n".join(f"**{key.capitalize()}**: {value}" for key, value in dct.items())
+
+
 class Corona(commands.Cog):
     """Wrapper for coronavirus API.
 
@@ -61,17 +66,17 @@ class Corona(commands.Cog):
         """Give cached information about the covid."""
         if country is None:
             title = "General stats"
-            descr = "\n".join(f"**{key.capitalize()}**: {value}" for key, value in self.all.items()) or "Cache empty"
+            descr = await cute_dict(self.all) or "Cache empty"
             color = discord.Colour.green() if self.all else discord.Colour.red()
 
         elif record := self.countries.get(country.casefold()):
             title = f"Stats for {country.title()}"
-            descr = "\n".join(f"**{key.title()}**: {value}" for key, value in record.items()) or "Cache empty"
+            descr = await cute_dict(record) or "Cache empty"
             color = discord.Colour.green()
 
         else:
             title = "Country not found"
-            descr = f"Available: {', '.join(self.countries) if self.countries else None}"
+            descr = f"Available: {', '.join(self.countries) if self.countries else 'none (cache empty)'}"
             color = discord.Colour.red()
 
         response = discord.Embed(title=title, description=descr, color=color)
