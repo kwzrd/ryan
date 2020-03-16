@@ -59,7 +59,7 @@ class Corona(commands.Cog):
             for record in country_list
         }
 
-        self.last_refresh = datetime.now()
+        self.last_refresh = datetime.utcnow()
 
     @commands.command(name="corona", aliases=["covid"])
     async def corona_cmd(self, ctx: commands.Context, *, country: t.Optional[str] = None) -> None:
@@ -80,7 +80,7 @@ class Corona(commands.Cog):
             color = discord.Colour.red()
 
         response = discord.Embed(title=title, description=descr, color=color)
-        response.set_footer(text=f"Last refresh: {self.last_refresh}")
+        response.set_footer(text=f"Last refresh: {self.last_refresh} (UTC)")
 
         await ctx.send(embed=response)
 
