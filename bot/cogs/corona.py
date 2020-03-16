@@ -28,10 +28,10 @@ class Corona(commands.Cog):
     url_all = "https://coronavirus-19-api.herokuapp.com/all"
     url_countries = "https://coronavirus-19-api.herokuapp.com/countries"
 
-    all: t.Dict[str, t.Any]
-    countries: t.Dict[str, t.Dict[str, t.Any]]
+    all: t.Dict[str, t.Any] = {}
+    countries: t.Dict[str, t.Dict[str, t.Any]] = {}
 
-    last_refresh: t.Optional[datetime]
+    last_refresh: t.Optional[datetime] = None
 
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
