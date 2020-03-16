@@ -88,4 +88,3 @@ class Corona(commands.Cog):
 def setup(bot: Bot) -> None:
     """Load Corona cog."""
     bot.add_cog(Corona(bot))
-    logger.info("Corona cog loaded")

@@ -331,4 +331,3 @@ class Gallonmate(commands.Cog):
 def setup(bot: Bot) -> None:
     """Load Gallonmate cog."""
     bot.add_cog(Gallonmate(bot))
-    logger.info("Gallonmate cog loaded")

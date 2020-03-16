@@ -154,4 +154,3 @@ class Seasons(commands.Cog):
 def setup(bot: Bot) -> None:
     """Load Seasons cog."""
     bot.add_cog(Seasons(bot))
-    logger.info("Seasons cog loaded")

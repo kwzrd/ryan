@@ -26,6 +26,14 @@ class Bot(commands.Bot):
             connector=aiohttp.TCPConnector(resolver=aiohttp.AsyncResolver(), family=socket.AF_INET)
         )
 
+    def add_cog(self, cog: commands.Cog) -> None:
+        """Delegate to super, log successful loads.
+
+        This reduces having to log in cog module setups.
+        """
+        super().add_cog(cog)
+        logger.info(f"Cog loaded: {cog.qualified_name}")
+
     async def start(self, *args, **kwargs) -> None:
         """Prepare Bot subclass.
 
