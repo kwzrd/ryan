@@ -22,13 +22,11 @@ dstamp = ["log", "-1", "--format=%as"]
 vc_info = f"HEAD: {run_git(commit)} ({run_git(branch)})\n{run_git(tstamp)}"
 activity = discord.Game(f"{run_git(commit)} ({run_git(dstamp)})")
 
-bot = Bot(command_prefix="?", activity=activity)
+bot = Bot(command_prefix="?", activity=activity, help_command=None)
 
 bot.load_extension("bot.cogs.corona")
 bot.load_extension("bot.cogs.gallonmate")
 bot.load_extension("bot.cogs.seasons")
-
-bot.remove_command("help")
 
 
 @bot.command(name="help")
