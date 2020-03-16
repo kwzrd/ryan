@@ -40,6 +40,7 @@ class Bot(commands.Bot):
         logger.info("Bot online")
 
     async def close(self) -> None:
-        """Allow base class to close, then safely close database connection."""
+        """Allow base class to close, then safely close database connection and http session."""
         await super().close()
         await self.database.close()
+        await self.http_session.close()
