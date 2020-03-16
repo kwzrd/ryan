@@ -3,6 +3,7 @@ import typing as t
 from datetime import datetime
 
 import aiohttp
+import discord
 from discord.ext import commands, tasks
 
 from bot.bot import Bot
@@ -54,6 +55,29 @@ class Corona(commands.Cog):
         }
 
         self.last_refresh = datetime.now()
+
+    @commands.command(name="corona", aliases=["covid"])
+    async def corona_cmd(self, ctx: commands.Context, *, country: t.Optional[str] = None) -> None:
+        """Give cached information about the covid."""
+        if country is None:
+            title = "General stats"
+            descr = "\n".join(f"**{key.capitalize()}**: {value}" for key, value in self.all.items()) or "Cache empty"
+            color = discord.Colour.green() if self.all else discord.Colour.red()
+
+        elif record := self.countries.get(country.casefold()):
+            title = f"Stats for {country.title()}"
+            descr = "\n".join(f"**{key.title()}**: {value}" for key, value in record.items()) or "Cache empty"
+            color = discord.Colour.green()
+
+        else:
+            title = "Country not found"
+            descr = f"Available: {', '.join(self.countries) if self.countries else None}"
+            color = discord.Colour.red()
+
+        response = discord.Embed(title=title, description=descr, color=color)
+        response.set_footer(text=f"Last refresh: {self.last_refresh}")
+
+        await ctx.send(embed=response)
 
 
 def setup(bot: Bot) -> None:
