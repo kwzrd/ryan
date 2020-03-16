@@ -23,7 +23,7 @@ class Corona(commands.Cog):
     See: https://github.com/javieraviles/covidapi
     """
 
-    INTERVAL = 15
+    INTERVAL = 60  # Once an hour
 
     url_all = "https://coronavirus-19-api.herokuapp.com/all"
     url_countries = "https://coronavirus-19-api.herokuapp.com/countries"
