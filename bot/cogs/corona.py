@@ -14,7 +14,14 @@ logger.setLevel(logging.INFO)
 
 async def cute_dict(dct: t.Dict[str, t.Union[str, int]]) -> str:
     """Make `dct` readable in Discord's markdown."""
-    return "\n".join(f"**{key.capitalize()}**: {value}" for key, value in dct.items())
+    lines = list()
+
+    for key, val in dct.items():
+        key = f"**{key.capitalize()}**"
+        val = f"{int(val):,}" if str(val).isdigit() else f"{val}"
+        lines.append(f"{key}: {val}")
+
+    return "\n".join(lines)
 
 
 class Corona(commands.Cog):
