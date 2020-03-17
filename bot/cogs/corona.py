@@ -83,7 +83,7 @@ class Corona(commands.Cog):
 
         else:
             title = "Country not found"
-            descr = f"**Available**: {', '.join(self.countries) if self.countries else 'none (cache empty)'}"
+            descr = f"**Available**:\n{', '.join(sorted(self.countries)) if self.countries else 'none (cache empty)'}"
             color = discord.Colour.red()
 
         response = discord.Embed(title=title, description=descr, color=color)
