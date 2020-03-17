@@ -1,3 +1,4 @@
+import contextlib
 import logging
 import typing as t
 from datetime import datetime
@@ -17,8 +18,9 @@ async def cute_dict(dct: t.Dict[str, t.Union[str, int]]) -> str:
     lines = list()
 
     for key, val in dct.items():
-        key = f"**{key.capitalize()}**"
-        val = f"{int(val):,}" if str(val).isdigit() else f"{val}"
+        key = f"**{str(key).capitalize()}**"
+        with contextlib.suppress(ValueError):
+            val = f"{int(val):,}"
         lines.append(f"{key}: {val}")
 
     return "\n".join(lines)
