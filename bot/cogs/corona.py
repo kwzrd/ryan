@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
-async def cute_dict(dct: t.Dict[str, str]) -> str:
+async def cute_dict(dct: t.Dict[str, t.Union[str, int]]) -> str:
     """Make `dct` readable in Discord's markdown."""
     return "\n".join(f"**{key.capitalize()}**: {value}" for key, value in dct.items())
 
