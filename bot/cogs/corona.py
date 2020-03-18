@@ -5,12 +5,13 @@ import typing as t
 import aiohttp
 import arrow
 import discord
+import pycountry
 from discord.ext import commands, tasks
 
 from bot.bot import Bot
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 
 async def cute_dict(dct: t.Dict[str, t.Union[str, int]]) -> str:
@@ -36,6 +37,8 @@ class Corona(commands.Cog):
 
     url_all = "https://coronavirus-19-api.herokuapp.com/all"
     url_countries = "https://coronavirus-19-api.herokuapp.com/countries"
+
+    url_flags = "https://www.countryflags.io/{code}/flat/64.png"
 
     all: t.Dict[str, t.Any] = {}
     countries: t.Dict[str, t.Dict[str, t.Any]] = {}
@@ -91,6 +94,12 @@ class Corona(commands.Cog):
         response = discord.Embed(title=title, description=descr, color=color)
         if self.last_refresh is not None:
             response.set_footer(text=f"Last refresh {self.last_refresh.humanize(arrow.utcnow())}")
+
+        with contextlib.suppress(Exception):
+            country_code = pycountry.countries.search_fuzzy(country)[0].alpha_2
+            url = self.url_flags.format(code=country_code)
+            response.set_author(icon_url=url, name=country_code)
+            logger.debug(f"Matched {country} to {country_code}")
 
         await ctx.send(embed=response)
 
