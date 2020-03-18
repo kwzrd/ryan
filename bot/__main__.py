@@ -1,7 +1,7 @@
 import subprocess
-from datetime import datetime
 from typing import List
 
+import arrow
 import discord
 from discord.ext import commands
 
@@ -45,7 +45,8 @@ async def custom_help(ctx: commands.Context) -> None:
     active_cogs = "\n".join(cog for cog in bot.cogs)
     help_embed.add_field(name="active modules", value=active_cogs, inline=False)
 
-    help_embed.add_field(name="uptime", value=f"{datetime.now() - bot.start_time}", inline=False)
+    uptime_string = f"{bot.start_time} ({bot.start_time.humanize(arrow.now())})"
+    help_embed.add_field(name="awake since", value=uptime_string, inline=False)
 
     help_embed.add_field(name="version control", value=vc_info, inline=False)
 

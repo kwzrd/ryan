@@ -1,8 +1,8 @@
 import logging
 import socket
-from datetime import datetime
 
 import aiohttp
+import arrow
 from discord.ext import commands
 
 from bot.database import Database
@@ -13,7 +13,7 @@ logger.setLevel(logging.INFO)
 
 class Bot(commands.Bot):
 
-    start_time: datetime
+    start_time: arrow.Arrow
     database: Database
 
     def __init__(self, *args, **kwargs) -> None:
@@ -40,7 +40,7 @@ class Bot(commands.Bot):
         We establish a connection to the database here from an async context,
         then delegate to the base class.
         """
-        self.start_time = datetime.now()
+        self.start_time = arrow.now()
         self.database = await Database().open()
 
         await super().start(*args, **kwargs)
