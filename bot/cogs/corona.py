@@ -93,7 +93,7 @@ class Corona(commands.Cog):
                 except LookupError:
                     country_code = None
 
-                name = country_code or country.capitalize()
+                name = country_code or country.title()
                 flag = self.url_flags.format(code=country_code) if country_code is not None else ""
                 desc = await cute_dict(record) or "Cache empty"
                 colour = discord.Colour.green()
