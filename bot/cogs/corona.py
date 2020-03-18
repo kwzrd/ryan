@@ -59,7 +59,7 @@ class Corona(commands.Cog):
     @tasks.loop(minutes=INTERVAL)
     async def refresh(self) -> None:
         """Periodically refresh & cache counts."""
-        logger.info(f"Refreshing cache")
+        logger.info("Refreshing cache")
         self.all = await self.get(self.url_all) or {}
 
         country_list = await self.get(self.url_countries) or []

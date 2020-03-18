@@ -77,7 +77,7 @@ class Database:
 
     async def truncate_nicknames(self) -> None:
         """Truncate the entire nicknames table."""
-        logger.debug(f"Database received call to `truncate_nicknames`")
+        logger.debug("Database received call to `truncate_nicknames`")
         await self._connection.execute(
             f"""DELETE FROM "{self.T_NICKNAMES}";"""
         )

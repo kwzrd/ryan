@@ -115,7 +115,7 @@ class Gallonmate(commands.Cog):
     async def switch_daemon_func(self) -> None:
         """Background task calling `switch_routine` once a day."""
         await self.bot.wait_until_ready()
-        logger.info(f"Daemon started")
+        logger.info("Daemon started")
 
         while True:
             t_sleep = await seconds_until_midnight()
@@ -126,7 +126,7 @@ class Gallonmate(commands.Cog):
             except SwitchException as switch_exc:
                 logger.error(f"Daily switch failed: {switch_exc}")
             else:
-                logger.info(f"Daily switch successful")
+                logger.info("Daily switch successful")
 
                 if self.announce:
                     msg = (
@@ -268,7 +268,7 @@ class Gallonmate(commands.Cog):
         """Remove all nicknames."""
         await self.bot.database.truncate_nicknames()
 
-        await ctx.send(embed=msg_success(f"Table truncated!"))
+        await ctx.send(embed=msg_success("Table truncated!"))
 
     @gallonmate.command(name="help", aliases=["h"])
     async def gallonmate_help(self, ctx: commands.Context) -> None:
