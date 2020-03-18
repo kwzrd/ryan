@@ -13,6 +13,7 @@ pyflakes = {editable = true,git = "https://github.com/PyCQA/pyflakes.git"}
 discord-py = "*"
 aiosqlite = "*"
 aiodns = "*"
+arrow = "*"
 
 [requires]
 python_version = "3.8"

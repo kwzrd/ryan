@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "95eb70241e9d88ac525276ce7b315aabb9acfc8fbb819ffe20be7a79fad25a1f"
+            "sha256": "320b3f5defdbec5155c2289a293acbd3129d8c255a510b28775af1da34b25f40"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -47,6 +47,14 @@
             ],
             "index": "pypi",
             "version": "==0.11.0"
+        },
+        "arrow": {
+            "hashes": [
+                "sha256:5390e464e2c5f76971b60ffa7ee29c598c7501a294bc9f5e6dadcb251a5d027b",
+                "sha256:70729bcc831da496ca3cb4b7e89472c8e2d27d398908155e0796179f6d2d41ee"
+            ],
+            "index": "pypi",
+            "version": "==0.15.5"
         },
         "async-timeout": {
             "hashes": [
@@ -179,6 +187,20 @@
             ],
             "version": "==2.20"
         },
+        "python-dateutil": {
+            "hashes": [
+                "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c",
+                "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"
+            ],
+            "version": "==2.8.1"
+        },
+        "six": {
+            "hashes": [
+                "sha256:236bdbdce46e6e6a3d61a337c0f8b763ca1e8717c03b369e87a7ec7ce1319c0a",
+                "sha256:8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c"
+            ],
+            "version": "==1.14.0"
+        },
         "websockets": {
             "hashes": [
                 "sha256:0e4fb4de42701340bd2353bb2eee45314651caa6ccee80dbd5f5d5978888fed5",
@@ -278,7 +300,7 @@
         "pyflakes": {
             "editable": true,
             "git": "https://github.com/PyCQA/pyflakes.git",
-            "ref": "38ee6702ab5d46ae8de436300a85ff5d61ce9f9e"
+            "ref": "c688d2b02ac6e3416775b88d6411ee6a3e8a51ec"
         }
     }
 }
