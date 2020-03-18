@@ -77,29 +77,40 @@ class Corona(commands.Cog):
     async def corona_cmd(self, ctx: commands.Context, *, country: t.Optional[str] = None) -> None:
         """Give cached information about the covid."""
         if country is None:
-            title = "General stats"
-            descr = await cute_dict(self.all) or "Cache empty"
-            color = discord.Colour.green() if self.all else discord.Colour.red()
-
-        elif record := self.countries.get(country.casefold()):  # noqa
-            title = f"Stats for {country.title()}"
-            descr = await cute_dict(record) or "Cache empty"
-            color = discord.Colour.green()
+            response = discord.Embed(
+                description=await cute_dict(self.all) or "Cache empty",
+                colour=discord.Colour.green(),
+            )
+            response.set_author(name="General stats")
 
         else:
-            title = "Country not found"
-            descr = f"**Available**:\n{', '.join(sorted(self.countries)) if self.countries else 'none (cache empty)'}"
-            color = discord.Colour.red()
+            country = country.casefold()
+            record = self.countries.get(country)
 
-        response = discord.Embed(title=title, description=descr, color=color)
+            if record is not None:
+                try:
+                    country_code = pycountry.countries.search_fuzzy(country)[0].alpha_2
+                except LookupError:
+                    country_code = None
+
+                name = country_code if country_code is not None else country.capitalize()
+                flag = self.url_flags.format(code=country_code) if country_code is not None else ""
+                desc = await cute_dict(record) or "Cache empty"
+                colour = discord.Colour.green()
+
+            else:
+                name = "Country not found, we have these:"
+                flag = ""
+                desc = ", ".join(sorted(self.countries)) if self.countries else "Cache empty"
+                colour = discord.Colour.red()
+
+            logger.info(f"Matched flag: {flag}")
+
+            response = discord.Embed(description=desc, colour=colour)
+            response.set_author(name=name, icon_url=flag)
+
         if self.last_refresh is not None:
             response.set_footer(text=f"Last refresh {self.last_refresh.humanize(arrow.utcnow())}")
-
-        with contextlib.suppress(Exception):
-            country_code = pycountry.countries.search_fuzzy(country)[0].alpha_2
-            url = self.url_flags.format(code=country_code)
-            response.set_author(icon_url=url, name=country_code)
-            logger.debug(f"Matched {country} to {country_code}")
 
         await ctx.send(embed=response)
 
