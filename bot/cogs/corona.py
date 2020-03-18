@@ -78,7 +78,7 @@ class Corona(commands.Cog):
             descr = await cute_dict(self.all) or "Cache empty"
             color = discord.Colour.green() if self.all else discord.Colour.red()
 
-        elif record := self.countries.get(country.casefold()):
+        elif record := self.countries.get(country.casefold()):  # noqa
             title = f"Stats for {country.title()}"
             descr = await cute_dict(record) or "Cache empty"
             color = discord.Colour.green()
