@@ -175,8 +175,8 @@ class Gallonmate(commands.Cog):
         try:
             await gallon.edit(nick=new_name)
 
-        except discord.Forbidden:
-            raise SwitchException(f"Missing permissions for name change (STATUS: 403)")
+        except discord.Forbidden as e:
+            raise SwitchException(f"Missing permissions for name change (STATUS: {e.status})")
 
         except discord.HTTPException as e:
             raise SwitchException(f"Failed to change name (STATUS: {e.status}, {e.text})")
