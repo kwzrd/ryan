@@ -1,9 +1,9 @@
 import contextlib
 import logging
 import typing as t
-from datetime import datetime
 
 import aiohttp
+import arrow
 import discord
 from discord.ext import commands, tasks
 
@@ -40,7 +40,7 @@ class Corona(commands.Cog):
     all: t.Dict[str, t.Any] = {}
     countries: t.Dict[str, t.Dict[str, t.Any]] = {}
 
-    last_refresh: t.Optional[datetime] = None
+    last_refresh: t.Optional[arrow.Arrow] = None
 
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
@@ -68,7 +68,7 @@ class Corona(commands.Cog):
             for record in country_list
         }
 
-        self.last_refresh = datetime.utcnow()
+        self.last_refresh = arrow.utcnow()
 
     @commands.command(name="corona", aliases=["covid"])
     async def corona_cmd(self, ctx: commands.Context, *, country: t.Optional[str] = None) -> None:
@@ -89,7 +89,8 @@ class Corona(commands.Cog):
             color = discord.Colour.red()
 
         response = discord.Embed(title=title, description=descr, color=color)
-        response.set_footer(text=f"Last refresh: {self.last_refresh} (UTC)")
+        if self.last_refresh is not None:
+            response.set_footer(text=f"Last refresh {self.last_refresh.humanize(arrow.utcnow())}")
 
         await ctx.send(embed=response)
 
