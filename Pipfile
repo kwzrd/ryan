@@ -14,6 +14,7 @@ discord-py = "*"
 aiosqlite = "*"
 aiodns = "*"
 arrow = "*"
+pycountry = "*"
 
 [requires]
 python_version = "3.8"
