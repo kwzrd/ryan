@@ -13,13 +13,19 @@ from bot.bot import Bot
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
+better_keys = {
+    "todaycases": "cases today",
+    "todaydeaths": "deaths today",
+    "casesperonemillion": "cases per million"
+}
+
 
 async def cute_dict(dct: t.Dict[str, t.Union[str, int]]) -> str:
     """Make `dct` readable in Discord's markdown."""
     lines = list()
 
     for key, val in dct.items():
-        key = f"**{str(key).capitalize()}**"
+        key = f"**{better_keys.get(key.casefold(), key).capitalize()}**"
         with contextlib.suppress(ValueError):
             val = f"{int(val):,}"
         lines.append(f"{key}: {val}")
