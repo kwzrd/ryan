@@ -104,8 +104,6 @@ class Corona(commands.Cog):
                 desc = ", ".join(sorted(self.countries)) if self.countries else "Cache empty"
                 colour = discord.Colour.red()
 
-            logger.info(f"Matched flag: {flag}")
-
             response = discord.Embed(description=desc, colour=colour)
             response.set_author(name=name, icon_url=flag)
 
