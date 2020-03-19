@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "92afec5ec283753cc71a97dc12d2538b2eace45b2e8ade296f6208c2b7d348eb"
+            "sha256": "88194fb813f1761ae56f7f17e6af1b95eda93a4a7ab8e59e572d0de291a0c401"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -305,9 +305,11 @@
             "version": "==2.5.0"
         },
         "pyflakes": {
-            "editable": true,
-            "git": "https://github.com/PyCQA/pyflakes.git",
-            "ref": "c688d2b02ac6e3416775b88d6411ee6a3e8a51ec"
+            "hashes": [
+                "sha256:17dbeb2e3f4d772725c777fabc446d5634d1038f234e77343108ce445ea69ce0",
+                "sha256:d976835886f8c5b31d47970ed689944a0262b5f3afa00a5a7b4dc81e5449f8a2"
+            ],
+            "version": "==2.1.1"
         }
     }
 }
