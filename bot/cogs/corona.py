@@ -88,7 +88,6 @@ class Corona(commands.Cog):
                 colour=discord.Colour.green(),
             )
             response.set_author(name="General stats")
-            delete_after = None
 
         else:
             country = country.casefold()
@@ -104,14 +103,11 @@ class Corona(commands.Cog):
                 flag = self.url_flags.format(code=country_code) if country_code is not None else ""
                 desc = await cute_dict(record) or "Cache empty"
                 colour = discord.Colour.green()
-                delete_after = None
 
             else:
-                name = "Country not found, we have these:"
-                flag = ""
-                desc = ", ".join(sorted(self.countries)) if self.countries else "Cache empty"
+                name = "No such country found"
+                flag = desc = ""
                 colour = discord.Colour.red()
-                delete_after = 10
 
             response = discord.Embed(description=desc, colour=colour)
             response.set_author(name=name, icon_url=flag)
@@ -119,7 +115,7 @@ class Corona(commands.Cog):
         if self.last_refresh is not None:
             response.set_footer(text=f"Last refresh {self.last_refresh.humanize(arrow.utcnow())}")
 
-        await ctx.send(embed=response, delete_after=delete_after)
+        await ctx.send(embed=response)
 
 
 def setup(bot: Bot) -> None:
