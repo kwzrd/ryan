@@ -263,6 +263,7 @@ class Gallonmate(commands.Cog):
 
         await ctx.send(embed=response_embed)
 
+    @commands.is_owner()
     @gallonmate.command(name="clear", aliases=["clr"])
     async def clear_nicknames(self, ctx: commands.Context) -> None:
         """Remove all nicknames."""
