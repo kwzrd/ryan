@@ -16,7 +16,7 @@ class Database:
     Ideally the database is only interfaced with through an instance of this class.
     """
 
-    DB_NAME = Path("ryan.database")
+    DB_FILE = Path("ryan.database")
 
     T_NICKNAMES = "nicknames"
 
@@ -29,7 +29,7 @@ class Database:
     @property
     def size(self) -> int:
         """Return size of the database file in bytes."""
-        return self.DB_NAME.stat().st_size
+        return self.DB_FILE.stat().st_size
 
     async def open(self) -> Database:
         """Open a connection to the database from an asynchronous context.
@@ -38,7 +38,7 @@ class Database:
 
         Returns `self` to allow method chaining.
         """
-        self._connection = await aiosqlite.connect(self.DB_NAME, isolation_level=None)
+        self._connection = await aiosqlite.connect(self.DB_FILE, isolation_level=None)
         logger.info("Database connection open")
 
         await self._connection.execute(
