@@ -10,7 +10,7 @@ import discord
 from discord.ext import commands
 
 from bot.bot import Bot
-from bot.constants import Channels, Emoji, Guilds, Users
+from bot.constants import Channels, Emoji, Guilds, Images, Users
 from bot.utils import relay_message
 
 logger = logging.getLogger(__name__)
@@ -37,20 +37,22 @@ title_error = (
 
 def msg_success(message: str) -> discord.Embed():
     """Create a success embed with `message`."""
-    return discord.Embed(
-        title=random.choice(title_success),
+    embed = discord.Embed(
         description=message,
         colour=discord.Colour.green(),
     )
+    embed.set_author(name=random.choice(title_success), icon_url=Images.gm_creepy)
+    return embed
 
 
 def msg_error(message: str) -> discord.Embed():
     """Create an error embed with `message`."""
-    return discord.Embed(
-        title=random.choice(title_error),
+    embed = discord.Embed(
         description=message,
         colour=discord.Colour.red(),
     )
+    embed.set_author(name=random.choice(title_error), icon_url=Images.gm_creepy)
+    return embed
 
 
 def is_gallonmate(user: discord.User) -> bool:
