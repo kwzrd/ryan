@@ -16,7 +16,9 @@ logger.setLevel(logging.DEBUG)
 better_keys = {
     "todaycases": "cases today",
     "todaydeaths": "deaths today",
-    "casesperonemillion": "cases per million"
+    "casesperonemillion": "cases per million",
+    "deathsperonemillion": "deaths per million",
+    "firstcase": "first case",
 }
 
 
