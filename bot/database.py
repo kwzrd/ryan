@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+from pathlib import Path
 from typing import List
 
 import aiosqlite
@@ -15,7 +16,7 @@ class Database:
     Ideally the database is only interfaced with through an instance of this class.
     """
 
-    DB_NAME = "ryan.database"
+    DB_NAME = Path("ryan.database")
 
     T_NICKNAMES = "nicknames"
 
