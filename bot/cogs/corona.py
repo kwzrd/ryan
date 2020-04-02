@@ -30,7 +30,7 @@ async def cute_dict(dct: t.Dict[str, t.Union[str, int]]) -> str:
         key = f"**{better_keys.get(key.casefold(), key).capitalize()}**"
         with contextlib.suppress(ValueError):
             val = f"{int(val):,}"
-        lines.append(f"{key}: {val}")
+        lines.append(f"{key}: {val.strip()}")
 
     return "\n".join(lines)
 
