@@ -256,10 +256,14 @@ class Gallonmate(commands.Cog):
         """List all available nicknames."""
         names = await self.bot.database.get_nicknames()
 
-        if names:
-            response_embed = msg_success("\n".join(n for n in names))
-        else:
-            response_embed = msg_error("No nicknames available")
+        if not names:
+            await ctx.send(embed=msg_error("No nicknames available"))
+            return
+
+        names_list = ", ".join(names)
+
+        response_embed = msg_success(f"There are currently **{len(names)}** names in the database:\n\n{names_list}")
+        response_embed.set_footer(text=f"{self.bot.database.size:,} bytes")
 
         await ctx.send(embed=response_embed)
 
