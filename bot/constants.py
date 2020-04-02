@@ -22,3 +22,10 @@ class Channels:
 
 class Client:
     token: str = os.environ["TOKEN"]
+
+
+class Images:
+    gm_creepy = (
+        "https://cdn.discordapp.com/attachments/319955430732464128/695021552520921148/"
+        "Screenshot_20200327-184350_FaceApp.jpg"
+    )
