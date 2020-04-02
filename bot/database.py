@@ -26,6 +26,11 @@ class Database:
 
     _connection: aiosqlite.Connection
 
+    @property
+    def size(self) -> int:
+        """Return size of the database file in bytes."""
+        return self.DB_NAME.stat().st_size
+
     async def open(self) -> Database:
         """Open a connection to the database from an asynchronous context.
 
