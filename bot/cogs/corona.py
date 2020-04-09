@@ -57,7 +57,7 @@ class Corona(commands.Cog):
 
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
-        self.refresh.start()
+        self.refresh_task.start()
 
     async def get(self, url: str) -> t.Any:
         """Make a GET request to `url` and return response parsed json."""
@@ -69,9 +69,8 @@ class Corona(commands.Cog):
             logger.error(f"Get failed: {exc}")
             return None
 
-    @tasks.loop(minutes=INTERVAL)
     async def refresh(self) -> None:
-        """Periodically refresh & cache counts."""
+        """Refresh cache & counts."""
         logger.info("Refreshing cache")
         self.all = await self.get(self.url_all) or {}
 
@@ -82,6 +81,11 @@ class Corona(commands.Cog):
         }
 
         self.last_refresh = arrow.utcnow()
+
+    @tasks.loop(minutes=INTERVAL)
+    async def refresh_task(self):
+        """Periodically call refresh."""
+        await self.refresh()
 
     @commands.command(name="corona", aliases=["covid"])
     async def corona_cmd(self, ctx: commands.Context, *, country: t.Optional[str] = None) -> None:
