@@ -19,6 +19,8 @@ better_keys = {
     "casesperonemillion": "cases per million",
     "deathsperonemillion": "deaths per million",
     "firstcase": "first case",
+    "totaltests": "total tests",
+    "testsperonemillion": "tests per million",
 }
 
 
