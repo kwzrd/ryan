@@ -10,6 +10,7 @@ import pycountry
 from discord.ext import commands, tasks
 
 from bot.bot import Bot
+from bot.constants import Emoji
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -87,7 +88,7 @@ class Corona(commands.Cog):
         """Periodically call refresh."""
         await self.refresh()
 
-    @commands.command(name="corona", aliases=["covid"])
+    @commands.group(name="corona", aliases=["covid"], invoke_without_command=True)
     async def corona_cmd(self, ctx: commands.Context, *, country: t.Optional[str] = None) -> None:
         """Give cached information about the covid."""
         if country is None:
@@ -131,6 +132,25 @@ class Corona(commands.Cog):
             response.set_footer(text=f"Last refresh {self.last_refresh.humanize(arrow.utcnow())}")
 
         await ctx.send(embed=response)
+
+    @corona_cmd.command(name="status")
+    async def corona_status(self, ctx: commands.Context) -> None:
+        response = discord.Embed(
+            description=(
+                f"There are currently **{len(self.countries)}** countries in the cache.\n"
+                f"Last refresh has taken place at {self.last_refresh} ({self.last_refresh.humanize(arrow.utcnow())})\n"
+                f"Cache will refresh automatically every {self.INTERVAL} minutes."
+            ),
+            color=discord.Colour.green() if self.countries else discord.Colour.red()
+        )
+        await ctx.send(embed=response)
+
+    @corona_cmd.command(name="refresh")
+    async def corona_refresh(self, ctx: commands.Context) -> None:
+        await self.refresh()
+        await ctx.send(
+            embed=discord.Embed(description=f"Refresh completed {Emoji.ok_hand}", color=discord.Colour.green())
+        )
 
 
 def setup(bot: Bot) -> None:
