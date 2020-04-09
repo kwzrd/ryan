@@ -138,7 +138,7 @@ class Corona(commands.Cog):
         response = discord.Embed(
             description=(
                 f"There are currently **{len(self.countries)}** countries in the cache.\n"
-                f"Last refresh has taken place at {self.last_refresh} ({self.last_refresh.humanize(arrow.utcnow())})\n"
+                f"Last refresh has taken place {self.last_refresh.humanize()}.\n"
                 f"Cache will refresh automatically every {self.INTERVAL} minutes."
             ),
             color=discord.Colour.green() if self.countries else discord.Colour.red()
