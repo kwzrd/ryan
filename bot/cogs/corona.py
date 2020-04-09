@@ -1,4 +1,5 @@
 import contextlib
+import difflib
 import logging
 import typing as t
 
@@ -108,8 +109,15 @@ class Corona(commands.Cog):
                 colour = discord.Colour.green()
 
             else:
+                guess = difflib.get_close_matches(country, self.countries.keys(), n=1)
+                if guess:
+                    closest_match = str(guess[0]).title()
+                else:
+                    closest_match = 'none found'
+
                 name = "No such country found"
-                flag = desc = ""
+                flag = ""
+                desc = f"Closest match in cache: {closest_match}"
                 colour = discord.Colour.red()
 
             response = discord.Embed(description=desc, colour=colour)
