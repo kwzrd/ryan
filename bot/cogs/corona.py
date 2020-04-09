@@ -145,6 +145,7 @@ class Corona(commands.Cog):
         )
         await ctx.send(embed=response)
 
+    @commands.is_owner()
     @corona_cmd.command(name="refresh")
     async def corona_refresh(self, ctx: commands.Context) -> None:
         await self.refresh()
