@@ -15,12 +15,12 @@ log = logging.getLogger(__name__)
 ErrorMessage = t.Tuple[t.Type[Exception], str]
 
 MESSAGES: t.Tuple[ErrorMessage, ...] = (
-    (commands.CommandNotFound,    "No such command exists"),
-    (commands.UserInputError,     "Command was invoked with invalid parameters {emoji}"),
-    (commands.CheckFailure,       "Permission check failed {emoji}"),
-    (commands.DisabledCommand,    "Command is currently disabled!"),
-    (commands.CommandInvokeError, "Command failed to execute {emoji}"),
-    (commands.CommandOnCooldown,  "Command is currently on cooldown!"),
+    (commands.CommandNotFound,    "No such command exists"),                               # noqa: E241
+    (commands.UserInputError,     "Command was invoked with invalid parameters {emoji}"),  # noqa: E241
+    (commands.CheckFailure,       "Permission check failed {emoji}"),                      # noqa: E241
+    (commands.DisabledCommand,    "Command is currently disabled!"),                       # noqa: E241
+    (commands.CommandInvokeError, "Command failed to execute {emoji}"),                    # noqa: E241
+    (commands.CommandOnCooldown,  "Command is currently on cooldown!"),                    # noqa: E241
 )
 FALLBACK = "Unexpected exception handled, see log for details"
 
