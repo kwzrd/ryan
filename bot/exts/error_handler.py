@@ -15,10 +15,14 @@ log = logging.getLogger(__name__)
 ErrorMessage = t.Tuple[t.Type[Exception], str]
 
 MESSAGES: t.Tuple[ErrorMessage, ...] = (
-    (commands.CheckFailure, "Permission check failed {emoji}"),
-    (commands.UserInputError, "Command was invoked with invalid parameters {emoji}"),
+    (commands.CommandNotFound,    "No such command exists"),
+    (commands.UserInputError,     "Command was invoked with invalid parameters {emoji}"),
+    (commands.CheckFailure,       "Permission check failed {emoji}"),
+    (commands.DisabledCommand,    "Command is currently disabled!"),
+    (commands.CommandInvokeError, "Command failed to execute {emoji}"),
+    (commands.CommandOnCooldown,  "Command is currently on cooldown!"),
 )
-FALLBACK = "Internal exception handled, see log for details"
+FALLBACK = "Unexpected exception handled, see log for details"
 
 EMOJI_POOL = (Emoji.weary, Emoji.angry, Emoji.frown, Emoji.upside_down, Emoji.pensive)
 
