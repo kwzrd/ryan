@@ -71,15 +71,13 @@ class ErrorHandler(commands.Cog):
         """
         Send message to `ctx` and log `error`.
 
-        The vast majority, or perhaps all, received `error` instances should be wrapped in something
-        that will carry a reference to the actual exception under the `original` attr. The first step
-        is therefore to fish out the actual exception, safely - should the attr not be present,
-        we fallback on `error` itself.
+        Response is matched based on `error` type. If an `original` attr is carried, it will be logged,
+        but its message will not propagate to the user.
 
         In case we do not match `error` to anything, a generic response `FALLBACK` is used as response.
         """
-        actual_exception = getattr(error, "original", error)
-        log.debug(f"Error handler received exception of type: {type(error)}, actual: {type(actual_exception)}")
+        original_exception = getattr(error, "original", None)
+        log.debug(f"Error handler received exception of type: {type(error)}, original: {type(original_exception)}")
 
         # This guarantees to always return some string - a fallback is used when no match is found
         response = match_response(error)
@@ -95,7 +93,7 @@ class ErrorHandler(commands.Cog):
 
         # The idea is to only log the full traceback if we've encountered a non-Discord exception
         # This may need to be revisited at some point in the future - maybe we need more information
-        if not isinstance(actual_exception, DiscordException):
+        if original_exception is not None:
             log.exception("Error handler received non-Discord exception", exc_info=error)
 
 
