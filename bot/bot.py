@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
-class Bot(commands.Bot):
+class Ryan(commands.Bot):
 
     start_time: arrow.Arrow
     database: Database

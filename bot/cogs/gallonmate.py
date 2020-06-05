@@ -9,7 +9,7 @@ from typing import Optional, Tuple
 import discord
 from discord.ext import commands
 
-from bot.bot import Bot
+from bot.bot import Ryan
 from bot.constants import Channels, Emoji, Guilds, Images, Users
 from bot.utils import relay_message
 
@@ -99,12 +99,12 @@ class SwitchException(Exception):
 class Gallonmate(commands.Cog):
     """Cog with Gallonmate-specific functionality."""
 
-    bot: Bot
+    bot: Ryan
 
     announce: bool
     switch_daemon: asyncio.Task
 
-    def __init__(self, bot: Bot) -> None:
+    def __init__(self, bot: Ryan) -> None:
         self.bot = bot
 
         self.announce = True
@@ -335,6 +335,6 @@ class Gallonmate(commands.Cog):
         await ctx.send(embed=await get_help(self.daemon, failed_cmd=False))
 
 
-def setup(bot: Bot) -> None:
+def setup(bot: Ryan) -> None:
     """Load Gallonmate cog."""
     bot.add_cog(Gallonmate(bot))
