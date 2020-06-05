@@ -34,10 +34,10 @@ def match_response(exception_instance: Exception) -> str:
 
     for exception_type, response in MESSAGES:
         if isinstance(exception_instance, exception_type):
-            log.debug(f"Exception matched to type: {exception_type}")
+            log.debug(f"Exception matched to type: {exception_type} (message: {response})")
             return response
 
-    log.debug("No match found, using fallback")
+    log.debug(f"No match found, using fallback: {FALLBACK}")
     return FALLBACK
 
 
