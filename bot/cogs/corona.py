@@ -84,7 +84,7 @@ class Corona(commands.Cog):
         self.last_refresh = arrow.utcnow()
 
     @tasks.loop(minutes=INTERVAL)
-    async def refresh_task(self):
+    async def refresh_task(self) -> None:
         """Periodically call refresh."""
         await self.refresh()
 
