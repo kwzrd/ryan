@@ -82,7 +82,7 @@ class ErrorHandler(commands.Cog):
         log.debug(f"Error handler received exception of type: {type(error)}, actual: {type(actual_exception)}")
 
         # This guarantees to always return some string - a fallback is used when no match is found
-        response = match_response(actual_exception)
+        response = match_response(error)
 
         # Use the generic error response generator, which wraps the message in a red embed
         response_embed = msg_error(response)
