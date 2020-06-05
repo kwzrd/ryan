@@ -1,10 +1,13 @@
+import contextlib
 import logging
+import random
 import typing as t
 
 from discord import DiscordException
 from discord.ext import commands
 
 from bot.bot import Ryan
+from bot.constants import Emoji
 from bot.utils import msg_error
 
 log = logging.getLogger(__name__)
@@ -12,11 +15,17 @@ log = logging.getLogger(__name__)
 ErrorMessage = t.Tuple[t.Type[Exception], str]
 
 MESSAGES: t.Tuple[ErrorMessage, ...] = (
-    (commands.CheckFailure, "Permission check failed"),
-    (commands.UserInputError, "Command was invoked with invalid parameters"),
+    (commands.CheckFailure, "Permission check failed {emoji}"),
+    (commands.UserInputError, "Command was invoked with invalid parameters {emoji}"),
 )
-
 FALLBACK = "Internal exception handled, see log for details"
+
+EMOJI_POOL = (Emoji.weary, Emoji.angry, Emoji.frown, Emoji.upside_down, Emoji.pensive)
+
+
+def random_emoji() -> str:
+    """Draw random emoji from `EMOJI_POOL`."""
+    return random.choice(EMOJI_POOL)
 
 
 def match_response(exception_instance: Exception) -> str:
@@ -27,14 +36,20 @@ def match_response(exception_instance: Exception) -> str:
 
     The reason why `MESSAGES` isn't a mapping is that using the types as keys would disallow
     the use of `isinstance` to correctly recognize subclasses.
-
-    TODO: Consider templating for random emoji insertion.
     """
     log.debug(f"Matching exception: {type(exception_instance)}")
 
     for exception_type, response in MESSAGES:
+
         if isinstance(exception_instance, exception_type):
             log.debug(f"Exception matched to type: {exception_type} (message: {response})")
+
+            # If the string contains an emoji placeholder, inject a random one,
+            # but otherwise we do nothing (exc raised on no placeholder)
+            with contextlib.suppress(KeyError):
+                response = response.format(emoji=random_emoji())
+                log.debug(f"Injected emoji: {response}")
+
             return response
 
     log.debug(f"No match found, using fallback: {FALLBACK}")
