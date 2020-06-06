@@ -47,7 +47,7 @@ def error_message(exc: Exception) -> str:
     The message does not contain the stack trace, as it's generally not necessary
     and brings about a certain level of complexity.
     """
-    error_lines = ["Traceback ignored:\n"] + traceback.format_exception_only(type(exc), exc)
+    error_lines = ["[Traceback ignored]\n\n"] + traceback.format_exception_only(type(exc), exc)
     return "".join(error_lines)
 
 
