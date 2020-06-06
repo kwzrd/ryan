@@ -26,6 +26,7 @@ bot = Ryan(command_prefix="?", activity=activity, help_command=None)
 
 bot.load_extension("bot.exts.corona")
 bot.load_extension("bot.exts.error_handler")
+bot.load_extension("bot.exts.execute")
 bot.load_extension("bot.exts.gallonmate")
 bot.load_extension("bot.exts.seasons")
 
