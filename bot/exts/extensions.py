@@ -30,6 +30,20 @@ class Extensions(commands.Cog):
         """Entry point to the extension."""
         ...
 
+    @ext_group.command(name="list", aliases=["ls"])
+    async def ext_list(self, ctx: commands.Context) -> None:
+        """Show a list of all active extensions."""
+        active_extensions: t.Mapping[str, types.ModuleType] = self.bot.extensions
+        log.debug(f"Active extensions: {active_extensions}")
+
+        if active_extensions:
+            readable = "\n".join(f"{i} | {ext_name}" for i, ext_name in enumerate(active_extensions.keys()))
+            response = f"Active extensions:\n"f"```{readable}```"
+            await ctx.send(embed=msg_success(response))
+
+        else:
+            await ctx.send(embed=msg_error("No extensions found!"))
+
     @ext_group.command(name="reload", aliases=["r"])
     async def ext_reload(self, ctx: commands.Context, *, ext_name: str) -> None:
         """
