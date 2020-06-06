@@ -3,6 +3,7 @@ import logging
 from discord.ext import commands
 
 from bot.bot import Ryan
+from bot.constants import Users
 
 logger = logging.getLogger(__name__)
 
@@ -16,6 +17,10 @@ class Extensions(commands.Cog):
 
     def __init__(self, bot: Ryan) -> None:
         self.bot = bot
+
+    def cog_check(self, ctx: commands.Context) -> bool:
+        """Only bot owner is allowed to use this cog."""
+        return ctx.author.id == Users.kwzrd
 
     @commands.group("extensions", aliases=["extension", "ext"])
     async def ext_group(self, ctx: commands.Context) -> None:
