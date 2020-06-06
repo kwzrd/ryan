@@ -6,7 +6,7 @@ import discord
 from discord.ext import commands
 
 from bot.bot import Ryan
-from bot.constants import Client, Users
+from bot.constants import Client
 
 
 def run_git(args: List[str]) -> str:
@@ -14,16 +14,13 @@ def run_git(args: List[str]) -> str:
     return subprocess.run(["git"] + args, capture_output=True, text=True).stdout.strip()
 
 
-commit = ["describe", "--always"]
-branch = ["rev-parse", "--abbrev-ref", "HEAD"]
-tstamp = ["log", "-1", "--format=%cd"]
-dstamp = ["log", "-1", "--format=%as"]
+latest_tag = run_git(["describe", "--tags"])
+tag_author = run_git(["show", latest_tag, "-s", "--format=%h:%an"])
+tag_tstamp = run_git(["show", latest_tag, "-s", "--format=%ci"]).split()[0]  # Date only
 
-vc_info = f"HEAD: {run_git(commit)} ({run_git(branch)})\n{run_git(tstamp)}"
-activity = discord.Game(f"{run_git(commit)} ({run_git(dstamp)})")
+bot = Ryan(command_prefix="?", activity=discord.Game(f"{latest_tag}"), help_command=None)
 
-bot = Ryan(command_prefix="?", activity=activity, help_command=None)
-
+# Instantiate all extensions
 bot.load_extension("bot.exts.corona")
 bot.load_extension("bot.exts.error_handler")
 bot.load_extension("bot.exts.execute")
@@ -35,23 +32,15 @@ bot.load_extension("bot.exts.seasons")
 async def custom_help(ctx: commands.Context) -> None:
     """Custom help command with basic information."""
     help_embed = discord.Embed(
-        title="I am Ryan",
-        description="Real human bean",
+        description=f"Revision:\n`{latest_tag}\n{tag_tstamp} ({tag_author})`",
         colour=discord.Colour.green(),
     )
-    help_embed.set_thumbnail(url=bot.user.avatar_url)
-
-    master_mention = bot.get_user(Users.kwzrd).mention
-    help_embed.add_field(name="master", value=master_mention, inline=False)
+    help_embed.set_author(name="Ryan ~ real human bean", icon_url=bot.user.avatar_url)
 
     active_cogs = "\n".join(cog for cog in bot.cogs)
-    help_embed.add_field(name="active modules", value=active_cogs, inline=False)
+    help_embed.add_field(name="Active extensions:", value=active_cogs, inline=False)
 
-    uptime_string = f"{bot.start_time} ({bot.start_time.humanize(arrow.now())})"
-    help_embed.add_field(name="awake since", value=uptime_string, inline=False)
-
-    help_embed.add_field(name="version control", value=vc_info, inline=False)
-
+    help_embed.set_footer(text=f"Awakened {bot.start_time.humanize(arrow.now())}")
     await ctx.send(embed=help_embed)
 
 
