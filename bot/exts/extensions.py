@@ -8,7 +8,11 @@ logger = logging.getLogger(__name__)
 
 
 class Extensions(commands.Cog):
-    """Allows extension management at runtime, e.g. live reloading."""
+    """
+    Allows extension management at runtime, e.g. live reloading.
+
+    This is mostly useful during development, as it prevents API abuse when testing changes.
+    """
 
     def __init__(self, bot: Ryan) -> None:
         self.bot = bot
