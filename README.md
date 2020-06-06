@@ -1,1 +1,3 @@
-# quizzard
+### Ryan
+
+Personal Discord bot project.
