@@ -5,7 +5,7 @@ import string
 import discord
 from discord.ext import commands
 
-from bot.bot import Bot
+from bot.bot import Ryan
 from bot.constants import Emoji
 
 logger = logging.getLogger(__name__)
@@ -93,7 +93,7 @@ class Seasons(commands.Cog):
         },
     )
 
-    def __init__(self, bot: Bot) -> None:
+    def __init__(self, bot: Ryan) -> None:
         self.bot = bot
 
     @commands.command()
@@ -151,6 +151,6 @@ class Seasons(commands.Cog):
         await ctx.message.clear_reaction(status_react)
 
 
-def setup(bot: Bot) -> None:
+def setup(bot: Ryan) -> None:
     """Load Seasons cog."""
     bot.add_cog(Seasons(bot))

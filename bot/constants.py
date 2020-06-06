@@ -2,9 +2,25 @@ import os
 
 
 class Emoji:
+    """
+    Emoji code constants recognizable by Discord.
+
+    For the custom ones, the bot must be in a guild where the emoji are defined.
+    """
+
+    # Custom emoji
     galooned = "<:galooned:338627421630627842>"
     tips_fedora = "<:pepetipsfedora:550466723997024267>"
+
+    # Positive emotions
     ok_hand = ":ok_hand:"
+
+    # Negative emotions
+    weary = ":weary:"
+    angry = ":angry:"
+    frown = ":frowning:"
+    upside_down = ":upside_down:"
+    pensive = ":pensive:"
 
 
 class Users:

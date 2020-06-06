@@ -9,7 +9,7 @@ import discord
 import pycountry
 from discord.ext import commands, tasks
 
-from bot.bot import Bot
+from bot.bot import Ryan
 from bot.constants import Emoji
 
 logger = logging.getLogger(__name__)
@@ -56,7 +56,7 @@ class Corona(commands.Cog):
 
     last_refresh: t.Optional[arrow.Arrow] = None
 
-    def __init__(self, bot: Bot) -> None:
+    def __init__(self, bot: Ryan) -> None:
         self.bot = bot
         self.refresh_task.start()
 
@@ -84,7 +84,7 @@ class Corona(commands.Cog):
         self.last_refresh = arrow.utcnow()
 
     @tasks.loop(minutes=INTERVAL)
-    async def refresh_task(self):
+    async def refresh_task(self) -> None:
         """Periodically call refresh."""
         await self.refresh()
 
@@ -154,6 +154,6 @@ class Corona(commands.Cog):
         )
 
 
-def setup(bot: Bot) -> None:
+def setup(bot: Ryan) -> None:
     """Load Corona cog."""
     bot.add_cog(Corona(bot))

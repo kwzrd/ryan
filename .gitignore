@@ -1,5 +1,8 @@
 .idea/
 __pycache__/
 
+# Local per-run logging directory
+logs/
+
 .env
 ryan.database
