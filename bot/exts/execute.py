@@ -1,3 +1,4 @@
+import asyncio
 import contextlib
 import enum
 import io
@@ -19,6 +20,8 @@ log = logging.getLogger(__name__)
 CODEBLOCK_REGEX = re.compile(r"(^```(py(thon)?)?\n)|(```$)")
 INDENT_DEPTH = 4
 
+T_MAX = 30  # Seconds to wait before exec job finishes, raise timeout otherwise
+
 # To allow execution of coroutines, we'll inject the code into this template, which
 # wraps everything in an awaitable body, prepares the coroutine, and assigns it
 ASYNC_WRAP = """
@@ -35,6 +38,7 @@ class ExitCode(enum.Enum):
     SUCCESS = 0
     FAIL_COMPILE = 1
     FAIL_RUNTIME = 2
+    FAIL_TIMEOUT = 3
 
 
 def error_message(exc: Exception) -> str:
@@ -65,6 +69,10 @@ async def run_code(in_text: str, in_locals: t.Dict[str, t.Any]) -> t.Tuple[ExitC
     We redirect & capture stdout at runtime, however, the executed code may not ever write to
     stdout, in which case the second return value is simply an empty string. In the case of
     a runtime exception, we return a formatted error message instead of stdout.
+
+    The task is killed after `T_MAX` seconds if it doesn't finish by then. The limit isn't strict
+    and is mostly in place to prevent an accidental endless loop, which we would otherwise have
+    no way to cancel once it gets awaited.
     """
     log.debug(f"Processing received text: {in_text!r}")  # Force repr due to new lines polluting logfile
     extracted_code = CODEBLOCK_REGEX.sub("", in_text.strip())
@@ -89,9 +97,15 @@ async def run_code(in_text: str, in_locals: t.Dict[str, t.Any]) -> t.Tuple[ExitC
     try:
         with contextlib.redirect_stdout(out_feed):
             exec(compiled_code, in_locals)
-            await in_locals["coro"]
+            await asyncio.wait_for(in_locals["coro"], timeout=T_MAX)
 
-    # If anything goes wrong, we'll propagate the error message as a string
+    # We consider timeouts to be a special case with its own exit code, the exception
+    # raised by asyncio doesn't include `T_MAX` so we use our own message
+    except asyncio.TimeoutError as timeout_exc:
+        log.debug(f"Schedule task timed out: {timeout_exc} ({T_MAX=})")
+        return ExitCode.FAIL_TIMEOUT, f"Timeout: task killed after {T_MAX} seconds"
+
+    # If anything else goes wrong, we'll propagate the error message as a string
     except Exception as runtime_exc:
         log.debug(f"Code failed at runtime: {runtime_exc}")
         return ExitCode.FAIL_RUNTIME, error_message(runtime_exc)
