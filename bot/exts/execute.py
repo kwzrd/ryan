@@ -129,7 +129,9 @@ class Execute(commands.Cog):
         finishes, we prepare a pretty response embed and return it to `ctx`.
         """
         start_time = datetime.now()
-        exit_code, out_message = await run_code(raw_code, locals())
+
+        async with ctx.typing():
+            exit_code, out_message = await run_code(raw_code, locals())
 
         time_diff = (datetime.now() - start_time).total_seconds()
         response = (
