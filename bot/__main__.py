@@ -23,6 +23,7 @@ bot = Ryan(command_prefix="?", activity=discord.Game(f"version {latest_tag}"), h
 bot.load_extension("bot.exts.corona")
 bot.load_extension("bot.exts.error_handler")
 bot.load_extension("bot.exts.execute")
+bot.load_extension("bot.exts.extensions")
 bot.load_extension("bot.exts.gallonmate")
 bot.load_extension("bot.exts.seasons")
 
