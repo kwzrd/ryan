@@ -15,7 +15,6 @@ def run_git(args: List[str]) -> str:
 
 
 latest_tag = run_git(["describe", "--tags"])
-tag_author = run_git(["show", latest_tag, "-s", "--format=%h:%an"])
 tag_tstamp = run_git(["show", latest_tag, "-s", "--format=%ci"]).split()[0]  # Date only
 
 bot = Ryan(command_prefix="?", activity=discord.Game(f"{latest_tag}"), help_command=None)
@@ -31,16 +30,21 @@ bot.load_extension("bot.exts.seasons")
 @bot.command(name="help")
 async def custom_help(ctx: commands.Context) -> None:
     """Custom help command with basic information."""
-    help_embed = discord.Embed(
-        description=f"Revision:\n`{latest_tag}\n{tag_tstamp} ({tag_author})`",
-        colour=discord.Colour.green(),
-    )
+    help_embed = discord.Embed(colour=discord.Colour.green())
+
+    # Field: bot name & icon
     help_embed.set_author(name="Ryan ~ real human bean", icon_url=bot.user.avatar_url)
 
+    # Field: revision
+    help_embed.add_field(name="Revision:", value=f"`{latest_tag} ({tag_tstamp})`")
+
+    # Field: active extensions
     active_cogs = "\n".join(cog for cog in bot.cogs)
     help_embed.add_field(name="Active extensions:", value=active_cogs, inline=False)
 
+    # Field: footer
     help_embed.set_footer(text=f"Awakened {bot.start_time.humanize(arrow.now())}")
+
     await ctx.send(embed=help_embed)
 
 
