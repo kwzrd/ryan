@@ -38,6 +38,6 @@ for handler in (handle_console, handle_file):
     handler.setFormatter(FORMAT)
 
 # We'll manually raise 3rd party log levels, as we're not interested in their info level
-logging.getLogger("asyncio").setLevel(logging.WARNING)
-logging.getLogger("discord").setLevel(logging.WARNING)
-logging.getLogger("websockets").setLevel(logging.WARNING)
+to_raise = ("asyncio", "discord", "websockets")
+for log_name in to_raise:
+    logging.getLogger(log_name).setLevel(logging.WARNING)
