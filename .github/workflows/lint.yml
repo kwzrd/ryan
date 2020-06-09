@@ -26,5 +26,5 @@ jobs:
     - name: Install dependencies
       run: pipenv sync --dev
 
-    - name: Lint with flake8 * plug-ins
+    - name: Lint with flake8 & plug-ins
       run: pipenv run lint
