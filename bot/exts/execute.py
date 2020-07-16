@@ -150,7 +150,7 @@ class Execute(commands.Cog):
         time_diff = (datetime.now() - start_time).total_seconds()
         response = (
             f"Finished with: `{exit_code} | {time_diff} secs`\n"
-            f"```{out_message}```"
+            f"```\n{out_message}```"  # Newline necessary to avoid markdown codeblock lang definition
         )
         make_embed = msg_success if exit_code is ExitCode.SUCCESS else msg_error
         await ctx.send(embed=make_embed(response))
