@@ -9,10 +9,10 @@ flake8-annotations = "~=2.3.0"
 flake8-import-order = "~=0.18.1"
 
 [packages]
-discord-py = "~=1.4.1"
-aiosqlite = "~=0.15.0"
 aiodns = "~=2.0.0"
+aiosqlite = "~=0.15.0"
 arrow = "~=0.15.7"
+discord-py = "~=1.4.1"
 pycountry = "~=20.7.3"
 
 [requires]
