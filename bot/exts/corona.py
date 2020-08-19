@@ -4,6 +4,9 @@ from discord.ext import commands
 
 from bot.bot import Ryan
 
+URL_API = "https://api.covid19api.com/summary"
+URL_FLAGS = "https://www.countryflags.io/{code}/flat/64.png"
+
 log = logging.getLogger(__name__)
 
 
