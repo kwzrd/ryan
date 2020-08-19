@@ -1,5 +1,7 @@
 import logging
+import typing as t
 
+import aiohttp
 from discord.ext import commands
 
 from bot.bot import Ryan
@@ -15,6 +17,21 @@ class Corona(commands.Cog):
 
     def __init__(self, bot: Ryan) -> None:
         self.bot = bot
+
+    async def _pull_data(self) -> t.Optional[t.Dict[str, t.Any]]:
+        """
+        Poll coronavirus API for fresh information.
+
+        Uses the bots internal aiohttp session. Returns None if the request fails,
+        or if the response JSON fails to parse.
+        """
+        log.debug("Polling coronavirus API")
+        try:
+            async with self.bot.http_session.get(URL_API) as resp:
+                log.debug(f"Response status: {resp.status}")
+                return await resp.json()
+        except aiohttp.ClientError as err:
+            log.exception("Failed to acquire data from API", exc_info=err)
 
 
 def setup(bot: Ryan) -> None:
