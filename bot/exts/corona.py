@@ -1,3 +1,4 @@
+import difflib
 import logging
 import typing as t
 from datetime import datetime
@@ -71,6 +72,27 @@ class CountryMap:
     def __len__(self) -> int:
         """Amount of countries in the map."""
         return len(self.map)
+
+    def lookup(self, name: str) -> t.Optional[Country]:
+        """
+        Lookup country by `name`.
+
+        First, `name` is normalized and checked for membership in the map. If found,
+        the result is returned directly. Otherwise, we attempt to find a close match
+        in the map's keys. If this fails as well, None is returned.
+        """
+        normal_name = self.normalize(name)
+        log.debug(f"Name '{name}' normalized into '{normal_name}'")
+
+        if (country := self.map.get(normal_name)) is not None:
+            return country
+
+        try:
+            match = difflib.get_close_matches(normal_name, possibilities=self.map, n=1)[0]
+        except IndexError:
+            log.debug(f"Found no match for '{normal_name}'")
+        else:
+            return self.map[match]
 
 
 class Corona(commands.Cog):
