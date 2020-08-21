@@ -3,7 +3,7 @@ import typing as t
 from datetime import datetime
 
 import aiohttp
-from discord.ext import commands
+from discord.ext import commands, tasks
 
 from bot.bot import Ryan
 
@@ -105,6 +105,12 @@ class Corona(commands.Cog):
         else:
             log.info("All countries parsed & validated successfully")
             return CountryMap(countries)
+
+    @tasks.loop(hours=1)
+    async def refresh_task(self) -> None:
+        """Periodically pull fresh data & refresh state."""
+        log.debug("Refreshing internal state")
+        self.country_map = await self._make_map()
 
 
 def setup(bot: Ryan) -> None:
