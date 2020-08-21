@@ -147,11 +147,10 @@ class Corona(commands.Cog):
     # endregion
     # region: command interface
 
-    @commands.group(name="corona")
+    @commands.group(name="corona", invoke_without_command=True)
     async def cmd_group(self, ctx: commands.Context, *, name: t.Optional[str] = None) -> None:
         """If no subcommand was invoked, try to match `name` to a country."""
-        if ctx.invoked_subcommand:
-            return
+        ...
 
     @cmd_group.command(name="status", aliases=["info", "about"])
     async def cmd_status(self, ctx: commands.Context) -> None:
