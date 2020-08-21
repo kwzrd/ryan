@@ -79,6 +79,8 @@ class Corona(commands.Cog):
         """Kill refresh task, if running."""
         self.refresh_task.stop()
 
+    # region: API & state management
+
     async def _pull_data(self) -> t.Optional[Record]:
         """
         Poll coronavirus API for fresh information.
@@ -119,6 +121,11 @@ class Corona(commands.Cog):
         """Periodically pull fresh data & refresh state."""
         log.debug("Refreshing internal state")
         self.country_map = await self._make_map()
+
+    # endregion
+    # region: command interface
+
+    # endregion
 
 
 def setup(bot: Ryan) -> None:
