@@ -69,7 +69,15 @@ class Corona(commands.Cog):
     """Provide basic per-country coronavirus statistics."""
 
     def __init__(self, bot: Ryan) -> None:
+        """Initialize attributes & start refresh task."""
         self.bot = bot
+        self.country_map: t.Optional[CountryMap] = None  # Must be initialized from an async context
+
+        self.refresh_task.start()
+
+    def cog_unload(self) -> None:
+        """Kill refresh task, if running."""
+        self.refresh_task.stop()
 
     async def _pull_data(self) -> t.Optional[Record]:
         """
