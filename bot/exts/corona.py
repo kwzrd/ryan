@@ -64,6 +64,10 @@ class CountryMap:
         }
         self.timestamp = datetime.utcnow()
 
+    def __len__(self) -> int:
+        """Amount of countries in the map."""
+        return len(self.map)
+
 
 class Corona(commands.Cog):
     """Provide basic per-country coronavirus statistics."""
