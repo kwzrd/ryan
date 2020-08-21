@@ -1,5 +1,6 @@
 import logging
 import typing as t
+from datetime import datetime
 
 import aiohttp
 from discord.ext import commands
@@ -45,6 +46,23 @@ class Country:
     def flag_url(self) -> str:
         """Inject own `code` into the flag url template."""
         return URL_FLAGS.format(code=self.code)
+
+
+class CountryMap:
+    """Wrap a Country map & provide convenience methods for look-ups."""
+
+    @staticmethod
+    def normalize(name: str) -> str:
+        """Normalize country `name` for look-up."""
+        return name.lower().replace(" ", "")
+
+    def __init__(self, countries: t.List[Country]) -> None:
+        """Initiate internal mapper."""
+        self.map: t.Dict[str, Country] = {
+            self.normalize(country.name): country
+            for country in countries
+        }
+        self.timestamp = datetime.utcnow()
 
 
 class Corona(commands.Cog):
