@@ -53,7 +53,7 @@ class Corona(commands.Cog):
     def __init__(self, bot: Ryan) -> None:
         self.bot = bot
 
-    async def _pull_data(self) -> t.Optional[t.Dict[str, t.Any]]:
+    async def _pull_data(self) -> t.Optional[Record]:
         """
         Poll coronavirus API for fresh information.
 
