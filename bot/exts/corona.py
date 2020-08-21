@@ -131,6 +131,22 @@ class Corona(commands.Cog):
     # endregion
     # region: command interface
 
+    @commands.group(name="corona")
+    async def cmd_group(self, ctx: commands.Context, *, name: str) -> None:
+        """If no subcommand was invoked, try to match `name` to a country."""
+        if ctx.invoked_subcommand:
+            return
+
+    @cmd_group.command(name="status", aliases=["info", "about"])
+    async def cmd_status(self, ctx: commands.Context) -> None:
+        """Show info about internal state."""
+        ...
+
+    @cmd_group.command(name="refresh", aliases=["pull"])
+    async def cmd_refresh(self, ctx: commands.Context) -> None:
+        """Refresh internal state."""
+        ...
+
     # endregion
 
 
