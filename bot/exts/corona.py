@@ -4,6 +4,7 @@ import typing as t
 from datetime import datetime
 
 import aiohttp
+import discord
 from discord.ext import commands, tasks
 
 from bot.bot import Ryan
@@ -172,7 +173,22 @@ class Corona(commands.Cog):
     @commands.group(name="corona", invoke_without_command=True)
     async def cmd_group(self, ctx: commands.Context, *, name: t.Optional[str] = None) -> None:
         """If no subcommand was invoked, try to match `name` to a country."""
-        ...
+        if None in (name, self.country_map):
+            await ctx.invoke(self.cmd_status)
+            return
+
+        if (country := self.country_map.lookup(name)) is None:
+            await ctx.send(embed=msg_error(f"No such country found. {Emoji.frown}"))
+            return
+
+        description = (
+            f"Confirmed: `{country.confirmed}` (today: `{country.confirmed_new}`)\n"
+            f"Recovered: `{country.recovered}` (today: `{country.recovered_new}`)\n"
+            f"Deaths: `{country.deaths}` (today: `{country.deaths_new}`)\n"
+        )
+        embed = discord.Embed(description=description, colour=discord.Color.green())
+        embed.set_author(name=country.name, icon_url=country.flag_url())
+        await ctx.send(embed=embed)
 
     @cmd_group.command(name="status", aliases=["info", "about"])
     async def cmd_status(self, ctx: commands.Context) -> None:
