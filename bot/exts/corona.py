@@ -6,6 +6,8 @@ import aiohttp
 from discord.ext import commands, tasks
 
 from bot.bot import Ryan
+from bot.constants import Emoji
+from bot.utils import msg_error, msg_success
 
 URL_API_HOME = "https://covid19api.com/"
 URL_API_DATA = "https://api.covid19api.com/summary"
@@ -159,7 +161,13 @@ class Corona(commands.Cog):
     @cmd_group.command(name="refresh", aliases=["pull"])
     async def cmd_refresh(self, ctx: commands.Context) -> None:
         """Refresh internal state."""
-        ...
+        log.debug("Manually refreshing internal state")
+        if await self.refresh():
+            resp = msg_success(f"Refreshed successfully! {Emoji.ok_hand}")
+        else:
+            resp = msg_error(f"Something has gone wrong, check log for details. {Emoji.weary}")
+
+        await ctx.send(embed=resp)
 
     # endregion
 
