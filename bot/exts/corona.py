@@ -7,7 +7,9 @@ from discord.ext import commands, tasks
 
 from bot.bot import Ryan
 
-URL_API = "https://api.covid19api.com/summary"
+URL_API_HOME = "https://covid19api.com/"
+URL_API_DATA = "https://api.covid19api.com/summary"
+
 URL_FLAGS = "https://www.countryflags.io/{code}/flat/64.png"
 
 Record = t.Dict[str, t.Any]  # A single country record returned from the API
@@ -94,7 +96,7 @@ class Corona(commands.Cog):
         """
         log.debug("Polling coronavirus API")
         try:
-            async with self.bot.http_session.get(URL_API) as resp:
+            async with self.bot.http_session.get(URL_API_DATA) as resp:
                 log.debug(f"Response status: {resp.status}")
                 return await resp.json()
         except aiohttp.ClientError as err:
