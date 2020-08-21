@@ -86,6 +86,26 @@ class Corona(commands.Cog):
         except aiohttp.ClientError as err:
             log.exception("Failed to acquire data from API", exc_info=err)
 
+    async def _make_map(self) -> t.Optional[CountryMap]:
+        """
+        Initiate a country map instance.
+
+        This loads the pulled data into Country instance. If an error occurs, None will
+        be returned. Otherwise, a CountryMap instance is given.
+        """
+        if (data := await self._pull_data()) is None:
+            log.error("Failed to acquire fresh data")
+            return
+
+        try:
+            countries = [Country(record) for record in data["Countries"]]
+        except Exception as parse_exc:
+            log.error("API response failed to parse", exc_info=parse_exc)
+            return
+        else:
+            log.info("All countries parsed & validated successfully")
+            return CountryMap(countries)
+
 
 def setup(bot: Ryan) -> None:
     """Load Corona cog."""
