@@ -156,7 +156,15 @@ class Corona(commands.Cog):
     @cmd_group.command(name="status", aliases=["info", "about"])
     async def cmd_status(self, ctx: commands.Context) -> None:
         """Show info about internal state."""
-        ...
+        if self.country_map is not None:
+            first_line = f"There are currently `{len(self.country_map)}` countries in the cache."
+            make_embed = msg_success
+        else:
+            first_line = "Cache is empty, check log for errors."
+            make_embed = msg_error
+
+        embed = make_embed(f"{first_line}\nData is pulled periodically from [COVID19API]({URL_API_HOME}).")
+        await ctx.send(embed=embed)
 
     @cmd_group.command(name="refresh", aliases=["pull"])
     async def cmd_refresh(self, ctx: commands.Context) -> None:
