@@ -122,11 +122,25 @@ class Corona(commands.Cog):
             log.info("All countries parsed & validated successfully")
             return CountryMap(countries)
 
+    async def refresh(self) -> bool:
+        """
+        Try to pull new data & refresh internal state.
+
+        If something goes wrong, returns False and rolls back to previous state.
+        """
+        if not (new_state := await self._make_map()):
+            log.error("Something has gone wrong, new state will not be applied")
+            return False
+
+        log.info("New state acquired, replacing old state")
+        self.country_map = new_state
+        return True
+
     @tasks.loop(hours=1)
     async def refresh_task(self) -> None:
         """Periodically pull fresh data & refresh state."""
-        log.debug("Refreshing internal state")
-        self.country_map = await self._make_map()
+        log.debug("Performing periodic state refresh")
+        await self.refresh()
 
     # endregion
     # region: command interface
