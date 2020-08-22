@@ -68,8 +68,12 @@ class Country:
         self.deaths = int(record["TotalDeaths"])
         self.deaths_new = int(record["NewDeaths"])
 
+        # Active cases are not given by the API but can be somewhat accurately computed,
+        # for most countries this corresponds to the reported number so I'm fine with it
         self.active: int = self.confirmed - (self.recovered + self.deaths)
 
+        # To computer per-million stats, we first need to fetch population, if this fails
+        # for the current country we default it to -1. so that it can be float-formatted
         if pop := population(self.code):
             mils = pop / 1_000_000
             self.confirmed_ml = self.confirmed / mils
