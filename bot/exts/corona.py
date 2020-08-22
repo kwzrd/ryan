@@ -70,6 +70,16 @@ class Country:
 
         self.active: int = self.confirmed - (self.recovered + self.deaths)
 
+        if pop := population(self.code):
+            mils = pop / 1_000_000
+            self.confirmed_ml = self.confirmed / mils
+            self.recovered_ml = self.recovered / mils
+            self.deaths_ml = self.deaths / mils
+            self.active_ml = self.active / mils
+        else:
+            log.error(f"Failed to fetch population for: '{self.code}' ({self.name})")
+            self.confirmed_ml = self.recovered_ml = self.deaths_ml = self.active_ml = -1.  # Must be float!
+
     def flag_url(self) -> str:
         """Inject own `code` into the flag url template."""
         return URL_FLAGS.format(code=self.code)
