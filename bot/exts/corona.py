@@ -217,15 +217,15 @@ class Corona(commands.Cog):
         fmt = "Total: `{total:,}`\nNew: `{new:,}`\nPer-mil: `{pml:,}`"  # Types: int, int, int
 
         embed.add_field(
-            name="Confirmed", inline=False,
+            name="Confirmed",
             value=fmt.format(total=country.confirmed, new=country.confirmed_new, pml=country.confirmed_ml),
         )
         embed.add_field(
-            name="Recovered", inline=False,
+            name="Recovered",
             value=fmt.format(total=country.recovered, new=country.recovered_new, pml=country.recovered_ml),
         )
         embed.add_field(
-            name="Deaths", inline=False,
+            name="Deaths",
             value=fmt.format(total=country.deaths, new=country.deaths_new, pml=country.deaths_ml),
         )
         return embed
