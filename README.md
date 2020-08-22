@@ -1,4 +1,4 @@
-![CI (lint)](https://github.com/kwzrd/ryan/workflows/CI%20(lint)/badge.svg?branch=master)
+![Flake8](https://github.com/kwzrd/ryan/workflows/Flake8/badge.svg)
 
 ### Ryan
 
