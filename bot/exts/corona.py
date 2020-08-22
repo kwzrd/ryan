@@ -177,6 +177,28 @@ class Corona(commands.Cog):
     # endregion
     # region: command interface
 
+    @staticmethod
+    def country_embed(country: Country, when: datetime) -> discord.Embed:
+        """Create a Discord embed representation for `country`."""
+        embed = discord.Embed(colour=discord.Color.blurple(), timestamp=when)
+        embed.set_author(name=country.name, icon_url=country.flag_url())
+
+        embed.add_field(
+            name="Confirmed", inline=False,
+            value=f"Total: `{country.confirmed}`\nNew: `{country.confirmed_new}`\nPer-mil: `n`",
+        )
+        embed.add_field(
+            name="Recovered", inline=False,
+            value=f"Total: `{country.recovered}`\nNew: `{country.recovered_new}`\nPer-mil: `n`",
+        )
+        embed.add_field(
+            name="Deaths", inline=False,
+            value=f"Total: `{country.deaths}`\nNew: `{country.deaths_new}`\nPer-mil: `n`",
+        )
+        embed.set_footer(text=f"Sourced from: [COVID19API]({URL_API_HOME})")
+
+        return embed
+
     @commands.group(name="corona", invoke_without_command=True)
     async def cmd_group(self, ctx: commands.Context, *, name: t.Optional[str] = None) -> None:
         """If no subcommand was invoked, try to match `name` to a country."""
@@ -188,15 +210,7 @@ class Corona(commands.Cog):
             await ctx.send(embed=msg_error(f"No such country found. {Emoji.frown}"))
             return
 
-        description = (
-            f"Confirmed: `{country.confirmed}` (today: `{country.confirmed_new}`)\n"
-            f"Recovered: `{country.recovered}` (today: `{country.recovered_new}`)\n"
-            f"Deaths: `{country.deaths}` (today: `{country.deaths_new}`)\n"
-            f"Active: `{country.active}`\n"
-        )
-        embed = discord.Embed(description=description, colour=discord.Color.green())
-        embed.set_author(name=country.name, icon_url=country.flag_url())
-        await ctx.send(embed=embed)
+        await ctx.send(embed=self.country_embed(country, self.country_map.timestamp))
 
     @cmd_group.command(name="status", aliases=["info", "about"])
     async def cmd_status(self, ctx: commands.Context) -> None:
