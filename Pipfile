@@ -14,7 +14,6 @@ aiohttp = "~=3.6.2"
 aiosqlite = "~=0.15.0"
 arrow = "~=0.15.7"
 discord-py = "~=1.4.1"
-pycountry = "~=20.7.3"
 
 [requires]
 python_version = "3.8"
