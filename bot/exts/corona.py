@@ -217,17 +217,19 @@ class Corona(commands.Cog):
         )
         embed.set_author(name=country.name, icon_url=country.flag_url())
 
+        fmt = "Total: `{total:,}`\nNew: `{new:,}`\nPer-mil: `{pml:,.2f}`"  # Types: int, int, float
+
         embed.add_field(
             name="Confirmed", inline=False,
-            value=f"Total: `{country.confirmed}`\nNew: `{country.confirmed_new}`\nPer-mil: `n`",
+            value=fmt.format(total=country.confirmed, new=country.confirmed_new, pml=country.confirmed_ml),
         )
         embed.add_field(
             name="Recovered", inline=False,
-            value=f"Total: `{country.recovered}`\nNew: `{country.recovered_new}`\nPer-mil: `n`",
+            value=fmt.format(total=country.recovered, new=country.recovered_new, pml=country.recovered_ml),
         )
         embed.add_field(
             name="Deaths", inline=False,
-            value=f"Total: `{country.deaths}`\nNew: `{country.deaths_new}`\nPer-mil: `n`",
+            value=fmt.format(total=country.deaths, new=country.deaths_new, pml=country.deaths_ml),
         )
         return embed
 
