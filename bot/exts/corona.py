@@ -73,16 +73,16 @@ class Country:
         self.active: int = self.confirmed - (self.recovered + self.deaths)
 
         # To computer per-million stats, we first need to fetch population, if this fails
-        # for the current country we default it to -1. so that it can be float-formatted
+        # for the current country we default it to -1 so that it can be int-formatted
         if pop := population(self.code):
             mils = pop / 1_000_000
-            self.confirmed_ml = self.confirmed / mils
-            self.recovered_ml = self.recovered / mils
-            self.deaths_ml = self.deaths / mils
-            self.active_ml = self.active / mils
+            self.confirmed_ml = int(self.confirmed / mils)
+            self.recovered_ml = int(self.recovered / mils)
+            self.deaths_ml = int(self.deaths / mils)
+            self.active_ml = int(self.active / mils)
         else:
             log.error(f"Failed to fetch population for: '{self.code}' ({self.name})")
-            self.confirmed_ml = self.recovered_ml = self.deaths_ml = self.active_ml = -1.  # Must be float!
+            self.confirmed_ml = self.recovered_ml = self.deaths_ml = self.active_ml = -1  # Must be int!
 
     def flag_url(self) -> str:
         """Inject own `code` into the flag url template."""
