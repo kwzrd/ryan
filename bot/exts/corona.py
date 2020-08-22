@@ -68,10 +68,7 @@ class Country:
         self.deaths = int(record["TotalDeaths"])
         self.deaths_new = int(record["NewDeaths"])
 
-    @property
-    def active(self) -> int:
-        """Compute & return active cases."""
-        return self.confirmed - (self.recovered + self.deaths)
+        self.active: int = self.confirmed - (self.recovered + self.deaths)
 
     def flag_url(self) -> str:
         """Inject own `code` into the flag url template."""
