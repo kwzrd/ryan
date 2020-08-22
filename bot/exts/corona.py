@@ -192,6 +192,7 @@ class Corona(commands.Cog):
             f"Confirmed: `{country.confirmed}` (today: `{country.confirmed_new}`)\n"
             f"Recovered: `{country.recovered}` (today: `{country.recovered_new}`)\n"
             f"Deaths: `{country.deaths}` (today: `{country.deaths_new}`)\n"
+            f"Active: `{country.active}`\n"
         )
         embed = discord.Embed(description=description, colour=discord.Color.green())
         embed.set_author(name=country.name, icon_url=country.flag_url())
