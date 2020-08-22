@@ -180,7 +180,11 @@ class Corona(commands.Cog):
     @staticmethod
     def country_embed(country: Country, when: datetime) -> discord.Embed:
         """Create a Discord embed representation for `country`."""
-        embed = discord.Embed(colour=discord.Color.blurple(), timestamp=when)
+        embed = discord.Embed(
+            colour=discord.Color.blurple(),
+            timestamp=when,
+            description=f"Sourced from: [COVID19API]({URL_API_HOME})",
+        )
         embed.set_author(name=country.name, icon_url=country.flag_url())
 
         embed.add_field(
@@ -195,8 +199,6 @@ class Corona(commands.Cog):
             name="Deaths", inline=False,
             value=f"Total: `{country.deaths}`\nNew: `{country.deaths_new}`\nPer-mil: `n`",
         )
-        embed.set_footer(text=f"Sourced from: [COVID19API]({URL_API_HOME})")
-
         return embed
 
     @commands.group(name="corona", invoke_without_command=True)
