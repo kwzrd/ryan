@@ -86,12 +86,14 @@ class CountryMap:
         log.debug(f"Name '{name}' normalized into '{normal_name}'")
 
         if (country := self.map.get(normal_name)) is not None:
+            log.debug("Named found directly in cache")
             return country
 
+        log.debug("Name does not exist in cache, trying to find closest match")
         try:
             match = difflib.get_close_matches(normal_name, possibilities=self.map, n=1)[0]
         except IndexError:
-            log.debug(f"Found no match for '{normal_name}'")
+            log.debug("No match found")
         else:
             return self.map[match]
 
