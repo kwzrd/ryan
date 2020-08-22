@@ -214,7 +214,7 @@ class Corona(commands.Cog):
         embed = discord.Embed(colour=discord.Color.blurple(), timestamp=when, description=descr)
         embed.set_author(name=country.name, icon_url=country.flag_url())
 
-        fmt = "Total: `{total:,}`\nNew: `{new:,}`\nPer-mil: `{pml:,.2f}`"  # Types: int, int, float
+        fmt = "Total: `{total:,}`\nNew: `{new:,}`\nPer-mil: `{pml:,}`"  # Types: int, int, int
 
         embed.add_field(
             name="Confirmed", inline=False,
