@@ -1,4 +1,4 @@
-![Flake8](https://github.com/kwzrd/ryan/workflows/Flake8/badge.svg)
+![Flake8 & friends](https://github.com/kwzrd/ryan/workflows/Flake8%20&%20friends/badge.svg)
 
 ### Ryan
 
