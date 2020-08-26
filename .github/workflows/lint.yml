@@ -1,4 +1,4 @@
-name: Flake8
+name: Flake8 & friends
 
 on:
   push:
@@ -7,10 +7,11 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  checks:
     runs-on: ubuntu-18.04
 
     steps:
+    - name: Checkout
     - uses: actions/checkout@v2
       with:
         ref: ${{ github.event.pull_request.head.sha }}
@@ -20,11 +21,11 @@ jobs:
       with:
         python-version: 3.8
 
-    - name: Install pipenv
+    - name: Install Pipenv
       uses: dschep/install-pipenv-action@v1
 
     - name: Install dependencies
       run: pipenv sync --dev
 
-    - name: Lint with flake8 & plug-ins
+    - name: Lint with Flake8 & friends
       run: pipenv run lint
