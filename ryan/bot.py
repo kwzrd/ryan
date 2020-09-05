@@ -5,7 +5,7 @@ import aiohttp
 import arrow
 from discord.ext import commands
 
-from bot.database import Database
+from ryan.database import Database
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)

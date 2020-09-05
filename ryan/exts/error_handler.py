@@ -6,9 +6,9 @@ import typing as t
 from discord import DiscordException
 from discord.ext import commands
 
-from bot.bot import Ryan
-from bot.constants import Emoji
-from bot.utils import msg_error
+from ryan.bot import Ryan
+from ryan.constants import Emoji
+from ryan.utils import msg_error
 
 log = logging.getLogger(__name__)
 

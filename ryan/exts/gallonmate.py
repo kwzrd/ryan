@@ -9,9 +9,9 @@ from typing import Optional, Tuple
 import discord
 from discord.ext import commands
 
-from bot.bot import Ryan
-from bot.constants import Channels, Emoji, Guilds, Users
-from bot.utils import msg_error, msg_success, relay_message
+from ryan.bot import Ryan
+from ryan.constants import Channels, Emoji, Guilds, Users
+from ryan.utils import msg_error, msg_success, relay_message
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)

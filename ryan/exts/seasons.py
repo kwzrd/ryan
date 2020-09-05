@@ -5,8 +5,8 @@ import string
 import discord
 from discord.ext import commands
 
-from bot.bot import Ryan
-from bot.constants import Emoji
+from ryan.bot import Ryan
+from ryan.constants import Emoji
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)

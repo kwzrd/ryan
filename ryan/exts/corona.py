@@ -10,9 +10,9 @@ import aiohttp
 import discord
 from discord.ext import commands, tasks
 
-from bot.bot import Ryan
-from bot.constants import Emoji
-from bot.utils import msg_error, msg_success
+from ryan.bot import Ryan
+from ryan.constants import Emoji
+from ryan.utils import msg_error, msg_success
 
 URL_API_HOME = "https://covid19api.com/"
 URL_API_DATA = "https://api.covid19api.com/summary"
@@ -33,7 +33,7 @@ def _population_map() -> t.Dict[str, int]:
 
     The result is cached after it is loaded for the first time.
     """
-    with Path("bot", "resources", "populations.json").open(mode="r", encoding="UTF-8") as pop_file:
+    with Path("ryan", "resources", "populations.json").open(mode="r", encoding="UTF-8") as pop_file:
         return json.load(pop_file)
 
 

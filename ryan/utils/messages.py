@@ -3,7 +3,7 @@ from datetime import datetime
 
 import discord
 
-from bot.constants import Images
+from ryan.constants import Images
 
 title_success = (
     "Good point",

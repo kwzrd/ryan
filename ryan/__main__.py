@@ -5,8 +5,8 @@ import arrow
 import discord
 from discord.ext import commands
 
-from bot.bot import Ryan
-from bot.constants import Client
+from ryan.bot import Ryan
+from ryan.constants import Client
 
 
 def run_git(args: List[str]) -> str:
@@ -20,12 +20,12 @@ tag_tstamp = run_git(["log", "-1", "--format=%ci", latest_tag]).split()[0]  # Da
 bot = Ryan(command_prefix="?", activity=discord.Game(f"version {latest_tag}"), help_command=None)
 
 # Instantiate all extensions
-bot.load_extension("bot.exts.corona")
-bot.load_extension("bot.exts.error_handler")
-bot.load_extension("bot.exts.execute")
-bot.load_extension("bot.exts.extensions")
-bot.load_extension("bot.exts.gallonmate")
-bot.load_extension("bot.exts.seasons")
+bot.load_extension("ryan.exts.corona")
+bot.load_extension("ryan.exts.error_handler")
+bot.load_extension("ryan.exts.execute")
+bot.load_extension("ryan.exts.extensions")
+bot.load_extension("ryan.exts.gallonmate")
+bot.load_extension("ryan.exts.seasons")
 
 
 @bot.command(name="help")
