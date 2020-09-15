@@ -9,6 +9,7 @@ from pathlib import Path
 import aiohttp
 import discord
 from discord.ext import commands, tasks
+from pypopulation import get_population
 
 from ryan.bot import Ryan
 from ryan.constants import Emoji
@@ -76,7 +77,7 @@ class Country:
 
         # To computer per-million stats, we first need to fetch population, if this fails
         # for the current country we default it to -1 so that it can be int-formatted
-        if pop := population(self.code):
+        if pop := get_population(self.code):
             mils = pop / 1_000_000
             self.confirmed_ml = int(self.confirmed / mils)
             self.recovered_ml = int(self.recovered / mils)
