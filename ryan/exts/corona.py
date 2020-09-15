@@ -1,14 +1,12 @@
 import difflib
-import json
 import logging
 import typing as t
 from datetime import datetime
-from functools import lru_cache
-from pathlib import Path
 
 import aiohttp
 import discord
 from discord.ext import commands, tasks
+from pypopulation import get_population
 
 from ryan.bot import Ryan
 from ryan.constants import Emoji
@@ -24,22 +22,6 @@ URL_FLAGS = "https://www.countryflags.io/{code}/flat/64.png"
 Record = t.Dict[str, t.Any]  # A single country record returned from the API
 
 log = logging.getLogger(__name__)
-
-
-@lru_cache(maxsize=1)
-def _population_map() -> t.Dict[str, int]:
-    """
-    Load the JSON file with country populations.
-
-    The result is cached after it is loaded for the first time.
-    """
-    with Path("ryan", "resources", "populations.json").open(mode="r", encoding="UTF-8") as pop_file:
-        return json.load(pop_file)
-
-
-def population(country_code: str) -> t.Optional[int]:
-    """Get population for `country_code` or None if not found."""
-    return _population_map().get(country_code)
 
 
 class Country:
@@ -76,7 +58,7 @@ class Country:
 
         # To computer per-million stats, we first need to fetch population, if this fails
         # for the current country we default it to -1 so that it can be int-formatted
-        if pop := population(self.code):
+        if pop := get_population(self.code):
             mils = pop / 1_000_000
             self.confirmed_ml = int(self.confirmed / mils)
             self.recovered_ml = int(self.recovered / mils)
