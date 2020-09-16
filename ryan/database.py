@@ -6,8 +6,7 @@ from typing import List
 
 import aiosqlite
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+log = logging.getLogger(__name__)
 
 
 class Database:
@@ -39,7 +38,7 @@ class Database:
         Returns `self` to allow method chaining.
         """
         self._connection = await aiosqlite.connect(self.DB_FILE, isolation_level=None)
-        logger.info("Database connection open")
+        log.info("Database connection open")
 
         await self._connection.execute(
             f"""
@@ -58,7 +57,7 @@ class Database:
 
         Gives an empty list should no nicknames be available.
         """
-        logger.debug("Database received call to `get_nicknames`")
+        log.debug("Database received call to `get_nicknames`")
         cursor = await self._connection.execute(
             f"""SELECT "{self.C_AUTHOR}", "{self.C_TARGET}", "{self.C_NAME}" FROM "{self.T_NICKNAMES}";"""
         )
@@ -67,7 +66,7 @@ class Database:
 
     async def add_nickname(self, author: int, target: int, name: str) -> None:
         """Add a new nickname for `target` from `author` with a value of `name`."""
-        logger.debug(f"Database received call to `add_nickname` (author={author}, target={target}, name={name})")
+        log.debug(f"Database received call to `add_nickname` (author={author}, target={target}, name={name})")
         await self._connection.execute(
             f"""INSERT INTO "{self.T_NICKNAMES}" VALUES (?, ?, ?);""",
             (author, target, name),
@@ -75,7 +74,7 @@ class Database:
 
     async def remove_nickname(self, name: str) -> None:
         """Remove rows with a name of `name`."""
-        logger.debug(f"Database received call to `remove_nickname` (name={name})")
+        log.debug(f"Database received call to `remove_nickname` (name={name})")
         await self._connection.execute(
             f"""DELETE FROM "{self.T_NICKNAMES}" WHERE "{self.C_NAME}" = ?;""",
             (name,)
@@ -83,7 +82,7 @@ class Database:
 
     async def truncate_nicknames(self) -> None:
         """Truncate the entire nicknames table."""
-        logger.debug("Database received call to `truncate_nicknames`")
+        log.debug("Database received call to `truncate_nicknames`")
         await self._connection.execute(
             f"""DELETE FROM "{self.T_NICKNAMES}";"""
         )
@@ -91,4 +90,4 @@ class Database:
     async def close(self) -> None:
         """Safely close the database connection from an asynchronous context."""
         await self._connection.close()
-        logger.info("Database connection safely closed")
+        log.info("Database connection safely closed")
