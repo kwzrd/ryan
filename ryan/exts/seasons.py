@@ -9,7 +9,6 @@ from ryan.bot import Ryan
 from ryan.constants import Emoji
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
 
 RESET_SEASON = "reset"  # Controls the name of the `reset` season
 

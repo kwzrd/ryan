@@ -14,7 +14,6 @@ from ryan.constants import Channels, Emoji, Guilds, Users
 from ryan.utils import msg_error, msg_success, relay_message
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
 
 
 def is_gallonmate(user: discord.User) -> bool:

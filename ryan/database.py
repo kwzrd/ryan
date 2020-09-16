@@ -7,7 +7,6 @@ from typing import List
 import aiosqlite
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
 
 
 class Database:

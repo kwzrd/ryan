@@ -8,7 +8,6 @@ from discord.ext import commands
 from ryan.database import Database
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
 
 
 class Ryan(commands.Bot):
