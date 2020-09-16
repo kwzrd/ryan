@@ -7,7 +7,7 @@ from discord.ext import commands
 
 from ryan.database import Database
 
-logger = logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 
 class Ryan(commands.Bot):
@@ -31,7 +31,7 @@ class Ryan(commands.Bot):
         This reduces having to log in cog module setups.
         """
         super().add_cog(cog)
-        logger.info(f"Cog loaded: {cog.qualified_name}")
+        log.info(f"Cog loaded: {cog.qualified_name}")
 
     async def start(self, *args, **kwargs) -> None:
         """Prepare Bot subclass.
@@ -44,7 +44,7 @@ class Ryan(commands.Bot):
 
         await super().start(*args, **kwargs)
 
-        logger.info("Bot online")
+        log.info("Bot online")
 
     async def close(self) -> None:
         """Allow base class to close, then safely close database connection and http session."""

@@ -8,7 +8,7 @@ from discord.ext import commands
 from ryan.bot import Ryan
 from ryan.constants import Emoji
 
-logger = logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 RESET_SEASON = "reset"  # Controls the name of the `reset` season
 

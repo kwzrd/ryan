@@ -13,7 +13,7 @@ from ryan.bot import Ryan
 from ryan.constants import Channels, Emoji, Guilds, Users
 from ryan.utils import msg_error, msg_success, relay_message
 
-logger = logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 
 def is_gallonmate(user: discord.User) -> bool:
@@ -78,7 +78,7 @@ class Gallonmate(commands.Cog):
     async def switch_daemon_func(self) -> None:
         """Background task calling `switch_routine` once a day."""
         await self.bot.wait_until_ready()
-        logger.info("Daemon started")
+        log.info("Daemon started")
 
         while True:
             t_sleep = await seconds_until_midnight()
@@ -87,9 +87,9 @@ class Gallonmate(commands.Cog):
             try:
                 old_name, new_name = await self.switch_routine()
             except SwitchException as switch_exc:
-                logger.error(f"Daily switch failed: {switch_exc}")
+                log.error(f"Daily switch failed: {switch_exc}")
             else:
-                logger.info("Daily switch successful")
+                log.info("Daily switch successful")
 
                 if self.announce:
                     msg = (
