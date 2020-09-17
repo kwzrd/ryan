@@ -10,7 +10,8 @@ log = logging.getLogger(__name__)
 
 
 class Database:
-    """Provides a simple API for the internal `_connection` to an SQLIte database.
+    """
+    Provides a simple API for the internal `_connection` to an SQLIte database.
 
     Ideally the database is only interfaced with through an instance of this class.
     """
@@ -31,7 +32,8 @@ class Database:
         return self.DB_FILE.stat().st_size
 
     async def open(self) -> Database:
-        """Open a connection to the database from an asynchronous context.
+        """
+        Open a connection to the database from an asynchronous context.
 
         Creates necessary tables if they don't exist.
 
@@ -53,7 +55,8 @@ class Database:
         return self
 
     async def get_nicknames(self) -> List[str]:
-        """Retrieve a list of all nicknames.
+        """
+        Retrieve a list of all nicknames.
 
         Gives an empty list should no nicknames be available.
         """

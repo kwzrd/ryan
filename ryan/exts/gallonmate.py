@@ -22,7 +22,8 @@ def is_gallonmate(user: discord.User) -> bool:
 
 
 async def seconds_until_midnight() -> float:
-    """Give the amount of seconds needed to wait until the next-up midnight.
+    """
+    Give the amount of seconds needed to wait until the next-up midnight.
 
     The exact `midnight` moment is actually delayed to 5 seconds after, in order
     to avoid potential race conditions due to imprecise sleep.
@@ -35,7 +36,8 @@ async def seconds_until_midnight() -> float:
 
 
 async def get_help(group: commands.Group, failed_cmd: bool) -> discord.Embed:
-    """Provide an embed with commands of `group`.
+    """
+    Provide an embed with commands of `group`.
 
     If `failed_cmd` is True, the embed is coloured orange. Green otherwise.
     """
@@ -102,7 +104,8 @@ class Gallonmate(commands.Cog):
                     await ann_channel.send(embed=msg_success(msg))
 
     async def switch_routine(self) -> Tuple[str, str]:
-        """Routine to attempt to switch Gallonmate nickname.
+        """
+        Routine to attempt to switch Gallonmate nickname.
 
         If the method fails at any point, it will raise SwitchException with an informative
         message the can be displayed to the user.

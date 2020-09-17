@@ -16,7 +16,8 @@ class Ryan(commands.Bot):
     database: Database
 
     def __init__(self, *args, **kwargs) -> None:
-        """Prepare an aiohttp session for the bot to use.
+        """
+        Prepare an aiohttp session for the bot to use.
 
         All args and kwargs propagate to super.
         """
@@ -26,7 +27,8 @@ class Ryan(commands.Bot):
         )
 
     def add_cog(self, cog: commands.Cog) -> None:
-        """Delegate to super, log successful loads.
+        """
+        Delegate to super, log successful loads.
 
         This reduces having to log in cog module setups.
         """
@@ -34,7 +36,8 @@ class Ryan(commands.Bot):
         log.info(f"Cog loaded: {cog.qualified_name}")
 
     async def start(self, *args, **kwargs) -> None:
-        """Prepare Bot subclass.
+        """
+        Prepare Bot subclass.
 
         We establish a connection to the database here from an async context,
         then delegate to the base class.
