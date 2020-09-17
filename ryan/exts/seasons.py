@@ -52,7 +52,8 @@ seasons = {
 
 
 def decorate_name(discord_name: str, season_name: str) -> str:
-    """Decorate a given string with emoji for current season.
+    """
+    Decorate a given string with emoji for current season.
 
     The used emoji are drawn randomly from the season given by `season_name`.
     Strips all other emoji from `discord_name` before decorating.
@@ -71,7 +72,8 @@ def decorate_name(discord_name: str, season_name: str) -> str:
 
 
 class Seasons(commands.Cog):
-    """Decorates the server for various seasons.
+    """
+    Decorates the server for various seasons.
 
     The guild name, channel names and member names will be decorated with
     emoji that are pre-defined for each season.
@@ -97,7 +99,8 @@ class Seasons(commands.Cog):
 
     @commands.command()
     async def season(self, ctx: commands.Context, *, season_name: str = None) -> None:
-        """Attempt to decorate the server.
+        """
+        Attempt to decorate the server.
 
         Many of the decorations may fail due to missing permissions. The bot handles
         this and returns an embed containing a report of how many decorations have
