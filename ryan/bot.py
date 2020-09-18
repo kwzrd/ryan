@@ -58,6 +58,7 @@ class Ryan(commands.Bot):
         self.database = await Database().open()
         self.start_time = arrow.now()
 
+        await init_tortoise()
         await super().start(*args, **kwargs)
 
     async def close(self) -> None:
@@ -69,3 +70,4 @@ class Ryan(commands.Bot):
         await super().close()
         await self.database.close()
         await self.http_session.close()
+        await Tortoise.close_connections()
