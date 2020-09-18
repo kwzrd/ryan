@@ -30,46 +30,42 @@ async def init_tortoise() -> None:
 
 
 class Ryan(commands.Bot):
+    """
+    Custom bot class.
 
-    start_time: arrow.Arrow
+    This holds attributes globally accessible to all cogs.
+    """
+
+    http_session: aiohttp.ClientSession
     database: Database
-
-    def __init__(self, *args, **kwargs) -> None:
-        """
-        Prepare an aiohttp session for the bot to use.
-
-        All args and kwargs propagate to super.
-        """
-        super().__init__(*args, **kwargs)
-        self.http_session = aiohttp.ClientSession(
-            connector=aiohttp.TCPConnector(resolver=aiohttp.AsyncResolver(), family=socket.AF_INET)
-        )
+    start_time: arrow.Arrow
 
     def add_cog(self, cog: commands.Cog) -> None:
-        """
-        Delegate to super, log successful loads.
-
-        This reduces having to log in cog module setups.
-        """
+        """Log cog name & delegate to super."""
+        log.info(f"Loading cog: {cog.qualified_name}")
         super().add_cog(cog)
-        log.info(f"Cog loaded: {cog.qualified_name}")
 
     async def start(self, *args, **kwargs) -> None:
         """
-        Prepare Bot subclass.
+        Initialize from an async context.
 
-        We establish a connection to the database here from an async context,
-        then delegate to the base class.
+        To ensure that the event loop is ready, we delay setting async attributes
+        until after this method is called.
         """
-        self.start_time = arrow.now()
+        connector = aiohttp.TCPConnector(resolver=aiohttp.AsyncResolver(), family=socket.AF_INET)
+        self.http_session = aiohttp.ClientSession(connector=connector)
+
         self.database = await Database().open()
+        self.start_time = arrow.now()
 
         await super().start(*args, **kwargs)
 
-        log.info("Bot online")
-
     async def close(self) -> None:
-        """Allow base class to close, then safely close database connection and http session."""
+        """
+        Let parent close & clean up own connections.
+
+        This handles graceful cleanup that should be done asynchronously.
+        """
         await super().close()
         await self.database.close()
         await self.http_session.close()
