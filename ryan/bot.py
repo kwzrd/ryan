@@ -4,10 +4,29 @@ import socket
 import aiohttp
 import arrow
 from discord.ext import commands
+from tortoise import Tortoise
 
+from ryan import models
 from ryan.database import Database
 
 log = logging.getLogger(__name__)
+
+
+async def init_tortoise() -> None:
+    """
+    Initialize Tortoise connection.
+
+    This must be done from an async context. Generating schemas in 'safe' mode
+    guards queries by 'IF NOT EXISTS', so this is ok to run everytime.
+
+    Migrations must currently be handled manually.
+    """
+    log.info("Initializing Tortoise connection")
+    await Tortoise.init(
+        db_url="sqlite://ryan.db",
+        modules={"models": [models.__name__]},
+    )
+    await Tortoise.generate_schemas(safe=True)
 
 
 class Ryan(commands.Bot):
