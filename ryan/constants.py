@@ -39,6 +39,7 @@ class Channels:
 
 class Client:
     token: str = os.environ["TOKEN"]
+    prefix: str = os.environ["PREFIX"]
 
 
 class Images:

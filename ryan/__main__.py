@@ -17,7 +17,7 @@ def run_git(args: List[str]) -> str:
 latest_tag = run_git(["describe", "--tags"])
 tag_tstamp = run_git(["log", "-1", "--format=%ci", latest_tag]).split()[0]  # Date only
 
-bot = Ryan(command_prefix="?", activity=discord.Game(f"version {latest_tag}"), help_command=None)
+bot = Ryan(command_prefix=Client.prefix, activity=discord.Game(f"version {latest_tag}"), help_command=None)
 
 # Instantiate all extensions
 bot.load_extension("ryan.exts.corona")
