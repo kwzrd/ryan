@@ -7,7 +7,6 @@ from discord.ext import commands
 from tortoise import Tortoise
 
 from ryan import models
-from ryan.database import Database
 
 log = logging.getLogger(__name__)
 
@@ -37,7 +36,6 @@ class Ryan(commands.Bot):
     """
 
     http_session: aiohttp.ClientSession
-    database: Database
     start_time: arrow.Arrow
 
     def add_cog(self, cog: commands.Cog) -> None:
@@ -55,7 +53,6 @@ class Ryan(commands.Bot):
         connector = aiohttp.TCPConnector(resolver=aiohttp.AsyncResolver(), family=socket.AF_INET)
         self.http_session = aiohttp.ClientSession(connector=connector)
 
-        self.database = await Database().open()
         self.start_time = arrow.now()
 
         await init_tortoise()
@@ -68,6 +65,5 @@ class Ryan(commands.Bot):
         This handles graceful cleanup that should be done asynchronously.
         """
         await super().close()
-        await self.database.close()
         await self.http_session.close()
         await Tortoise.close_connections()
