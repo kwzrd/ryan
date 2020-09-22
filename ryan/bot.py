@@ -22,7 +22,7 @@ async def init_tortoise() -> None:
     """
     log.info("Initializing Tortoise connection")
     await Tortoise.init(
-        db_url="sqlite://ryan.db",
+        db_url="sqlite://ryan.database",
         modules={"models": [models.__name__]},
     )
     await Tortoise.generate_schemas(safe=True)
