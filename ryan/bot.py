@@ -50,12 +50,15 @@ class Ryan(commands.Bot):
         To ensure that the event loop is ready, we delay setting async attributes
         until after this method is called.
         """
+        log.info("Initializing Ryan attributes from an async context")
+        self.start_time = arrow.now()
+
         connector = aiohttp.TCPConnector(resolver=aiohttp.AsyncResolver(), family=socket.AF_INET)
         self.http_session = aiohttp.ClientSession(connector=connector)
 
-        self.start_time = arrow.now()
-
         await init_tortoise()
+
+        log.info("Ryan ready, connecting to Discord")
         await super().start(*args, **kwargs)
 
     async def close(self) -> None:
@@ -65,5 +68,7 @@ class Ryan(commands.Bot):
         This handles graceful cleanup that should be done asynchronously.
         """
         await super().close()
+
+        log.info("Closing HTTP session & Tortoise connections")
         await self.http_session.close()
         await Tortoise.close_connections()
