@@ -8,8 +8,10 @@ log = logging.getLogger(__name__)
 
 
 class Galoon(commands.Cog):
+    """Galoon rolls."""
 
     def __init__(self, bot: Ryan) -> None:
+        """Initialize cog."""
         self.bot = bot
 
 
