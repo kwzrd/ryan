@@ -3,6 +3,9 @@ import logging
 from discord.ext import commands
 
 from ryan.bot import Ryan
+from ryan.constants import Users
+
+USERS = {Users.gallonmate}  # Users which can be galooned
 
 log = logging.getLogger(__name__)
 
