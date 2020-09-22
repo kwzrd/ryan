@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ba49abb3c5201a875ace2b960b66462efa687ed85a0aca6a219b52f55e7c5cba"
+            "sha256": "75f884b727aaed747a44eebb6f86d86aba534b722d2ed28d287b0325ac521c57"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -130,6 +130,14 @@
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==2.10"
         },
+        "iso8601": {
+            "hashes": [
+                "sha256:694be0743e9f1535ea873bfc7bd6fb62380c62b75822761859428073a17fd39c",
+                "sha256:6f02f01dd13320a7f280e58516dc8d1950dfaf77527cc365a398cd9de4d3c692",
+                "sha256:f7dec22af52025d4526be94cc1303c7d8f5379b746a3f54a8c8446384392eeb1"
+            ],
+            "version": "==0.1.13"
+        },
         "multidict": {
             "hashes": [
                 "sha256:1ece5a3369835c20ed57adadc663400b5525904e53bae59ec854a5d36b39b21a",
@@ -195,6 +203,12 @@
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==2.20"
         },
+        "pypika": {
+            "hashes": [
+                "sha256:f6c715348cb6fa0042fe5b69f40cbb19c36ee3ff68414ece8660465c56523012"
+            ],
+            "version": "==0.39.1"
+        },
         "pypopulation": {
             "hashes": [
                 "sha256:b8a5f0f5ceea92df1f6ae52b516757182a4feb65a155aa388678a1c132a031ee",
@@ -218,6 +232,13 @@
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.15.0"
+        },
+        "tortoise-orm": {
+            "hashes": [
+                "sha256:47d5acd7cdcd2660dd71a8b0d96a0fe5cc2171fd49576d4f8791dcd6365ece91"
+            ],
+            "index": "pypi",
+            "version": "==0.16.15"
         },
         "typing-extensions": {
             "hashes": [
