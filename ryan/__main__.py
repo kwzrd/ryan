@@ -24,7 +24,7 @@ bot.load_extension("ryan.exts.corona")
 bot.load_extension("ryan.exts.error_handler")
 bot.load_extension("ryan.exts.execute")
 bot.load_extension("ryan.exts.extensions")
-bot.load_extension("ryan.exts.gallonmate")
+bot.load_extension("ryan.exts.galoon")
 bot.load_extension("ryan.exts.seasons")
 
 
