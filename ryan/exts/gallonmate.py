@@ -7,7 +7,7 @@ from ryan.bot import Ryan
 log = logging.getLogger(__name__)
 
 
-class Gallonmate(commands.Cog):
+class Galoon(commands.Cog):
 
     def __init__(self, bot: Ryan) -> None:
         self.bot = bot
@@ -15,4 +15,4 @@ class Gallonmate(commands.Cog):
 
 def setup(bot: Ryan) -> None:
     """Load Gallonmate cog."""
-    bot.add_cog(Gallonmate(bot))
+    bot.add_cog(Galoon(bot))
