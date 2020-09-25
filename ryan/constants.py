@@ -2,21 +2,21 @@ import os
 
 
 class Channels:
+    """Discord channel IDs."""
+
     gallonmate_rolls = 484118447073132574
     gallonmate_announce = 319955430732464128
 
 
 class Client:
+    """Relating to Discord connection."""
+
     token: str = os.environ["TOKEN"]
     prefix: str = os.environ["PREFIX"]
 
 
 class Emoji:
-    """
-    Emoji code constants recognizable by Discord.
-
-    For the custom ones, the bot must be in a guild where the emoji are defined.
-    """
+    """Discord emoji codes & IDs."""
 
     # Custom emoji
     galooned = "<:galooned:338627421630627842>"
@@ -34,10 +34,14 @@ class Emoji:
 
 
 class Guilds:
+    """Discord guilds IDs."""
+
     tree_society = 319955430732464128
 
 
 class Images:
+    """Images links."""
+
     gm_creepy = (
         "https://cdn.discordapp.com/attachments/319955430732464128/695021552520921148/"
         "Screenshot_20200327-184350_FaceApp.jpg"
@@ -45,5 +49,7 @@ class Images:
 
 
 class Users:
+    """Discord user IDs."""
+
     gallonmate = 209018651360100352
     kwzrd = 144912469071101952
