@@ -42,10 +42,7 @@ class Guilds:
 class Images:
     """Images links."""
 
-    gm_creepy = (
-        "https://cdn.discordapp.com/attachments/319955430732464128/695021552520921148/"
-        "Screenshot_20200327-184350_FaceApp.jpg"
-    )
+    gm_creepy = "https://cdn.discordapp.com/attachments/319955430732464128/695021552520921148/Screenshot_20200327-184350_FaceApp.jpg"  # noqa: E501
 
 
 class Users:
