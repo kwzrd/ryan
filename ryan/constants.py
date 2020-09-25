@@ -1,6 +1,16 @@
 import os
 
 
+class Channels:
+    gallonmate_rolls = 484118447073132574
+    gallonmate_announce = 319955430732464128
+
+
+class Client:
+    token: str = os.environ["TOKEN"]
+    prefix: str = os.environ["PREFIX"]
+
+
 class Emoji:
     """
     Emoji code constants recognizable by Discord.
@@ -23,23 +33,8 @@ class Emoji:
     pensive = ":pensive:"
 
 
-class Users:
-    gallonmate = 209018651360100352
-    kwzrd = 144912469071101952
-
-
 class Guilds:
     tree_society = 319955430732464128
-
-
-class Channels:
-    gallonmate_rolls = 484118447073132574
-    gallonmate_announce = 319955430732464128
-
-
-class Client:
-    token: str = os.environ["TOKEN"]
-    prefix: str = os.environ["PREFIX"]
 
 
 class Images:
@@ -47,3 +42,8 @@ class Images:
         "https://cdn.discordapp.com/attachments/319955430732464128/695021552520921148/"
         "Screenshot_20200327-184350_FaceApp.jpg"
     )
+
+
+class Users:
+    gallonmate = 209018651360100352
+    kwzrd = 144912469071101952
