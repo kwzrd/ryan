@@ -12,7 +12,7 @@ FILE = Path(LOG_DIR, f"{datetime.utcnow().isoformat()}.log")
 
 # Define custom log format
 FORMAT = logging.Formatter(
-    fmt="{levelname} | {asctime} | {name} | {msg}",
+    fmt="{asctime} | {levelname} | {name} | {msg}",
     datefmt="%d/%m/%y %H:%M:%S",
     style="{",  # Style arg enables f-string syntax
 )
