@@ -110,7 +110,7 @@ class CountryMap:
 
         log.debug("Name does not exist in cache, trying to find closest match")
         try:
-            match = difflib.get_close_matches(normal_name, possibilities=self.map, n=1)[0]
+            match = difflib.get_close_matches(normal_name, possibilities=self.map, n=1, cutoff=0.75)[0]
         except IndexError:
             log.debug("No match found")
         else:
