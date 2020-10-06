@@ -126,6 +126,10 @@ class CountryMap:
             log.debug("Named found directly in cache")
             return country
 
+        if submatch := self.substring_match(normal_name, self.map):
+            log.debug("Found a substring match")
+            return submatch
+
         log.debug("Name does not exist in cache, trying to find closest match")
         try:
             match = difflib.get_close_matches(normal_name, possibilities=self.map, n=1, cutoff=0.75)[0]
