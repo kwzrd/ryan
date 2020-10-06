@@ -81,6 +81,24 @@ class CountryMap:
         """Normalize country `name` for look-up."""
         return name.lower().replace(" ", "")
 
+    @staticmethod
+    def substring_match(name: str, options: t.Dict[str, Country]) -> t.Optional[Country]:
+        """
+        If `name` is a substring of any key in `options`, return its value.
+
+        This method works with the assumption that both `name` and all keys in `options`
+        have already been normalized.
+
+        For `name` shorter than 5 characters, the search is aborted, as it would produce
+        too many false positives. If there are multiple matches, the first one is given.
+        """
+        if len(name) < 5:
+            return None
+
+        for mapped_name, country in options.items():
+            if name in mapped_name:
+                return country
+
     def __init__(self, countries: t.List[Country]) -> None:
         """Initiate internal mapper."""
         self.map: t.Dict[str, Country] = {
@@ -108,9 +126,13 @@ class CountryMap:
             log.debug("Named found directly in cache")
             return country
 
+        if submatch := self.substring_match(normal_name, self.map):
+            log.debug("Found a substring match")
+            return submatch
+
         log.debug("Name does not exist in cache, trying to find closest match")
         try:
-            match = difflib.get_close_matches(normal_name, possibilities=self.map, n=1)[0]
+            match = difflib.get_close_matches(normal_name, possibilities=self.map, n=1, cutoff=0.75)[0]
         except IndexError:
             log.debug("No match found")
         else:
