@@ -81,6 +81,24 @@ class CountryMap:
         """Normalize country `name` for look-up."""
         return name.lower().replace(" ", "")
 
+    @staticmethod
+    def substring_match(name: str, options: t.Dict[str, Country]) -> t.Optional[Country]:
+        """
+        If `name` is a substring of any key in `options`, return its value.
+
+        This method works with the assumption that both `name` and all keys in `options`
+        have already been normalized.
+
+        For `name` shorter than 5 characters, the search is aborted, as it would produce
+        too many false positives. If there are multiple matches, the first one is given.
+        """
+        if len(name) < 5:
+            return None
+
+        for mapped_name, country in options.items():
+            if name in mapped_name:
+                return country
+
     def __init__(self, countries: t.List[Country]) -> None:
         """Initiate internal mapper."""
         self.map: t.Dict[str, Country] = {
