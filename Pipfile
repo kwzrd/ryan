@@ -17,7 +17,7 @@ pypopulation = "==2020.3"
 tortoise-orm = "~=0.16.15"
 
 [requires]
-python_version = "3.8"
+python_version = "3.9"
 
 [scripts]
 ryan = "python -m ryan"
