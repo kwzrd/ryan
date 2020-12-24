@@ -116,7 +116,6 @@ class Seasons(commands.Cog):
         status_react = Emoji.tips_fedora
         await ctx.message.add_reaction(status_react)
 
-        g_success = None
         ch_fail, m_fail = 0, 0
 
         guild_name = decorate_name(ctx.guild.name, season_name)
