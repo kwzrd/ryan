@@ -1,5 +1,6 @@
 import logging
 import random
+import typing as t
 from datetime import datetime
 
 import discord
@@ -44,6 +45,19 @@ def msg_error(message: str) -> discord.Embed:
     )
     embed.set_author(name=random.choice(TITLE_ERROR), icon_url=Images.gm_creepy)
     return embed
+
+
+async def download_file(attachment: discord.Attachment) -> t.Optional[discord.File]:
+    """
+    Download & return `attachment` file.
+
+    If the download fails, the reason is logged and None will be returned.
+    """
+    log.debug(f"Attempting to download attachment: {attachment.url}")
+    try:
+        return await attachment.to_file()
+    except discord.HTTPException as http_exc:
+        log.warning("Failed to download attachment!", exc_info=http_exc)
 
 
 async def relay_message(message: discord.Message, target: discord.TextChannel) -> None:
