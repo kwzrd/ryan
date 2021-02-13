@@ -75,9 +75,9 @@ async def relay_message(message: discord.Message, target: discord.TextChannel) -
     else:
         name = author.name
 
-    quote_embed = discord.Embed(description=message.content)
+    quote_embed = discord.Embed(description=message.content, timestamp=datetime.utcnow())
     quote_embed.set_author(name=name, icon_url=author.avatar_url)
-    quote_embed.set_footer(text=f"{datetime.now()} - {message.guild.name} - {message.channel.name}")
+    quote_embed.set_footer(text=f"{message.guild.name} | {message.channel.name}")
 
     if message.attachments:
         log.debug(f"Relaying first of {len(message.attachments)} attachments")
