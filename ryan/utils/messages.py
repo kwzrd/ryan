@@ -61,7 +61,12 @@ async def download_file(attachment: discord.Attachment) -> t.Optional[discord.Fi
 
 
 async def relay_message(message: discord.Message, target: discord.TextChannel) -> None:
-    """Relays a quote embed to the `target` channel."""
+    """
+    Relays an embed quoting `message` to the `target` channel.
+
+    If the `message` contains attachments, the first one will be sent with the quotation.
+    User-sent messages do not normally contain multiple attachments, so this case is ignored.
+    """
     author = message.author
     if author.display_name != author.name:
         name = f"{author.display_name} ({author.name})"
@@ -77,9 +82,10 @@ async def relay_message(message: discord.Message, target: discord.TextChannel) -
         text=f"{datetime.now()} - {message.guild.name} - {message.channel.name}"
     )
     if message.attachments:
-        quote_embed.add_field(
-            name="Attachments:",
-            value="\n".join(message.attachments)
-        )
+        attachment = message.attachments[0]  # We will only relay the first attachment
+        if (att_file := await download_file(attachment)) is not None:
+            quote_embed.set_image(url=f"attachment://{attachment.filename}")  # Embed displays the attached file
+    else:
+        att_file = None
 
-    await target.send(embed=quote_embed)
+    await target.send(embed=quote_embed, file=att_file)
