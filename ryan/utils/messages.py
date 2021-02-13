@@ -24,7 +24,7 @@ title_error = (
 )
 
 
-def msg_success(message: str) -> discord.Embed():
+def msg_success(message: str) -> discord.Embed:
     """Create a success embed with `message`."""
     embed = discord.Embed(
         description=message,
@@ -34,7 +34,7 @@ def msg_success(message: str) -> discord.Embed():
     return embed
 
 
-def msg_error(message: str) -> discord.Embed():
+def msg_error(message: str) -> discord.Embed:
     """Create an error embed with `message`."""
     embed = discord.Embed(
         description=message,
