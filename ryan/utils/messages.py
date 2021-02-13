@@ -1,3 +1,4 @@
+import logging
 import random
 from datetime import datetime
 
@@ -21,6 +22,8 @@ TITLE_ERROR = (
     "Something wrong",
     "I hold my head",
 )
+
+log = logging.getLogger(__name__)
 
 
 def msg_success(message: str) -> discord.Embed:
