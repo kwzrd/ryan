@@ -67,25 +67,27 @@ async def relay_message(message: discord.Message, target: discord.TextChannel) -
     If the `message` contains attachments, the first one will be sent with the quotation.
     User-sent messages do not normally contain multiple attachments, so this case is ignored.
     """
-    author = message.author
+    author = message.author  # For short since we'll access this a lot
+    log.debug(f"Building quotation embed for message from: {author}")
+
     if author.display_name != author.name:
         name = f"{author.display_name} ({author.name})"
     else:
         name = author.name
 
     quote_embed = discord.Embed(description=message.content)
-    quote_embed.set_author(
-        name=name,
-        icon_url=author.avatar_url
-    )
-    quote_embed.set_footer(
-        text=f"{datetime.now()} - {message.guild.name} - {message.channel.name}"
-    )
+    quote_embed.set_author(name=name, icon_url=author.avatar_url)
+    quote_embed.set_footer(text=f"{datetime.now()} - {message.guild.name} - {message.channel.name}")
+
     if message.attachments:
+        log.debug(f"Relaying first of {len(message.attachments)} attachments")
         attachment = message.attachments[0]  # We will only relay the first attachment
+
         if (att_file := await download_file(attachment)) is not None:
             quote_embed.set_image(url=f"attachment://{attachment.filename}")  # Embed displays the attached file
     else:
+        log.debug("Message contains no attachments")
         att_file = None
 
+    log.debug("Dispatching quotation embed")
     await target.send(embed=quote_embed, file=att_file)
