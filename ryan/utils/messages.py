@@ -5,15 +5,14 @@ import discord
 
 from ryan.constants import Images
 
-title_success = (
+TITLE_SUCCESS = (
     "Good point",
     "Great moves Ethan",
     "Keep it up",
     "Life is excellent!",
     "The daemon congratulates you",
 )
-
-title_error = (
+TITLE_ERROR = (
     "Galooned again",
     "Put on full blast",
     "Reduced you to memes",
@@ -30,7 +29,7 @@ def msg_success(message: str) -> discord.Embed:
         description=message,
         colour=discord.Colour.green(),
     )
-    embed.set_author(name=random.choice(title_success), icon_url=Images.gm_creepy)
+    embed.set_author(name=random.choice(TITLE_SUCCESS), icon_url=Images.gm_creepy)
     return embed
 
 
@@ -40,7 +39,7 @@ def msg_error(message: str) -> discord.Embed:
         description=message,
         colour=discord.Colour.red(),
     )
-    embed.set_author(name=random.choice(title_error), icon_url=Images.gm_creepy)
+    embed.set_author(name=random.choice(TITLE_ERROR), icon_url=Images.gm_creepy)
     return embed
 
 
