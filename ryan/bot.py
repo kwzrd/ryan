@@ -51,7 +51,7 @@ class Ryan(commands.Bot):
         until after this method is called.
         """
         log.info("Initializing Ryan attributes from an async context")
-        self.start_time = arrow.now()
+        self.start_time = arrow.utcnow()
 
         connector = aiohttp.TCPConnector(resolver=aiohttp.AsyncResolver(), family=socket.AF_INET)
         self.http_session = aiohttp.ClientSession(connector=connector)
