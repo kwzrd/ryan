@@ -52,7 +52,7 @@ async def custom_help(ctx: commands.Context) -> None:
     help_embed.add_field(name="Active extensions:", value=active_cogs, inline=False)
 
     # Field: footer
-    help_embed.set_footer(text=f"Awakened {bot.start_time.humanize(arrow.now())}")
+    help_embed.set_footer(text=f"Awakened {bot.start_time.humanize(arrow.utcnow())}")
 
     await ctx.send(embed=help_embed)
 
