@@ -9,13 +9,11 @@ from discord.ext import commands, tasks
 from pypopulation import get_population
 
 from ryan.bot import Ryan
-from ryan.constants import Emoji
+from ryan.constants import Emoji, Images
 from ryan.utils import msg_error, msg_success
 
 URL_API_HOME = "https://covid19api.com/"
 URL_API_DATA = "https://api.covid19api.com/summary"
-
-URL_ICON = "https://cdn.pixabay.com/photo/2020/04/29/07/54/coronavirus-5107715_1280.png"
 
 URL_FLAGS = "https://www.countryflags.io/{code}/flat/64.png"
 
@@ -218,7 +216,7 @@ class Corona(commands.Cog):
         """Create a Discord embed representation for `country`."""
         title = f"Currently active cases: `{country.active:,}` (`{country.active_ml:,}` per million)"
         embed = discord.Embed(colour=discord.Color.blurple(), timestamp=when, title=title)
-        embed.set_thumbnail(url=URL_ICON)
+        embed.set_thumbnail(url=Images.coronavirus)
         embed.set_author(name=country.name, icon_url=country.flag_url())
 
         fmt = "Total: `{total:,}`\nNew: `{new:,}`\nPer-mil: `{pml:,}`"  # Types: int, int, int
