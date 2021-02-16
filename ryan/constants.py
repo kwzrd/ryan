@@ -42,6 +42,7 @@ class Guilds:
 class Images:
     """Images links."""
 
+    coronavirus = "https://cdn.discordapp.com/attachments/746790524567945277/746790671557591070/coronavirus-5107715_1280.webp"  # noqa: E501
     gm_creepy = "https://cdn.discordapp.com/attachments/319955430732464128/695021552520921148/Screenshot_20200327-184350_FaceApp.jpg"  # noqa: E501
 
 
