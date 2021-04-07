@@ -10,6 +10,8 @@ on:
 
 jobs:
   checks:
+
+    name: Checks
     runs-on: ubuntu-18.04
 
     steps:
