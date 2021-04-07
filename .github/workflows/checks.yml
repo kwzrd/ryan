@@ -2,9 +2,11 @@ name: Flake8 & friends
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - main
   pull_request:
-    branches: [ master ]
+    branches:
+      - main
 
 jobs:
   checks:
