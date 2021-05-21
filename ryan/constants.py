@@ -1,18 +1,8 @@
-import os
-
-
 class Channels:
     """Discord channel IDs."""
 
     gallonmate_rolls = 484118447073132574
     gallonmate_announce = 319955430732464128
-
-
-class Client:
-    """Relating to Discord connection."""
-
-    token: str = os.environ["TOKEN"]
-    prefix: str = os.environ["PREFIX"]
 
 
 class Emoji:
