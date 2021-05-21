@@ -6,7 +6,7 @@ import discord
 from discord.ext import commands
 
 from ryan.bot import Ryan
-from ryan.constants import Client
+from ryan.config import Secrets
 
 
 def run_git(args: List[str]) -> str:
@@ -21,7 +21,7 @@ intents = discord.Intents.default()
 intents.members = True
 
 bot = Ryan(
-    command_prefix=Client.prefix,
+    command_prefix=Secrets.bot_prefix,
     activity=discord.Game(f"version {latest_tag}"),
     help_command=None,
     intents=intents,
@@ -57,4 +57,4 @@ async def custom_help(ctx: commands.Context) -> None:
     await ctx.send(embed=help_embed)
 
 
-bot.run(Client.token)
+bot.run(Secrets.bot_token)
