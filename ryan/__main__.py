@@ -1,5 +1,4 @@
-import subprocess
-from typing import List
+from os import environ
 
 import arrow
 import discord
@@ -8,21 +7,14 @@ from discord.ext import commands
 from ryan.bot import Ryan
 from ryan.config import Secrets
 
-
-def run_git(args: List[str]) -> str:
-    """Run a git command specified by `args`, capture its stdout output and return as string."""
-    return subprocess.run(["git"] + args, capture_output=True, text=True).stdout.strip()
-
-
-latest_tag = run_git(["describe", "--tags"])
-tag_tstamp = run_git(["log", "-1", "--format=%ci", latest_tag]).split()[0]  # Date only
+revision = environ.get("REVISION")
 
 intents = discord.Intents.default()
 intents.members = True
 
 bot = Ryan(
     command_prefix=Secrets.bot_prefix,
-    activity=discord.Game(f"version {latest_tag}"),
+    activity=discord.Game(f"version {revision}"),
     help_command=None,
     intents=intents,
 )
@@ -45,7 +37,7 @@ async def custom_help(ctx: commands.Context) -> None:
     help_embed.set_author(name="Ryan ~ real human bean", icon_url=bot.user.avatar_url)
 
     # Field: revision
-    help_embed.add_field(name="Revision:", value=f"`{latest_tag} ({tag_tstamp})`")
+    help_embed.add_field(name="Revision:", value=f"`{revision}`")
 
     # Field: active extensions
     active_cogs = "\n".join(cog for cog in bot.cogs)
