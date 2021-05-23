@@ -1,4 +1,4 @@
-name: "Flake8 & friends"
+name: "Checks"
 
 on:
   push:
