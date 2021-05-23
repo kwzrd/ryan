@@ -1,0 +1,39 @@
+name: "Build & Push"
+
+on:
+  workflow_run:
+    workflows:
+      - "Checks"
+    branches:
+      - "main"
+    types:
+      - "completed"
+
+jobs:
+  build:
+    name: "Build & Push"
+    runs-on: "ubuntu-18.04"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2"
+
+      - name: "Log in to GHCR"
+        uses: "docker/login-action@v1"
+        with:
+          registry: "ghcr.io"
+          username: "kwzrd"
+          password: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: "Set up Docker Buildx"
+        uses: "docker/setup-buildx-action@v1"
+
+      - name: "Build & Push"
+        uses: "docker/build-push-action@v2"
+        with:
+          context: "."
+          tags: |
+            "ghcr.io/kwzrd/ryan:latest"
+            "ghcr.io/kwzrd/ryan:${{ github.sha }}"
+          push: true
+          build-args: "GIT_SHA=${{ github.sha }}"
