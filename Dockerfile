@@ -14,5 +14,9 @@ RUN pipenv sync
 # Insert the application.
 COPY ryan ryan
 
+# Define build argument & store value as environment variable.
+ARG GIT_SHA="Development"
+ENV REVISION=$GIT_SHA
+
 # Set container entrypoint ~ this defines what happens when the container starts.
 ENTRYPOINT ["pipenv", "run", "ryan"]
