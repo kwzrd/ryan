@@ -1,4 +1,3 @@
-![CalVer schema](https://img.shields.io/badge/CalVer-YY.MINOR-blue?style=flat-square)
 ![Python](https://img.shields.io/github/pipenv/locked/python-version/kwzrd/ryan?label=Python&style=flat-square)
 ![Checks](https://img.shields.io/github/workflow/status/kwzrd/ryan/Checks?label=Checks&style=flat-square)
 ![Build & Push](https://img.shields.io/github/workflow/status/kwzrd/ryan/Build%20&%20Push?label=Build%20%26%20Push&style=flat-square)
