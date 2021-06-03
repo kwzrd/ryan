@@ -4,28 +4,8 @@ import socket
 import aiohttp
 import arrow
 from discord.ext import commands
-from tortoise import Tortoise
-
-from ryan import models
 
 log = logging.getLogger(__name__)
-
-
-async def init_tortoise() -> None:
-    """
-    Initialize Tortoise connection.
-
-    This must be done from an async context. Generating schemas in 'safe' mode
-    guards queries by 'IF NOT EXISTS', so this is ok to run everytime.
-
-    Migrations must currently be handled manually.
-    """
-    log.info("Initializing Tortoise connection")
-    await Tortoise.init(
-        db_url="sqlite://ryan.database",
-        modules={"models": [models.__name__]},
-    )
-    await Tortoise.generate_schemas(safe=True)
 
 
 class Ryan(commands.Bot):
@@ -56,8 +36,6 @@ class Ryan(commands.Bot):
         connector = aiohttp.TCPConnector(resolver=aiohttp.AsyncResolver(), family=socket.AF_INET)
         self.http_session = aiohttp.ClientSession(connector=connector)
 
-        await init_tortoise()
-
         log.info("Ryan ready, connecting to Discord")
         await super().start(*args, **kwargs)
 
@@ -69,6 +47,5 @@ class Ryan(commands.Bot):
         """
         await super().close()
 
-        log.info("Closing HTTP session & Tortoise connections")
+        log.info("Closing HTTP session")
         await self.http_session.close()
-        await Tortoise.close_connections()
