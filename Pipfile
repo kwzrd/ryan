@@ -14,7 +14,6 @@ aiohttp = "~=3.7.4"
 arrow = "~=0.15.7"
 discord-py = "~=1.6.0"
 pypopulation = "==2020.3"
-tortoise-orm = "~=0.16.15"
 
 [requires]
 python_version = "3.9"
