@@ -1,0 +1,27 @@
+{
+    "channels": {
+        "gallonmate_rolls": 484118447073132574,
+        "gallonmate_announce": 319955430732464128
+    },
+    "emoji": {
+        "galooned": "<:galooned:338627421630627842>",
+        "tips_fedora": "<:pepetipsfedora:550466723997024267>",
+        "ok_hand": ":ok_hand:",
+        "weary": ":weary:",
+        "angry": ":angry:",
+        "frown": ":frowning:",
+        "upside_down": ":upside_down:",
+        "pensive": ":pensive:"
+    },
+    "guilds": {
+        "tree_society": 319955430732464128
+    },
+    "images": {
+        "coronavirus": "https://cdn.discordapp.com/attachments/746790524567945277/746790671557591070/coronavirus-5107715_1280.webp",
+        "gm_creepy": "https://cdn.discordapp.com/attachments/319955430732464128/695021552520921148/Screenshot_20200327-184350_FaceApp.jpg"
+    },
+    "users": {
+        "gallonmate": 209018651360100352,
+        "kwzrd": 144912469071101952
+    }
+}
