@@ -20,6 +20,10 @@ with chosen_file.open(mode="r", encoding="UTF-8") as file:
     data = json.load(file)
 
 
+class ConfigError(RuntimeError):
+    pass
+
+
 class _ConfigBase:
     """
     Base class for runtime config abstraction.
@@ -33,11 +37,22 @@ class _ConfigBase:
         """
         Load annotations into attributes from `section_name` in `data`.
 
-        Lookups are naive and will raise errors. CI checks should ensure that broken
-        config never reaches production.
+        Raise errors when `section_name` is not present in `data`, or an annotated
+        attribute is not present in the chosen section. CI checks should ensure that
+        broken config never reaches production.
         """
         log.info(f"Loading config: {type(self).__name__!r} (section: {section_name!r})")
+
+        if section_name not in data:
+            raise ConfigError(f"Section '{section_name}' is not present in config!")
+
         section = data[section_name]
 
         for attr_name in self.__annotations__:
+
+            if attr_name not in section:
+                raise ConfigError(
+                    f"Attribute '{attr_name}' not found in section '{section_name}'!"
+                )
+
             setattr(self, attr_name, section[attr_name])
