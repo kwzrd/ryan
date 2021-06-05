@@ -56,3 +56,58 @@ class _ConfigBase:
                 )
 
             setattr(self, attr_name, section[attr_name])
+
+
+class _Channels(_ConfigBase):
+    """Discord channel IDs."""
+
+    gallonmate_rolls: int
+    gallonmate_announce: int
+
+
+Channels = _Channels(section_name="channels")
+
+
+class _Emoji(_ConfigBase):
+    """Discord emoji codes & IDs."""
+
+    galooned: str
+    tips_fedora: str
+    ok_hand: str
+    weary: str
+    angry: str
+    frown: str
+    upside_down: str
+    pensive: str
+
+
+Emoji = _Emoji(section_name="emoji")
+
+
+class _Guilds(_ConfigBase):
+    """Discord guilds IDs."""
+
+    tree_society: int
+
+
+Guilds = _Guilds(section_name="guilds")
+
+
+class _Images(_ConfigBase):
+    """Images links."""
+
+    coronavirus: str
+    gm_creepy: str
+
+
+Images = _Images(section_name="images")
+
+
+class _Users(_ConfigBase):
+    """Discord user IDs."""
+
+    gallonmate: int
+    kwzrd: int
+
+
+Users = _Users(section_name="users")
