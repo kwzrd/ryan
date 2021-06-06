@@ -13,11 +13,13 @@ class _Secrets:
         """Load secrets from environment & set as attributes."""
         log.info("Loading secrets from environment")
 
-        required_keys = ("BOT_TOKEN",)
-        if any(key not in environ.keys() for key in required_keys):
-            raise Exception(f"Environment lacks required variables: {required_keys}")
+        for attr_name in self.__annotations__:
+            lookup_name = attr_name.upper()  # Conventionally environment variables are uppercase.
 
-        self.bot_token = str(environ.get("BOT_TOKEN"))
+            if lookup_name not in environ:
+                raise RuntimeError(f"Environment variable missing: '{lookup_name}'")
+
+            setattr(self, attr_name, environ[lookup_name])
 
 
 Secrets = _Secrets()
