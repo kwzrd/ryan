@@ -6,3 +6,6 @@ __pycache__/
 
 # Local env vars loaded with Pipenv.
 .env
+
+# Local config override.
+ryan/config/environments/development.json
