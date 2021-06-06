@@ -12,7 +12,7 @@ from datetime import datetime
 from discord.ext import commands
 
 from ryan.bot import Ryan
-from ryan.constants import Users
+from ryan.config import Users
 from ryan.utils import msg_error, msg_success
 
 log = logging.getLogger(__name__)

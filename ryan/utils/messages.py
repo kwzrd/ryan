@@ -5,7 +5,7 @@ from datetime import datetime
 
 import discord
 
-from ryan.constants import Images
+from ryan.config import Images
 
 TITLE_SUCCESS = (
     "Good point",

@@ -6,7 +6,7 @@ import discord
 from discord.ext import commands
 
 from ryan.bot import Ryan
-from ryan.constants import Emoji
+from ryan.config import Emoji
 
 log = logging.getLogger(__name__)
 

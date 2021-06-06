@@ -7,7 +7,7 @@ from discord import DiscordException
 from discord.ext import commands
 
 from ryan.bot import Ryan
-from ryan.constants import Emoji
+from ryan.config import Emoji
 from ryan.utils import msg_error
 
 log = logging.getLogger(__name__)
