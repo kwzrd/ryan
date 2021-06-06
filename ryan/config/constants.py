@@ -7,7 +7,7 @@ log = logging.getLogger(__name__)
 environments = Path("ryan", "config", "environments")
 available_files = {file.name: file for file in environments.glob("*.json")}
 
-for option in ("production.json", "development.json"):
+for option in ("development.json", "production.json"):
     if option in available_files:
         chosen_file: Path = available_files[option]
         break
