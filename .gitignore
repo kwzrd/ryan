@@ -1,8 +1,8 @@
+# JetBrains stuff.
 .idea/
+
+# Python bytecode cache.
 __pycache__/
 
-# Local per-run logging directory
-logs/
-
+# Local env vars loaded with Pipenv.
 .env
-ryan.database
