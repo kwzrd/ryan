@@ -5,7 +5,7 @@ import typing as t
 from discord.ext import commands
 
 from ryan.bot import Ryan
-from ryan.constants import Emoji, Users
+from ryan.config import Emoji, Users
 from ryan.utils import msg_error, msg_success
 
 log = logging.getLogger(__name__)

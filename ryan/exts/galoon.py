@@ -6,7 +6,7 @@ import discord
 from discord.ext import commands
 
 from ryan.bot import Ryan
-from ryan.constants import Channels, Emoji, Users
+from ryan.config import Channels, Emoji, Users
 from ryan.utils import relay_message
 
 USERS = {Users.gallonmate}  # Users which can be galooned

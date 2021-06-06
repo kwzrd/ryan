@@ -9,7 +9,7 @@ from discord.ext import commands, tasks
 from pypopulation import get_population
 
 from ryan.bot import Ryan
-from ryan.constants import Emoji, Images
+from ryan.config import Emoji, Images
 from ryan.utils import msg_error, msg_success
 
 URL_API_HOME = "https://covid19api.com/"
