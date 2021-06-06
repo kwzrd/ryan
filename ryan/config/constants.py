@@ -58,6 +58,16 @@ class _ConfigBase:
             setattr(self, attr_name, section[attr_name])
 
 
+class _App(_ConfigBase):
+    """Configuration for the application itself."""
+
+    prefix: str  # Command prefix on Discord.
+    log_debug: bool  # Enable DEBUG logs, otherwise INFO and above.
+
+
+App = _App(section_name="app")
+
+
 class _Channels(_ConfigBase):
     """Discord channel IDs."""
 
