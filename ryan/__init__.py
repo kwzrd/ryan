@@ -20,3 +20,10 @@ root_log.addHandler(handle_console)
 to_raise = ("aiosqlite", "asyncio", "db_client", "discord", "websockets")
 for log_name in to_raise:
     logging.getLogger(log_name).setLevel(logging.WARNING)
+
+# Since we do not want to miss out on logging from config init, the initial import is
+# deferred after the stdout sink is ready.
+from ryan.config import App  # noqa: E402
+
+if not App.log_debug:
+    root_log.setLevel(logging.INFO)

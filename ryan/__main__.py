@@ -5,7 +5,7 @@ import discord
 from discord.ext import commands
 
 from ryan.bot import Ryan
-from ryan.config import Secrets
+from ryan.config import App, Secrets
 
 revision = environ.get("REVISION")
 
@@ -13,7 +13,7 @@ intents = discord.Intents.default()
 intents.members = True
 
 bot = Ryan(
-    command_prefix=Secrets.bot_prefix,
+    command_prefix=App.prefix,
     activity=discord.Game(f"version {revision}"),
     help_command=None,
     intents=intents,

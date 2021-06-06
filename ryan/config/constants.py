@@ -7,7 +7,7 @@ log = logging.getLogger(__name__)
 environments = Path("ryan", "config", "environments")
 available_files = {file.name: file for file in environments.glob("*.json")}
 
-for option in ("production.json", "development.json"):
+for option in ("development.json", "production.json"):
     if option in available_files:
         chosen_file: Path = available_files[option]
         break
@@ -56,6 +56,16 @@ class _ConfigBase:
                 )
 
             setattr(self, attr_name, section[attr_name])
+
+
+class _App(_ConfigBase):
+    """Configuration for the application itself."""
+
+    prefix: str  # Command prefix on Discord.
+    log_debug: bool  # Enable DEBUG logs, otherwise INFO and above.
+
+
+App = _App(section_name="app")
 
 
 class _Channels(_ConfigBase):

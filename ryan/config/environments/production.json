@@ -1,4 +1,8 @@
 {
+    "app": {
+        "prefix": "?",
+        "log_debug": false
+    },
     "channels": {
         "gallonmate_rolls": 484118447073132574,
         "gallonmate_announce": 319955430732464128
