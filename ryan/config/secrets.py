@@ -8,7 +8,6 @@ class _Secrets:
     """Runtime abstraction exposing environment variables."""
 
     bot_token: str  # Discord login token
-    bot_prefix: str  # Command prefix
 
     def __init__(self) -> None:
         """Load secrets from environment & set as attributes."""
@@ -19,7 +18,6 @@ class _Secrets:
             raise Exception(f"Environment lacks required variables: {required_keys}")
 
         self.bot_token = str(environ.get("BOT_TOKEN"))
-        self.bot_prefix = str(environ.get("BOT_PREFIX", "?"))
 
 
 Secrets = _Secrets()
