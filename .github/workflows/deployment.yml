@@ -1,0 +1,45 @@
+name: "Deployment"
+
+on:
+  workflow_run:
+    workflows:
+      - "Build & Push"
+    branches:
+      - "main"
+    types:
+      - "completed"
+
+jobs:
+  deploy:
+    name: "Deploy to Kubernetes"
+    runs-on: "ubuntu-18.04"
+
+    # Only if build succeeded.
+    if: "${{ github.event.workflow_run.conclusion == 'success' }}"
+
+    steps:
+      - name: "Checkout (ryan)"
+        uses: "actions/checkout@v2"
+
+      - name: "Expose short revision SHA"
+        id: "get_sha"
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
+      - name: "Checkout (kube-manifest)"
+        uses: "actions/checkout@v2"
+        with:
+          repository: "kwzrd/kube-manifest"
+          ref: "main"
+          token: "${{ secrets.KUBE_MANIFEST_TOKEN }}"
+
+      - name: "K8s: set context"
+        uses: "azure/k8s-set-context@v1"
+        with:
+          method: "kubeconfig"
+          kubeconfig: "${{ secrets.KUBECONFIG }}"
+
+      - name: "K8s: deploy manifest"
+        uses: "azure/k8s-deploy@v1"
+        with:
+          manifests: "kube-manifest/ryan/deployment.yml"
+          images: "ghcr.io/kwzrd/ryan:${{ steps.get_sha.outputs.sha_short }}"
