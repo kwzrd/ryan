@@ -1,7 +1,7 @@
 import logging
 
 FORMAT = logging.Formatter(
-    fmt="{asctime} | {levelname} | {name} | {msg}",
+    fmt="{asctime} | {levelname} | {name} | {message}",
     datefmt="%d/%m/%y %H:%M:%S",
     style="{",  # Style arg enables f-string syntax.
 )
