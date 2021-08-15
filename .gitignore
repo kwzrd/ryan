@@ -9,3 +9,6 @@ __pycache__/
 
 # Local config override.
 ryan/config/environments/development.json
+
+# VS Code workspace file.
+*.code-workspace

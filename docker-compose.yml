@@ -1,0 +1,8 @@
+version: "3.9"
+
+services:
+
+  ryan:
+    image: "ghcr.io/kwzrd/kwzrd-site:latest"
+    env_file: 
+      - .env
